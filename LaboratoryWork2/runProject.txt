@@ -1,0 +1,3 @@
+mkdir classes
+javac -cp lib/Pokemon.jar -d classes src/pokemons/*.java src/moves/*.java src/BattleSimulator.java
+java -cp lib/Pokemon.jar:classes BattleSimulator

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<set>
+  <dragon>
+    <id>1</id>
+    <name>Dimas</name>
+    <coordinates>
+      <x>1</x>
+      <y>1.0</y>
+    </coordinates>
+    <creationDate>2022-02-11 12:49:52.514 UTC</creationDate>
+    <age>19</age>
+    <wingspan>187</wingspan>
+    <color>YELLOW</color>
+    <character>CHAOTIC_EVIL</character>
+    <cave>
+      <depth>17.1</depth>
+      <numberOfTreasures>2</numberOfTreasures>
+    </cave>
+  </dragon>
+  <dragon>
+    <id>4</id>
+    <name>Fufel</name>
+    <coordinates>
+      <x>54</x>
+      <y>34.5</y>
+    </coordinates>
+    <creationDate>2022-02-18 02:02:04.100 UTC</creationDate>
+    <age>27</age>
+    <wingspan>185</wingspan>
+    <color>BLUE</color>
+    <character>FICKLE</character>
+    <cave>
+      <depth>63.1</depth>
+      <numberOfTreasures>4343</numberOfTreasures>
+    </cave>
+  </dragon>
+  <dragon>
+    <id>2</id>
+    <name>Serega</name>
+    <coordinates>
+      <x>0</x>
+      <y>0.0</y>
+    </coordinates>
+    <creationDate>2022-02-11 12:49:52.514 UTC</creationDate>
+    <age>18</age>
+    <wingspan>175</wingspan>
+    <color>BLUE</color>
+    <character>CHAOTIC</character>
+    <cave>
+      <depth>15.3</depth>
+      <numberOfTreasures>3</numberOfTreasures>
+    </cave>
+  </dragon>
+  <dragon>
+    <id>3</id>
+    <name>Ivan</name>
+    <coordinates>
+      <x>12</x>
+      <y>123.4</y>
+    </coordinates>
+    <creationDate>2022-02-11 12:51:13.977 UTC</creationDate>
+    <age>26</age>
+    <wingspan>170</wingspan>
+    <color>BLUE</color>
+    <character>WISE</character>
+    <cave>
+      <depth>123.7</depth>
+      <numberOfTreasures>14331134</numberOfTreasures>
+    </cave>
+  </dragon>
+</set>

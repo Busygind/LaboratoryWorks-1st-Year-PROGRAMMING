@@ -1,0 +1,3 @@
+echo -e 'Class-Path: lib/Pokemon.jar classes/ \nMain-Class: BattleSimulator\n' >MANIFEST.MF
+jar -cfm Lab2.jar MANIFEST.MF lib/Pokemon.jar classes/
+java -jar Lab2.jar
