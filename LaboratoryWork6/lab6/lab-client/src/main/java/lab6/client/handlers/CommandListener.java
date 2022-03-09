@@ -36,7 +36,7 @@ public class CommandListener {
      */
     private CollectionManager collection;
 
-    private static Map<String, CommandAbstract> commandsNew = new HashMap<>();
+    private static final Map<String, CommandAbstract> commandsNew = new HashMap<>();
 
     /**
      * Конструктор объекта данного класса
@@ -58,6 +58,7 @@ public class CommandListener {
         commandsNew.put("clear", new ClearCommand(collection));
         commandsNew.put("execute_script", new ExecuteScriptCommand());
         commandsNew.put("exit", new ExitCommand());
+        commandsNew.put("help", new HelpCommand());
         commandsNew.put("history", new HistoryCommand());
         commandsNew.put("info", new InfoCommand(collection));
         commandsNew.put("max_by_cave", new MaxByCaveCommand(collection));
@@ -429,5 +430,9 @@ public class CommandListener {
 
     public static List<String> getCommandHistory() {
         return commandHistory;
+    }
+
+    public static Map<String, CommandAbstract> getCommandsNew() {
+        return commandsNew;
     }
 }
