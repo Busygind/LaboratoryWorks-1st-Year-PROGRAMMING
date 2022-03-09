@@ -14,10 +14,10 @@ public class HistoryCommand extends CommandAbstract {
     @Override
     public boolean execute(ArrayList<String> args) {
         final int countOfWatchableCommands = 11;
-        if (CommandListener.getCommandHistory().size() > countOfWatchableCommands) {
-            TextFormatter.printMessage(CommandListener.getCommandHistory().subList(CommandListener.getCommandHistory().size() - countOfWatchableCommands, CommandListener.getCommandHistory().size()).toString());
+        if (CommandListener.getCommandsHistory().size() > countOfWatchableCommands) {
+            TextFormatter.printMessage(CommandListener.getCommandsHistory().subList(CommandListener.getCommandsHistory().size() - countOfWatchableCommands, CommandListener.getCommandsHistory().size()).toString());
         }
-        TextFormatter.printMessage(CommandListener.getCommandHistory().toString());
+        TextFormatter.printMessage(CommandListener.getCommandsHistory().toString());
         return true;
     }
 }

@@ -4,10 +4,7 @@ import lab6.client.handlers.CommandListener;
 import lab6.client.handlers.TextFormatter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
-
-import static lab6.client.handlers.CommandListener.getCommandsNew;
 
 public class HelpCommand extends CommandAbstract {
 
@@ -15,7 +12,6 @@ public class HelpCommand extends CommandAbstract {
         super("help", "Вывести список доступных команд", 0);
     }
 
-    //todo реализовать
     @Override
     public boolean execute(ArrayList<String> args) {
         StringBuilder sb = new StringBuilder("Список команд: \n");

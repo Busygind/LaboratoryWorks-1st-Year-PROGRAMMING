@@ -27,7 +27,7 @@ public class ExecuteScriptCommand extends CommandAbstract {
                 String nextLine = sc.nextLine();
                 if (!("execute_script " + args.get(0)).equals(nextLine)) {
                     ArrayList<String> line = LineSplitter.smartSplit(nextLine);
-                    CommandListener.invokeMethod(getCommandName(line), getCommandArguments(line));
+                    CommandListener.invokeCommand(getCommandName(line), getCommandArguments(line));
                 } else {
                     TextFormatter.printErrorMessage("Ошибка выполнения. Скрипт вызывает сам себя.");
                     break;

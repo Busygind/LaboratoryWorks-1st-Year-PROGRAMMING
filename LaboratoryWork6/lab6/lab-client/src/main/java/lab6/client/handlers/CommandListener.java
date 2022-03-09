@@ -2,12 +2,7 @@ package lab6.client.handlers;
 
 import lab6.client.commands.*;
 import lab6.client.entities.CollectionManager;
-import lab6.client.entities.Dragon;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -25,16 +20,7 @@ public class CommandListener {
     /**
      * Список, сохраняющий данные о последних командах пользователя
      */
-    private static List<String> commandHistory = new ArrayList<>();
-    /**
-     * Объект класса, управляющего считыванием примитивов во время заполнения
-     * полей нового элемента коллекции
-     */
-    private ArgumentsListener argumentsListener = new ArgumentsListener();
-    /**
-     * Объект коллекции, с полем dragons которого производятся действия
-     */
-    private CollectionManager collection;
+    private static final List<String> commandsHistory = new ArrayList<>();
 
     private static final Map<String, CommandAbstract> commandsNew = new HashMap<>();
 
@@ -53,7 +39,6 @@ public class CommandListener {
 //    }
 
     public CommandListener(CollectionManager collection) {
-        this.collection = collection;
         commandsNew.put("add", new AddCommand(collection));
         commandsNew.put("clear", new ClearCommand(collection));
         commandsNew.put("execute_script", new ExecuteScriptCommand());
@@ -368,7 +353,7 @@ public class CommandListener {
         while (true) { // цикл завершится только при вызове команды exit или вводе ctrl+d
             try {
                 ArrayList<String> line = readCommandFromSystemIn();
-                invokeMethod(getCommandName(line), getCommandArguments(line));
+                invokeCommand(getCommandName(line), getCommandArguments(line));
             } catch (NoSuchElementException e) {
                 System.out.println("Введена команда прерывания работы приложения. Работа завершена");
                 System.exit(0);
@@ -382,9 +367,9 @@ public class CommandListener {
      * @param commandName название вызываемой команды
      * @param commandArgs аргументы вызываемой команды
      */
-    public static void invokeMethod(String commandName, ArrayList<String> commandArgs) {
+    public static void invokeCommand(String commandName, ArrayList<String> commandArgs) {
         CommandAbstract command = commandsNew.get(commandName);
-        commandHistory.add(commandName);
+        commandsHistory.add(commandName);
         try {
             if (commandArgs.size() != command.getCountOfArgs()) {
                 System.out.println("Неверное количество аргументов. Необходимо: " + command.getCountOfArgs());
@@ -428,8 +413,8 @@ public class CommandListener {
         return line.get(0);
     }
 
-    public static List<String> getCommandHistory() {
-        return commandHistory;
+    public static List<String> getCommandsHistory() {
+        return commandsHistory;
     }
 
     public static Map<String, CommandAbstract> getCommandsNew() {

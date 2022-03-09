@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <set>
   <dragon>
+    <id>4</id>
+    <name>Ivan</name>
+    <coordinates>
+      <x>12</x>
+      <y>123.4</y>
+    </coordinates>
+    <creationDate>2022-02-11 12:51:13.977 UTC</creationDate>
+    <age>26</age>
+    <wingspan>170</wingspan>
+    <color>BLUE</color>
+    <character>WISE</character>
+    <cave>
+      <depth>123.7</depth>
+      <numberOfTreasures>14331134</numberOfTreasures>
+    </cave>
+  </dragon>
+  <dragon>
+    <id>1</id>
+    <name>Serega</name>
+    <coordinates>
+      <x>0</x>
+      <y>0.0</y>
+    </coordinates>
+    <creationDate>2022-02-11 12:49:52.514 UTC</creationDate>
+    <age>18</age>
+    <wingspan>175</wingspan>
+    <color>BLUE</color>
+    <character>CHAOTIC</character>
+    <cave>
+      <depth>15.3</depth>
+      <numberOfTreasures>3</numberOfTreasures>
+    </cave>
+  </dragon>
+  <dragon>
     <id>2</id>
     <name>Vafel</name>
     <coordinates>
@@ -31,40 +65,6 @@
     <cave>
       <depth>17.1</depth>
       <numberOfTreasures>2</numberOfTreasures>
-    </cave>
-  </dragon>
-  <dragon>
-    <id>1</id>
-    <name>Ivan</name>
-    <coordinates>
-      <x>12</x>
-      <y>123.4</y>
-    </coordinates>
-    <creationDate>2022-02-11 12:51:13.977 UTC</creationDate>
-    <age>26</age>
-    <wingspan>170</wingspan>
-    <color>BLUE</color>
-    <character>WISE</character>
-    <cave>
-      <depth>123.7</depth>
-      <numberOfTreasures>14331134</numberOfTreasures>
-    </cave>
-  </dragon>
-  <dragon>
-    <id>5</id>
-    <name>Serega</name>
-    <coordinates>
-      <x>0</x>
-      <y>0.0</y>
-    </coordinates>
-    <creationDate>2022-02-11 12:49:52.514 UTC</creationDate>
-    <age>18</age>
-    <wingspan>175</wingspan>
-    <color>BLUE</color>
-    <character>CHAOTIC</character>
-    <cave>
-      <depth>15.3</depth>
-      <numberOfTreasures>3</numberOfTreasures>
     </cave>
   </dragon>
 </set>
