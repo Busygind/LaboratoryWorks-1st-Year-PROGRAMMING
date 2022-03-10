@@ -2,6 +2,8 @@ package lab6.client;
 
 import lab6.client.entities.*;
 import lab6.client.handlers.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +28,7 @@ public final class Client {
 //        String fileName = args[0];
 //        File starting = new File(System.getProperty("user.dir")); // Get current user directory
 //        File file = new File(starting, fileName); // Initialize file from cmd
+        Logger logger = LogManager.getLogger();
         File file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
         XMLReader reader = new XMLReader(); // Initialize parser
         CollectionManager collection = new CollectionManager(); // Initialize collection

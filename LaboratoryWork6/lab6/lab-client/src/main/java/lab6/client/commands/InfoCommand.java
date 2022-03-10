@@ -9,7 +9,7 @@ public class InfoCommand extends CommandAbstract {
     CollectionManager manager;
 
     public InfoCommand(CollectionManager manager) {
-        super("show", "вывод всех элементов коллекции в строковом представлении", 0);
+        super("info", "Вывести информацию о коллекции", 0);
         this.manager = manager;
     }
 

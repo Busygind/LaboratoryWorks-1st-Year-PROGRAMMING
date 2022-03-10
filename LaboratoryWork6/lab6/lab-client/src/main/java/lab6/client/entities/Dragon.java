@@ -2,6 +2,7 @@ package lab6.client.entities;
 
 import lab6.client.enums.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Comparator;
@@ -38,6 +39,7 @@ public class Dragon implements Comparable<Dragon> {
      * Координаты текущего элемента коллекции
      * <strong>(Поле не может быть null)</strong>
      */
+    @Valid
     @NotNull
     private Coordinates coordinates;
 
@@ -69,6 +71,7 @@ public class Dragon implements Comparable<Dragon> {
      * Пещера текущего дракона
      * <strong>(Поле не может быть null)</strong>
      */
+    @Valid
     @NotNull
     private DragonCave cave;
 

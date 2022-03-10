@@ -9,7 +9,7 @@ public class UpdateByIdCommand extends CommandAbstract {
     CollectionManager manager;
 
     public UpdateByIdCommand(CollectionManager manager) {
-        super("update", "Обновить данные о элементе коллекции по данному id", 1);
+        super("update_by_id", "Обновить данные о элементе коллекции по данному id", 1);
         this.manager = manager;
     }
 

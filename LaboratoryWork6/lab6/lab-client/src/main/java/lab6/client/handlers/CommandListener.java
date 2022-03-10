@@ -48,7 +48,7 @@ public class CommandListener {
         commandsNew.put("info", new InfoCommand(collection));
         commandsNew.put("max_by_cave", new MaxByCaveCommand(collection));
         commandsNew.put("print_ascending", new PrintAscendingCommand(collection));
-        commandsNew.put("print_descending", new PrintAscendingCommand(collection));
+        commandsNew.put("print_descending", new PrintDescendingCommand(collection));
         commandsNew.put("remove_by_id", new RemoveByIdCommand(collection));
         commandsNew.put("save", new SaveCommand(collection));
         commandsNew.put("show", new ShowCommand(collection));
