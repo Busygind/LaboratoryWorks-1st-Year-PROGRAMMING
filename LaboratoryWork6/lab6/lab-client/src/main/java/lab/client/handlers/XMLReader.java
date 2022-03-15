@@ -1,12 +1,11 @@
-package lab6.client.handlers;
+package lab.client.handlers;
 
-import lab6.client.entities.CollectionManager;
-import lab6.client.entities.Dragon;
+import lab.client.entities.CollectionManager;
+import lab.client.entities.Dragon;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.AnyTypePermission;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;

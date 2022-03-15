@@ -1,12 +1,12 @@
-package lab6.client.commands;
+package lab.client.commands;
 
-import lab6.client.entities.CollectionManager;
+import lab.client.entities.CollectionManager;
 
 import java.util.ArrayList;
 
 public class RemoveByIdCommand extends CommandAbstract {
 
-    CollectionManager manager;
+    private final CollectionManager manager;
 
     public RemoveByIdCommand(CollectionManager manager) {
         super("remove_by_id", "удалить дракона с текущим значением id", 1);

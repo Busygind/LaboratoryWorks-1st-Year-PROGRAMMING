@@ -1,4 +1,4 @@
-package lab6.client.enums;
+package lab.client.enums;
 
 /**
  * Перечисление доступных настроений драконов

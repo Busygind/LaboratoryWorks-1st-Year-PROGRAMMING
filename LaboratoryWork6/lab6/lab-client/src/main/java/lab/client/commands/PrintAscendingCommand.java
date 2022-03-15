@@ -1,15 +1,16 @@
-package lab6.client.commands;
+package lab.client.commands;
 
-import lab6.client.entities.CollectionManager;
-import lab6.client.entities.Dragon;
-import lab6.client.handlers.TextFormatter;
+import lab.client.entities.CollectionManager;
+import lab.client.entities.Dragon;
+import lab.client.handlers.TextFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class PrintAscendingCommand extends CommandAbstract {
-    CollectionManager manager;
+
+    private final CollectionManager manager;
 
     public PrintAscendingCommand(CollectionManager manager) {
         super("print_ascending", "Вывести драконов коллекции от младшего к старшему", 0);

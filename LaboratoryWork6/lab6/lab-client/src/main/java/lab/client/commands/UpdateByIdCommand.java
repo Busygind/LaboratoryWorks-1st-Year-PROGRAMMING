@@ -1,12 +1,12 @@
-package lab6.client.commands;
+package lab.client.commands;
 
-import lab6.client.entities.CollectionManager;
+import lab.client.entities.CollectionManager;
 
 import java.util.ArrayList;
 
 public class UpdateByIdCommand extends CommandAbstract {
 
-    CollectionManager manager;
+    private final CollectionManager manager;
 
     public UpdateByIdCommand(CollectionManager manager) {
         super("update_by_id", "Обновить данные о элементе коллекции по данному id", 1);

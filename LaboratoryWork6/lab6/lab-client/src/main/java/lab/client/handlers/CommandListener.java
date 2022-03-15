@@ -1,10 +1,9 @@
-package lab6.client.handlers;
+package lab.client.handlers;
 
-import lab6.client.commands.*;
-import lab6.client.entities.CollectionManager;
-
-import java.lang.reflect.Method;
-import java.util.*;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 
 /**
@@ -12,68 +11,78 @@ import java.util.*;
  * а также методы по обработке полученных данных
  */
 public class CommandListener {
+    private final InputStream inputStream;
 
-    /**
-     * Словарь, сопоставляющий доступные команды с соответствующими методами
-     */
-    private static Map<String, Method> commands = new HashMap<>();
-    /**
-     * Список, сохраняющий данные о последних командах пользователя
-     */
-    private static final List<String> commandsHistory = new ArrayList<>();
-
-    private static final Map<String, CommandAbstract> commandsNew = new HashMap<>();
-
-    /**
-     * Конструктор объекта данного класса
-     * @param collection коллекция, с которой работает пользователь
-     */
-//    public CommandListener(CollectionManager collection) {
-//        this.collection = collection;
-//        for (Method method : CommandListener.class.getDeclaredMethods()) {
-//            if (method.isAnnotationPresent(Command.class)) {
-//                Command command = method.getAnnotation(Command.class);
-//                commands.put(command.name(), method);
-//            }
-//        }
-//    }
-
-    public CommandListener(CollectionManager collection) {
-        commandsNew.put("add", new AddCommand(collection));
-        commandsNew.put("clear", new ClearCommand(collection));
-        commandsNew.put("execute_script", new ExecuteScriptCommand());
-        commandsNew.put("exit", new ExitCommand());
-        commandsNew.put("help", new HelpCommand());
-        commandsNew.put("history", new HistoryCommand());
-        commandsNew.put("info", new InfoCommand(collection));
-        commandsNew.put("max_by_cave", new MaxByCaveCommand(collection));
-        commandsNew.put("print_ascending", new PrintAscendingCommand(collection));
-        commandsNew.put("print_descending", new PrintDescendingCommand(collection));
-        commandsNew.put("remove_by_id", new RemoveByIdCommand(collection));
-        commandsNew.put("save", new SaveCommand(collection));
-        commandsNew.put("show", new ShowCommand(collection));
-        commandsNew.put("update_by_id", new UpdateByIdCommand(collection));
+    public CommandListener(InputStream stream) {
+        this.inputStream = stream;
     }
-
     /**
-     * Метод, вызываемый командой <strong>help</strong>
+     * Метод, циклически считывающий команды из консоли и вызывающий необходимые методы обработки коллекции
      */
-    @Command(name = "help",
-            args = "",
-            countOfArgs = 0,
-            desc = "Доступные пользователю команды")
-    private void help() {
-        StringBuilder sb = new StringBuilder("Список команд: \n");
-        for (Method m : this.getClass().getDeclaredMethods()) {
-            if (m.isAnnotationPresent(Command.class)) {
-                Command com = m.getAnnotation(Command.class);
-                sb.append(com.name()).append(" ")
-                        .append(com.args()).append(" - ")
-                        .append(com.desc()).append("\n");
+    public void run() {
+        while (true) { // цикл завершится только при вызове команды exit или вводе ctrl+d
+            ArrayList<String> line = readCommand();
+            try {
+                //todo реализовать отправку данных на сервер(менеджеру), а не тянуть менеджера сюда
+                CommandManager.invokeCommand(getCommandName(line), getCommandArguments(line));
+            } catch (NoSuchElementException e) {
+                TextFormatter.printInfoMessage("Введена команда прерывания работы приложения. Работа завершена");
+                System.exit(0);
             }
         }
-        System.out.println(sb);
     }
+
+    /**
+     * Метод, считывающий команду из консоли и разделяющий ее на имя и аргументы
+     *
+     * @return разделенная строка с составляющими частями команды
+     */
+    private ArrayList<String> readCommand() {
+        Scanner scanner = new Scanner(inputStream);
+        String line = scanner.nextLine().toLowerCase();
+        return LineSplitter.smartSplit(line);
+    }
+
+    /**
+     * Метод, извлекающий из полученного массива аргументов данные, которые являются аргументами
+     *
+     * @param line разделенная строка
+     * @return массив аргументов
+     */
+    public static ArrayList<String> getCommandArguments(ArrayList<String> line) {
+        line.remove(0);
+        return line;
+    }
+
+    /**
+     * Метод, извлекающий из полученного массива строк имя команды
+     *
+     * @param line разделенная строка
+     * @return имя команды
+     */
+    public static String getCommandName(ArrayList<String> line) {
+        return line.get(0);
+    }
+
+//    /**
+//     * Метод, вызываемый командой <strong>help</strong>
+//     */
+//    @Command(name = "help",
+//            args = "",
+//            countOfArgs = 0,
+//            desc = "Доступные пользователю команды")
+//    private void help() {
+//        StringBuilder sb = new StringBuilder("Список команд: \n");
+//        for (Method m : this.getClass().getDeclaredMethods()) {
+//            if (m.isAnnotationPresent(Command.class)) {
+//                Command com = m.getAnnotation(Command.class);
+//                sb.append(com.name()).append(" ")
+//                        .append(com.args()).append(" - ")
+//                        .append(com.desc()).append("\n");
+//            }
+//        }
+//        System.out.println(sb);
+//    }
 
 //    /**
 //     * Метод, вызываемый командой <strong>info</strong>
@@ -236,55 +245,8 @@ public class CommandListener {
 //        System.exit(0);
 //    }
 
-//    /**
-//     * Метод, вызываемый командой <strong>add_if_max</strong>
-//     *
-//     * @param name имя дракона, которого пытается добавить пользователь
-//     * @param age возраст дракона, которого пытается добавить пользователь
-//     * @param wingspan размах крыльев дракона, которого пытается добавить пользователь
-//     */
-//    @Command(name = "add_if_max",
-//            args = "{name, age, wingspan}",
-//            countOfArgs = Dragon.COUNT_OF_PRIMITIVE_ARGS,
-//            desc = "Добавить дракона в коллекцию, если его возраст больше, чем у самого старшего в коллекции")
-//    private void addIfMax(String name, String age, String wingspan) {
-//        int maxAge = 0;
-//        for (Dragon dragon : collection.getDragons()) {
-//            if (dragon.getAge() > maxAge) {
-//                maxAge = dragon.getAge();
-//            }
-//        }
-//        if (Integer.parseInt(age) > maxAge) {
-//            add(name, age, wingspan);
-//        } else {
-//            System.out.println("В коллекции есть дракон постарше!");
-//        }
-//    }
 //
-//    /**
-//     * Метод, вызываемый командой <strong>add_if_min</strong>
-//     *
-//     * @param name имя дракона, которого пытается добавить пользователь
-//     * @param age возраст дракона, которого пытается добавить пользователь
-//     * @param wingspan размах крыльев дракона, которого пытается добавить пользователь
-//     */
-//    @Command(name = "add_if_min",
-//            args = "{name, age, wingspan}",
-//            countOfArgs = Dragon.COUNT_OF_PRIMITIVE_ARGS,
-//            desc = "Добавить дракона в коллекцию, если его возраст меньше, чем у самого младшего в коллекции")
-//    private void addIfMin(String name, String age, String wingspan) {
-//        int minAge = Integer.MAX_VALUE;
-//        for (Dragon dragon : collection.getDragons()) {
-//            if (dragon.getAge() < minAge) {
-//                minAge = dragon.getAge();
-//            }
-//        }
-//        if (Integer.parseInt(age) < minAge) {
-//            add(name, age, wingspan);
-//        } else {
-//            System.out.println("В коллекции есть дракон помладше!");
-//        }
-//    }
+
 
 //    /**
 //     * Метод, вызываемый командой <strong>history</strong>
@@ -346,78 +308,5 @@ public class CommandListener {
 //        System.out.println(dragons);
 //    }
 
-    /**
-     * Метод, циклически считывающий команды из консоли и вызывающий необходимые методы обработки коллекции
-     */
-    public void commandsReader() {
-        while (true) { // цикл завершится только при вызове команды exit или вводе ctrl+d
-            try {
-                ArrayList<String> line = readCommandFromSystemIn();
-                invokeCommand(getCommandName(line), getCommandArguments(line));
-            } catch (NoSuchElementException e) {
-                System.out.println("Введена команда прерывания работы приложения. Работа завершена");
-                System.exit(0);
-            }
-        }
-    }
 
-    /**
-     * Метод, вызывающий необходимую команду по ее имени и аргументам
-     *
-     * @param commandName название вызываемой команды
-     * @param commandArgs аргументы вызываемой команды
-     */
-    public static void invokeCommand(String commandName, ArrayList<String> commandArgs) {
-        CommandAbstract command = commandsNew.get(commandName);
-        commandsHistory.add(commandName);
-        try {
-            if (commandArgs.size() != command.getCountOfArgs()) {
-                System.out.println("Неверное количество аргументов. Необходимо: " + command.getCountOfArgs());
-            } else {
-                command.execute(commandArgs);
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Команда некорректна или пуста, попробуйте еще раз");
-        }
-    }
-
-    /**
-     * Метод, считывающий команду из консоли и разделяющий ее на имя и аргументы
-     *
-     * @return разделенная строка с составляющими частями команды
-     */
-    private static ArrayList<String> readCommandFromSystemIn() {
-        Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine().toLowerCase();
-        return LineSplitter.smartSplit(line);
-    }
-
-    /**
-     * Метод, извлекающий из полученного массива строк данные, которые являются аргументами
-     *
-     * @param line разделенная строка
-     * @return массив аргументов
-     */
-    public static ArrayList<String> getCommandArguments(ArrayList<String> line) {
-        line.remove(0);
-        return line;
-    }
-
-    /**
-     * Метод, извлекающий из полученного массива строк имя команды
-     *
-     * @param line разделенная строка
-     * @return имя команды
-     */
-    public static String getCommandName(ArrayList<String> line) {
-        return line.get(0);
-    }
-
-    public static List<String> getCommandsHistory() {
-        return commandsHistory;
-    }
-
-    public static Map<String, CommandAbstract> getCommandsNew() {
-        return commandsNew;
-    }
 }

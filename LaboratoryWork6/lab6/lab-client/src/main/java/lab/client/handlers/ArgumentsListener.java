@@ -1,10 +1,10 @@
-package lab6.client.handlers;
+package lab.client.handlers;
 
-import lab6.client.entities.Coordinates;
-import lab6.client.entities.Dragon;
-import lab6.client.entities.DragonCave;
-import lab6.client.enums.Color;
-import lab6.client.enums.DragonCharacter;
+import lab.client.entities.Coordinates;
+import lab.client.entities.Dragon;
+import lab.client.entities.DragonCave;
+import lab.client.enums.DragonCharacter;
+import lab.client.enums.Color;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class ArgumentsListener {
 
-    Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Метод обработки и инициализации данных примитивных типов для переданного

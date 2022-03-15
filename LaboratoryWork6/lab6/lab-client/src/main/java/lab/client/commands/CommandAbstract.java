@@ -1,4 +1,4 @@
-package lab6.client.commands;
+package lab.client.commands;
 
 import java.util.ArrayList;
 

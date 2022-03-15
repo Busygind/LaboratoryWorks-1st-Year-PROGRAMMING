@@ -1,7 +1,7 @@
-package lab6.client.handlers;
+package lab.client.handlers;
 
-import lab6.client.entities.CollectionManager;
-import lab6.client.entities.Dragon;
+import lab.client.entities.CollectionManager;
+import lab.client.entities.Dragon;
 import com.thoughtworks.xstream.XStream;
 
 import java.io.File;

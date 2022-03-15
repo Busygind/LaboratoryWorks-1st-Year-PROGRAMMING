@@ -1,12 +1,12 @@
-package lab6.client.commands;
+package lab.client.commands;
 
-import lab6.client.entities.CollectionManager;
+import lab.client.entities.CollectionManager;
 
 import java.util.ArrayList;
 
 public class InfoCommand extends CommandAbstract {
 
-    CollectionManager manager;
+    private final CollectionManager manager;
 
     public InfoCommand(CollectionManager manager) {
         super("info", "Вывести информацию о коллекции", 0);

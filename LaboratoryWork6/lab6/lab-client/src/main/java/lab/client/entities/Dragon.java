@@ -1,6 +1,7 @@
-package lab6.client.entities;
+package lab.client.entities;
 
-import lab6.client.enums.*;
+import lab.client.enums.Color;
+import lab.client.enums.DragonCharacter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

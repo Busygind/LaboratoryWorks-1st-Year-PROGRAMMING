@@ -1,15 +1,18 @@
-package lab6.client.handlers;
+package lab.client.handlers;
 
 import java.io.PrintStream;
 
-public class TextFormatter {
+public final class TextFormatter {
 
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_BLUE = "\u001B[34m";
-
     private static PrintStream printStream = System.out;
+
+    private TextFormatter() {
+
+    }
 
     public static void changePrintStream(PrintStream stream) {
         printStream = stream;

@@ -1,4 +1,4 @@
-package lab6.client.entities;
+package lab.client.entities;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -7,11 +7,12 @@ import javax.validation.constraints.NotNull;
  * Класс координат, объекты которого присваиваются элементам коллекции
  */
 public class Coordinates {
+    private static final int MAX_X_VALUE = 603;
     /**
      * Координата Х
      * <strong>(Максимальное значение поля: 603, поле не может быть null)</strong>
      */
-    @Max(603)
+    @Max(MAX_X_VALUE)
     @NotNull
     private Integer x;
     /**

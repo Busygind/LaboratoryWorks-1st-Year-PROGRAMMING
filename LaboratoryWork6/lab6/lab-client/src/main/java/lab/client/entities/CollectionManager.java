@@ -1,14 +1,13 @@
-package lab6.client.entities;
+package lab.client.entities;
 
-import lab6.client.handlers.ArgumentsListener;
-import lab6.client.handlers.TextFormatter;
-import lab6.client.handlers.XMLWriter;
+import lab.client.handlers.ArgumentsListener;
+import lab.client.handlers.TextFormatter;
+import lab.client.handlers.XMLWriter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Scanner;
 //todo реализовать синглтон
 /**
  * Класс коллекции, содержащий текущую коллекцию <b>dragons</b>,
