@@ -1,16 +1,16 @@
-package lab6.client.commands;
+package lab.client.commands;
 
-import lab6.client.entities.CollectionManager;
-import lab6.client.entities.Dragon;
-import lab6.client.handlers.ArgumentsListener;
-import lab6.client.handlers.TextFormatter;
+import lab.client.entities.CollectionManager;
+import lab.client.entities.Dragon;
+import lab.client.handlers.ArgumentsListener;
+import lab.client.handlers.TextFormatter;
 
 import java.util.ArrayList;
 
-public class AddCommand extends CommandAbstract{
+public class AddCommand extends CommandAbstract {
 
-    CollectionManager manager;
-    ArgumentsListener argumentsListener = new ArgumentsListener();
+    private final CollectionManager manager;
+    private final ArgumentsListener argumentsListener = new ArgumentsListener();
 
     public AddCommand(CollectionManager manager) {
         super("add", "Добавить элемент в коллекцию", Dragon.COUNT_OF_PRIMITIVE_ARGS);
