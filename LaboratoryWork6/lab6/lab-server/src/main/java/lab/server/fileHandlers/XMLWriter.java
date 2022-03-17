@@ -1,8 +1,8 @@
-package lab.client.handlers;
+package lab.server.fileHandlers;
 
-import lab.client.entities.CollectionManager;
-import lab.client.entities.Dragon;
 import com.thoughtworks.xstream.XStream;
+import lab.common.util.entities.CollectionManager;
+import lab.common.util.entities.Dragon;
 
 import java.io.File;
 import java.io.FileWriter;
