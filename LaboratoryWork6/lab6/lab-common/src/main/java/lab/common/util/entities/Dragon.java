@@ -1,10 +1,11 @@
-package lab.client.entities;
+package lab.common.util.entities;
 
-import lab.client.enums.Color;
-import lab.client.enums.DragonCharacter;
+import lab.common.util.enums.Color;
+import lab.common.util.enums.DragonCharacter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.util.Comparator;
 import java.util.Date;
@@ -35,6 +36,8 @@ public class Dragon implements Comparable<Dragon> {
      * Имя текущего элемента коллекции
      * <strong>(Поле не может быть null, строка не может быть пустой)</strong>
      */
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")
     private String name;
     /**
      * Координаты текущего элемента коллекции

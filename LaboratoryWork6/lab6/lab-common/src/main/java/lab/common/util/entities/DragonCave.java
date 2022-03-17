@@ -1,4 +1,4 @@
-package lab.client.entities;
+package lab.common.util.entities;
 
 /**
  * Класс пещеры дракона, объекты которого присваиваются полю cave элементов коллекции

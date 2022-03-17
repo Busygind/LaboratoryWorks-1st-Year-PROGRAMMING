@@ -1,7 +1,8 @@
-package lab.client.commands;
+package lab.common.util.commands;
 
-import lab.client.handlers.TextFormatter;
-import lab.client.handlers.CommandManager;
+
+import lab.common.util.handlers.CommandManager;
+import lab.common.util.handlers.TextFormatter;
 
 import java.util.ArrayList;
 

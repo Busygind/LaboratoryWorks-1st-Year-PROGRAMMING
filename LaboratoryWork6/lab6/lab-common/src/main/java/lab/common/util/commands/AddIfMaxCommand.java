@@ -1,16 +1,16 @@
-package lab.client.commands;
+package lab.common.util.commands;
 
-import lab.client.entities.CollectionManager;
-import lab.client.entities.Dragon;
-import lab.client.handlers.ArgumentsListener;
-import lab.client.handlers.TextFormatter;
+import lab.common.util.entities.CollectionManager;
+import lab.common.util.entities.Dragon;
+import lab.common.util.handlers.ArgumentsListener;
+import lab.common.util.handlers.TextFormatter;
 
 import java.util.ArrayList;
 
 public class AddIfMaxCommand extends CommandAbstract {
 
     private final CollectionManager manager;
-    private final ArgumentsListener argumentsListener = new ArgumentsListener();;
+    private final ArgumentsListener argumentsListener = new ArgumentsListener();
 
     public AddIfMaxCommand(CollectionManager manager) {
         super("add_if_max", "Добавить дракона в коллекцию, если он старше всех существующих", Dragon.COUNT_OF_PRIMITIVE_ARGS);
@@ -29,12 +29,7 @@ public class AddIfMaxCommand extends CommandAbstract {
             TextFormatter.printErrorMessage("Аргументы имеют неверный формат");
             return false;
         }
-        int maxAge = 0;
-        for (Dragon dragon : manager.getDragons()) {
-            if (dragon.getAge() > maxAge) {
-                maxAge = dragon.getAge();
-            }
-        }
+        int maxAge = manager.getMax().getAge();
         if (age > maxAge) {
             Dragon dragon = new Dragon();
             dragon.setAge(age);

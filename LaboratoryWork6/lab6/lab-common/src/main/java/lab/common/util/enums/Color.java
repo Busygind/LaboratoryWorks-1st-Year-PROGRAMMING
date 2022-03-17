@@ -1,4 +1,4 @@
-package lab.client.enums;
+package lab.common.util.enums;
 
 /**
  * Перечисление доступных цветов дракона

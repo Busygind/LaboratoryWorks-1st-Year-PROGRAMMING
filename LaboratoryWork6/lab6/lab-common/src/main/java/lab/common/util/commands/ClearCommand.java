@@ -1,6 +1,7 @@
-package lab.client.commands;
+package lab.common.util.commands;
 
-import lab.client.entities.CollectionManager;
+
+import lab.common.util.entities.CollectionManager;
 
 import java.util.ArrayList;
 

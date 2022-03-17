@@ -1,4 +1,4 @@
-package lab.client.entities;
+package lab.common.util.entities;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;

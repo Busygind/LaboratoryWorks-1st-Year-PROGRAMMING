@@ -1,10 +1,10 @@
-package lab.client.handlers;
+package lab.common.util.handlers;
 
-import lab.client.entities.Coordinates;
-import lab.client.entities.Dragon;
-import lab.client.entities.DragonCave;
-import lab.client.enums.DragonCharacter;
-import lab.client.enums.Color;
+import lab.common.util.entities.Coordinates;
+import lab.common.util.entities.Dragon;
+import lab.common.util.entities.DragonCave;
+import lab.common.util.enums.Color;
+import lab.common.util.enums.DragonCharacter;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -29,6 +29,13 @@ public class ArgumentsListener {
             dragon.setName(inputArray[0]);
             dragon.setAge(Integer.parseInt(inputArray[1]));
             dragon.setWingspan(Integer.parseInt(inputArray[2]));
+            boolean correctName = DragonValidator.validateField(dragon, "name");
+            boolean correctAge = DragonValidator.validateField(dragon, "age");
+            boolean correctWingspan = DragonValidator.validateField(dragon, "wingspan");
+            if (!correctName | !correctAge | !correctWingspan) {
+                TextFormatter.printErrorMessage("Введенные данные некорректны");
+                inputPrimitives(dragon);
+            }
         } catch (IllegalArgumentException e) {
             TextFormatter.printErrorMessage("Введены некорректные данные, верный формат: name age[>0] wingspan[>0]");
             inputPrimitives(dragon);
@@ -61,6 +68,7 @@ public class ArgumentsListener {
             coordinates.setX(x);
             boolean correctField = DragonValidator.validateField(coordinates, "x");
             if (!correctField) {
+                TextFormatter.printErrorMessage("Значение поля некорректно, попробуйте еще раз");
                 inputX(coordinates);
             }
         } catch (NumberFormatException e) {

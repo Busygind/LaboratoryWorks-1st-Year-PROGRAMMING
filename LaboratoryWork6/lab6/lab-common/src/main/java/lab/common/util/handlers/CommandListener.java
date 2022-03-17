@@ -1,4 +1,4 @@
-package lab.client.handlers;
+package lab.common.util.handlers;
 
 import java.io.InputStream;
 import java.util.ArrayList;

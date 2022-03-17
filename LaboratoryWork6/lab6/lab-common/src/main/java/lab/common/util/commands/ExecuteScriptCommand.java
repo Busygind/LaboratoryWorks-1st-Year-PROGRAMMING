@@ -1,8 +1,9 @@
-package lab.client.commands;
+package lab.common.util.commands;
 
-import lab.client.handlers.CommandManager;
-import lab.client.handlers.TextFormatter;
-import lab.client.handlers.LineSplitter;
+import lab.common.util.handlers.CommandListener;
+import lab.common.util.handlers.CommandManager;
+import lab.common.util.handlers.LineSplitter;
+import lab.common.util.handlers.TextFormatter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,8 +12,6 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import static lab.client.handlers.CommandListener.getCommandArguments;
-import static lab.client.handlers.CommandListener.getCommandName;
 
 
 public class ExecuteScriptCommand extends CommandAbstract {
@@ -35,7 +34,7 @@ public class ExecuteScriptCommand extends CommandAbstract {
                 String nextLine = sc.nextLine();
                 if (!("execute_script " + filename).equals(nextLine)) {
                     ArrayList<String> line = LineSplitter.smartSplit(nextLine);
-                    CommandManager.invokeCommand(getCommandName(line), getCommandArguments(line));
+                    CommandManager.invokeCommand(CommandListener.getCommandName(line), CommandListener.getCommandArguments(line));
                 } else {
                     TextFormatter.printErrorMessage("Ошибка выполнения. Скрипт вызывает сам себя.");
                     break;

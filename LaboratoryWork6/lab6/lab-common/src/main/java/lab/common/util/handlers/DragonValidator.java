@@ -1,6 +1,6 @@
-package lab.client.handlers;
+package lab.common.util.handlers;
 
-import lab.client.entities.Dragon;
+import lab.common.util.entities.Dragon;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

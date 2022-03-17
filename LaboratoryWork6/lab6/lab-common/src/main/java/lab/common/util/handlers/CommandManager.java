@@ -1,8 +1,23 @@
-package lab.client.handlers;
+package lab.common.util.handlers;
 
-
-import lab.client.commands.*;
-import lab.client.entities.CollectionManager;
+import lab.common.util.commands.AddCommand;
+import lab.common.util.commands.AddIfMaxCommand;
+import lab.common.util.commands.AddIfMinCommand;
+import lab.common.util.commands.ClearCommand;
+import lab.common.util.commands.CommandAbstract;
+import lab.common.util.commands.ExecuteScriptCommand;
+import lab.common.util.commands.ExitCommand;
+import lab.common.util.commands.HelpCommand;
+import lab.common.util.commands.HistoryCommand;
+import lab.common.util.commands.InfoCommand;
+import lab.common.util.commands.MaxByCaveCommand;
+import lab.common.util.commands.PrintAscendingCommand;
+import lab.common.util.commands.PrintDescendingCommand;
+import lab.common.util.commands.RemoveByIdCommand;
+import lab.common.util.commands.SaveCommand;
+import lab.common.util.commands.ShowCommand;
+import lab.common.util.commands.UpdateByIdCommand;
+import lab.common.util.entities.CollectionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +37,7 @@ public final class CommandManager {
     /**
      * Конструктор объекта данного класса
      *
-     * @param collection коллекция, с которой работает пользователь
+     *
      */
     private CommandManager() {
         //never used
@@ -66,7 +81,6 @@ public final class CommandManager {
         COMMANDS.put("save", new SaveCommand(collection));
         COMMANDS.put("show", new ShowCommand(collection));
         COMMANDS.put("update_by_id", new UpdateByIdCommand(collection));
-        //todo add_if_max и add_if_min
     }
 
     public static List<String> getCommandsHistory() {

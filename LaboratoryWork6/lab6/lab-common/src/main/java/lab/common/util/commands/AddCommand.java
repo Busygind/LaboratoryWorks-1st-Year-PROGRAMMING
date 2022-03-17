@@ -1,9 +1,9 @@
-package lab.client.commands;
+package lab.common.util.commands;
 
-import lab.client.entities.CollectionManager;
-import lab.client.entities.Dragon;
-import lab.client.handlers.ArgumentsListener;
-import lab.client.handlers.TextFormatter;
+import lab.common.util.entities.CollectionManager;
+import lab.common.util.entities.Dragon;
+import lab.common.util.handlers.ArgumentsListener;
+import lab.common.util.handlers.TextFormatter;
 
 import java.util.ArrayList;
 

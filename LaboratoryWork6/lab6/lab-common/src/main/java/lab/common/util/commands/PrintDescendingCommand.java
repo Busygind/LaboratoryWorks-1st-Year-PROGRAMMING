@@ -1,7 +1,7 @@
-package lab.client.commands;
+package lab.common.util.commands;
 
-import lab.client.entities.CollectionManager;
-import lab.client.entities.Dragon;
+import lab.common.util.entities.CollectionManager;
+import lab.common.util.entities.Dragon;
 
 import java.util.ArrayList;
 import java.util.Collections;
