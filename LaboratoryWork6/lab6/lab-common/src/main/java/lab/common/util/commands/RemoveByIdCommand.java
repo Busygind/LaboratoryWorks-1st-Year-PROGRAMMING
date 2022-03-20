@@ -1,21 +1,21 @@
 package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
+import lab.common.util.handlers.TextFormatter;
 
-import java.util.ArrayList;
 
 public class RemoveByIdCommand extends CommandAbstract {
 
-    private final CollectionManager manager;
+    private final long id;
 
-    public RemoveByIdCommand(CollectionManager manager) {
+    public RemoveByIdCommand(long id) {
         super("remove_by_id", "удалить дракона с текущим значением id", 1);
-        this.manager = manager;
+        this.id = id;
     }
 
     @Override
-    public boolean execute(ArrayList<String> args) {
-        manager.removeById(args.get(0));
-        return true;
+    public String execute(CollectionManager manager) {
+        manager.removeById(id);
+        return TextFormatter.colorInfoMessage("Dragon successfully removed");
     }
 }

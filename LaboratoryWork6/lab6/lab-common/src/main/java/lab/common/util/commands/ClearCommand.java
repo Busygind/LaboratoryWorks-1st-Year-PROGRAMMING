@@ -2,21 +2,19 @@ package lab.common.util.commands;
 
 
 import lab.common.util.entities.CollectionManager;
+import lab.common.util.handlers.TextFormatter;
 
 import java.util.ArrayList;
 
 public class ClearCommand extends CommandAbstract {
 
-    private final CollectionManager manager;
-
-    public ClearCommand(CollectionManager manager) {
+    public ClearCommand() {
         super("clear", "Очищение коллекции", 0);
-        this.manager = manager;
     }
 
     @Override
-    public boolean execute(ArrayList<String> args) {
+    public String execute(CollectionManager manager) {
         manager.clear();
-        return true;
+        return TextFormatter.colorInfoMessage("Collection successfully cleared");
     }
 }

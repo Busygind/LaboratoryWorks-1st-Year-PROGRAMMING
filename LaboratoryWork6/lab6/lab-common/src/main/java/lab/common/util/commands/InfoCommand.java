@@ -2,21 +2,18 @@ package lab.common.util.commands;
 
 
 import lab.common.util.entities.CollectionManager;
+import lab.common.util.handlers.TextFormatter;
 
 import java.util.ArrayList;
 
 public class InfoCommand extends CommandAbstract {
 
-    private final CollectionManager manager;
-
-    public InfoCommand(CollectionManager manager) {
+    public InfoCommand() {
         super("info", "Вывести информацию о коллекции", 0);
-        this.manager = manager;
     }
 
     @Override
-    public boolean execute(ArrayList<String> args) {
-        manager.showInfo();
-        return true;
+    public String execute(CollectionManager manager) {
+        return manager.showInfo();
     }
 }

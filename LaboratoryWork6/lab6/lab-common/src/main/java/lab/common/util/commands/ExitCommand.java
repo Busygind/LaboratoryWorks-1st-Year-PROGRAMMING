@@ -1,6 +1,8 @@
 package lab.common.util.commands;
 
-import java.util.ArrayList;
+import lab.common.util.entities.CollectionManager;
+import lab.common.util.handlers.TextFormatter;
+
 
 public class ExitCommand extends CommandAbstract {
 
@@ -9,8 +11,8 @@ public class ExitCommand extends CommandAbstract {
     }
 
     @Override
-    public boolean execute(ArrayList<String> args) {
-        System.exit(0);
-        return true;
+    public String execute(CollectionManager manager) {
+
+        return TextFormatter.colorInfoMessage("Connection disabled");
     }
 }

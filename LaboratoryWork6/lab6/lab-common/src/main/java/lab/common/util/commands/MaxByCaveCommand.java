@@ -8,15 +8,12 @@ import java.util.ArrayList;
 
 public class MaxByCaveCommand extends CommandAbstract {
 
-    private final CollectionManager manager;
-
-    public MaxByCaveCommand(CollectionManager manager) {
+    public MaxByCaveCommand() {
         super("max_by_cave", "Вывести любого дракона из коллекции, глубина пещеры которого является максимальной", 0);
-        this.manager = manager;
     }
 
     @Override
-    public boolean execute(ArrayList<String> args) {
+    public String execute(CollectionManager manager) {
         double maxDepth = Double.MIN_VALUE;
         Dragon dragonWithDeepestCave = null;
         for (Dragon dragon : manager.getDragons()) {
@@ -25,7 +22,6 @@ public class MaxByCaveCommand extends CommandAbstract {
                 dragonWithDeepestCave = dragon;
             }
         }
-        TextFormatter.printMessage("Данные о драконе с самой глубокой пещерой:\n" + dragonWithDeepestCave);
-        return true;
+        return TextFormatter.colorMessage("Данные о драконе с самой глубокой пещерой:\n" + dragonWithDeepestCave);
     }
 }

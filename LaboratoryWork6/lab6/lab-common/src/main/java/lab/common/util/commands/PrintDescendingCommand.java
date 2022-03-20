@@ -2,6 +2,7 @@ package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
+import lab.common.util.handlers.TextFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,18 +10,14 @@ import java.util.List;
 
 public class PrintDescendingCommand extends CommandAbstract {
 
-    private final CollectionManager manager;
-
-    public PrintDescendingCommand(CollectionManager manager) {
+    public PrintDescendingCommand() {
         super("print_descending", "Вывести всех драконов от старшего к младшему", 0);
-        this.manager = manager;
     }
 
     @Override
-    public boolean execute(ArrayList<String> args) {
+    public String execute(CollectionManager manager) {
         List<Dragon> dragons = new ArrayList<>(manager.getDragons());
         dragons.sort(Collections.reverseOrder());
-        System.out.println(dragons);
-        return true;
+        return TextFormatter.colorMessage(dragons.toString());
     }
 }

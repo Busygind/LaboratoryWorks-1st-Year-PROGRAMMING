@@ -2,50 +2,27 @@ package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
-import lab.common.util.handlers.ArgumentsListener;
 import lab.common.util.handlers.TextFormatter;
 
-import java.util.ArrayList;
 
 public class AddIfMaxCommand extends CommandAbstract {
 
-    private final CollectionManager manager;
-    private final ArgumentsListener argumentsListener = new ArgumentsListener();
+    private final Dragon dragon;
 
-    public AddIfMaxCommand(CollectionManager manager) {
+    public AddIfMaxCommand(Dragon dragon) {
         super("add_if_max", "Добавить дракона в коллекцию, если он старше всех существующих", Dragon.COUNT_OF_PRIMITIVE_ARGS);
-        this.manager = manager;
+        this.dragon = dragon;
     }
 
     @Override
-    public boolean execute(ArrayList<String> args) {
-        String name = args.get(0).substring(0, 1).toUpperCase() + args.get(0).substring(1);
-        int age;
-        int wingspan;
-        try {
-            age = Integer.parseInt(args.get(1));
-            wingspan = Integer.parseInt(args.get(2));
-        } catch (NumberFormatException e) {
-            TextFormatter.printErrorMessage("Аргументы имеют неверный формат");
-            return false;
-        }
+    public String execute(CollectionManager manager) {
         int maxAge = manager.getMax().getAge();
-        if (age > maxAge) {
-            Dragon dragon = new Dragon();
-            dragon.setAge(age);
-            dragon.setWingspan(wingspan);
-            dragon.setName(name);
-            dragon.setCoordinates(argumentsListener.inputCoordinates());
-            argumentsListener.inputColor(dragon);
-            argumentsListener.inputCharacter(dragon);
-            dragon.setCave(argumentsListener.inputCave());
+        if (dragon.getAge() > maxAge) {
             manager.addDragon(dragon);
-            return true;
+            return TextFormatter.colorInfoMessage("Dragon successfully added");
         } else {
-            TextFormatter.printInfoMessage("В коллекции есть дракон постарше!");
-            return false;
+            return TextFormatter.colorInfoMessage("В коллекции есть дракон постарше!");
         }
-
     }
 }
 //    String name = args.get(0).substring(0, 1).toUpperCase() + args.get(0).substring(1); //Делаем имя с большой буквы

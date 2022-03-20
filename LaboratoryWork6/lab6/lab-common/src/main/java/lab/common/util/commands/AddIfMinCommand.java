@@ -3,48 +3,27 @@ package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
-import lab.common.util.handlers.ArgumentsListener;
 import lab.common.util.handlers.TextFormatter;
 
-import java.util.ArrayList;
 
 public class AddIfMinCommand extends CommandAbstract {
 
-    private final CollectionManager manager;
-    private final ArgumentsListener argumentsListener = new ArgumentsListener();
+    private final Dragon dragon;
 
-    public AddIfMinCommand(CollectionManager manager) {
+    public AddIfMinCommand(Dragon dragon) {
         super("add_if_min", "Добавить дракона в коллекцию, если его возраст меньше, чем у самого младшего в коллекции", Dragon.COUNT_OF_PRIMITIVE_ARGS);
-        this.manager = manager;
+        this.dragon = dragon;
     }
 
     @Override
-    public boolean execute(ArrayList<String> args) {
-        String name = args.get(0).substring(0, 1).toUpperCase() + args.get(0).substring(1);
-        int age;
-        int wingspan;
-        try {
-            age = Integer.parseInt(args.get(1));
-            wingspan = Integer.parseInt(args.get(2));
-        } catch (NumberFormatException e) {
-            TextFormatter.printErrorMessage("Аргументы имеют неверный формат");
-            return false;
-        }
+    public String execute(CollectionManager manager) {
         int minAge = manager.getMin().getAge();
-        if (age < minAge) {
-            Dragon dragon = new Dragon();
-            dragon.setAge(age);
-            dragon.setWingspan(wingspan);
-            dragon.setName(name);
-            dragon.setCoordinates(argumentsListener.inputCoordinates());
-            argumentsListener.inputColor(dragon);
-            argumentsListener.inputCharacter(dragon);
-            dragon.setCave(argumentsListener.inputCave());
+        if (dragon.getAge() < minAge) {
             manager.addDragon(dragon);
-            return true;
+            TextFormatter.printInfoMessage("Dragon successfully added");
+            return TextFormatter.colorInfoMessage("Dragon successfully added");
         } else {
-            TextFormatter.printInfoMessage("В коллекции есть дракон помладше!");
-            return false;
+            return TextFormatter.colorInfoMessage("В коллекции есть дракон помладше!");
         }
     }
 }
