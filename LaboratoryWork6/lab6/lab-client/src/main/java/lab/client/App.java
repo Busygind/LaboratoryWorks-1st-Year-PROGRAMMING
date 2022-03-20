@@ -44,9 +44,11 @@ public class App {
                     String input = br.readLine();
                     ArrayList<String> splitCommand = LineSplitter.smartSplit(input);
                     // проверяем условие выхода из соединения
-                    if ("exit".equalsIgnoreCase(splitCommand.get(0))) {
+                    if ("exit".equalsIgnoreCase(splitCommand.get(0)) && splitCommand.size() == 1) {
                         // если условие выхода достигнуто разъединяемся
                         TextFormatter.printInfoMessage("Client kill connections");
+                        oos.writeObject(CommandListener.initCommand("exit"));
+                        oos.flush();
                         Thread.sleep(sleepTimeTwo);
                         // смотрим что нам ответил сервер
                         // напоследок перед закрытием ресурсов
