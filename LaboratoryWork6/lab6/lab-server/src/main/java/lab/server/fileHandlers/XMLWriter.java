@@ -20,7 +20,7 @@ public class XMLWriter {
      * @param dragons коллекция, которую необходимо сохранить
      * @throws IOException возникает при невозможности записи в файл полученных данных
      */
-    public void write(File file, CollectionManager dragons) throws IOException {
+    public static void write(File file, CollectionManager dragons) throws IOException {
         XStream xStream = new XStream();
         xStream.alias("dragon", Dragon.class);
         xStream.alias("set", CollectionManager.class);
