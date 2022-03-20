@@ -4,9 +4,10 @@ import lab.common.util.enums.Color;
 import lab.common.util.enums.DragonCharacter;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import java.util.Objects;
 /**
  * Класс объектов, хранимых в коллекции, которой управляет программа
  */
-public class Dragon implements Comparable<Dragon> {
+public class Dragon implements Comparable<Dragon>, Serializable {
 
     /**
      * Количество полей примитивного типа, которые необходимо передавать при инициализации
@@ -30,7 +31,7 @@ public class Dragon implements Comparable<Dragon> {
      * <strong>(Значение поля должно быть больше 0, значение этого поля должно быть уникальным,
      * значение этого поля должно генерироваться автоматически)</strong>
      */
-    @Positive
+    @Min(1)
     private long id;
     /**
      * Имя текущего элемента коллекции
@@ -52,13 +53,13 @@ public class Dragon implements Comparable<Dragon> {
      * Возраст текущего дракона
      * <strong>(Значение поля должно быть больше 0)</strong>
      */
-    @Positive
+    @Min(1)
     private int age;
     /**
      * Размах крыльев текущего дракона
      * <strong>(Значение поля должно быть больше 0)</strong>
      */
-    @Positive
+    @Min(1)
     private int wingspan;
     /**
      * Цвет текущего дракона

@@ -2,11 +2,12 @@ package lab.common.util.entities;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Класс координат, объекты которого присваиваются элементам коллекции
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
     private static final int MAX_X_VALUE = 603;
     /**
      * Координата Х

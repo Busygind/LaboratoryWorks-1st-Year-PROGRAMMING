@@ -1,9 +1,11 @@
 package lab.common.util.entities;
 
+import java.io.Serializable;
+
 /**
  * Класс пещеры дракона, объекты которого присваиваются полю cave элементов коллекции
  */
-public class DragonCave {
+public class DragonCave implements Serializable {
     /**
      * Глубина текущей пещеры
      */
