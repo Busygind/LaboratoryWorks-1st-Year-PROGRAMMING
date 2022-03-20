@@ -14,14 +14,7 @@ public class MaxByCaveCommand extends CommandAbstract {
 
     @Override
     public String execute(CollectionManager manager) {
-        double maxDepth = Double.MIN_VALUE;
-        Dragon dragonWithDeepestCave = null;
-        for (Dragon dragon : manager.getDragons()) {
-            if (dragon.getCave().getDepth() > maxDepth) {
-                maxDepth = dragon.getCave().getDepth();
-                dragonWithDeepestCave = dragon;
-            }
-        }
-        return TextFormatter.colorMessage("Данные о драконе с самой глубокой пещерой:\n" + dragonWithDeepestCave);
+        Dragon dragon = manager.getMaxByCave();
+        return TextFormatter.colorMessage("Данные о драконе с самой глубокой пещерой:" + dragon);
     }
 }

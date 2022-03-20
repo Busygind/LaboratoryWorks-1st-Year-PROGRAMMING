@@ -100,7 +100,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
      *
      * @return id дракона
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -263,6 +263,13 @@ public class Dragon implements Comparable<Dragon>, Serializable {
      */
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    public int compareByCave(Dragon o) {
+        if (o == null) {
+            return 1;
+        }
+        return getCave().compareTo(o.getCave());
     }
 
     @Override

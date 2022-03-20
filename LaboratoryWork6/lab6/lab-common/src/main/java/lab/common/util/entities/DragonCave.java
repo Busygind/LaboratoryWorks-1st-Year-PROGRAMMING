@@ -1,11 +1,12 @@
 package lab.common.util.entities;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Класс пещеры дракона, объекты которого присваиваются полю cave элементов коллекции
  */
-public class DragonCave implements Serializable {
+public class DragonCave implements Serializable, Comparable<DragonCave> {
     /**
      * Глубина текущей пещеры
      */
@@ -64,5 +65,13 @@ public class DragonCave implements Serializable {
     @Override
     public String toString() {
         return "depth: " + depth + " numbers of treasures: " + numberOfTreasures;
+    }
+
+    @Override
+    public int compareTo(DragonCave o) {
+        if (o == null) {
+            return 1;
+        }
+        return Comparator.comparing(DragonCave::getDepth).thenComparing(DragonCave::getNumberOfTreasures).compare(this, o);
     }
 }

@@ -15,7 +15,6 @@ public class RemoveByIdCommand extends CommandAbstract {
 
     @Override
     public String execute(CollectionManager manager) {
-        manager.removeById(id);
-        return TextFormatter.colorInfoMessage("Dragon successfully removed");
+        return manager.removeById(id);
     }
 }

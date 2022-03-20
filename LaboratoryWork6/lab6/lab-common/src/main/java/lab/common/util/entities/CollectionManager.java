@@ -3,6 +3,7 @@ package lab.common.util.entities;
 import lab.common.util.handlers.TextFormatter;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 //todo реализовать синглтон
@@ -103,36 +104,23 @@ public class CollectionManager {
      *
      * @param id id дракона, которого нужно удалить
      */
-    public void removeById(long id) {
-        boolean idIsValid = false;
+    public String removeById(long id) {
         try {
-            for (Dragon dragon : dragons) {
-                if (dragon.getId() == id) {
-                    idIsValid = true;
-                    dragons.remove(dragon);
-                    TextFormatter.printInfoMessage("Дракон успешно удален");
-                    break;
-                }
-            }
-            if (!idIsValid) {
-                TextFormatter.printErrorMessage("Дракона с таким id нет в коллекции");
+            Dragon dragon = getById(id);
+            if (dragon != null) {
+                dragons.remove(dragon);
+                return TextFormatter.colorInfoMessage("Dragon successfully removed");
+            } else {
+                return TextFormatter.colorErrorMessage("Dragon with that ID not found");
             }
         } catch (NumberFormatException e) {
-            TextFormatter.printErrorMessage("ID имеет некорректный формат");
+            return TextFormatter.colorErrorMessage("ID имеет некорректный формат");
         }
     }
 
-    //todo убрать save
-//    public void save() {
-//        XMLWriter writer = new XMLWriter();
-//        try {
-//            writer.write(this.getOutFile(), this);
-//            TextFormatter.printInfoMessage("Коллекция успешно сохранена");
-//        } catch (IOException e) {
-//            TextFormatter.printErrorMessage("Ошибка сохранения, файл не найден или некорректен");
-//        }
-//    }
-
+    public Dragon getById(Long id) {
+        return dragons.stream().filter(dr -> dr.getId().equals(id)).findAny().orElse(null);
+    }
 
     /**
      * Метод, выводящий пользователю информацию о коллекции
@@ -142,6 +130,10 @@ public class CollectionManager {
                 + TextFormatter.colorMessage("Collection type: " + dragons.getClass()
                 + " initialization date: " + creationDate
                 + " count of dragons: " + dragons.size());
+    }
+
+    public Dragon getMaxByCave() {
+        return dragons.stream().max(Dragon::compareByCave).get();
     }
 
     public Dragon getMax() {
