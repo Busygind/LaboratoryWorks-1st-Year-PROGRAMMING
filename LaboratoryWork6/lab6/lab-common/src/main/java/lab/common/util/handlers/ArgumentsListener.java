@@ -59,20 +59,26 @@ public class ArgumentsListener {
      * @param dragon дракон, характеристики примитивных типов которого вводит пользователь
      */
     public void inputPrimitives(Dragon dragon) {
+        TextFormatter.printMessage("Enter primitives args of dragon: name age[>0], wingspan[>0]");
         String[] inputArray = scanner.nextLine().split(" ");
-        try {
-            dragon.setName(inputArray[0]);
-            dragon.setAge(Integer.parseInt(inputArray[1]));
-            dragon.setWingspan(Integer.parseInt(inputArray[2]));
-            boolean correctName = DragonValidator.validateField(dragon, "name");
-            boolean correctAge = DragonValidator.validateField(dragon, "age");
-            boolean correctWingspan = DragonValidator.validateField(dragon, "wingspan");
-            if (!correctName | !correctAge | !correctWingspan) {
-                TextFormatter.printErrorMessage("Введенные данные некорректны");
+        if (inputArray.length == 3) {
+            try {
+                dragon.setName(inputArray[0]);
+                dragon.setAge(Integer.parseInt(inputArray[1]));
+                dragon.setWingspan(Integer.parseInt(inputArray[2]));
+                boolean correctName = DragonValidator.validateField(dragon, "name");
+                boolean correctAge = DragonValidator.validateField(dragon, "age");
+                boolean correctWingspan = DragonValidator.validateField(dragon, "wingspan");
+                if (!correctName | !correctAge | !correctWingspan) {
+                    TextFormatter.printErrorMessage("Введенные данные некорректны");
+                    inputPrimitives(dragon);
+                }
+            } catch (IllegalArgumentException e) {
+                TextFormatter.printErrorMessage("Введены некорректные данные, верный формат: name age[>0] wingspan[>0]");
                 inputPrimitives(dragon);
             }
-        } catch (IllegalArgumentException e) {
-            TextFormatter.printErrorMessage("Введены некорректные данные, верный формат: name age[>0] wingspan[>0]");
+        } else {
+            TextFormatter.printErrorMessage("Incorrect count of primitive args. Needed: name age[>0], wingspan[>0]");
             inputPrimitives(dragon);
         }
     }
