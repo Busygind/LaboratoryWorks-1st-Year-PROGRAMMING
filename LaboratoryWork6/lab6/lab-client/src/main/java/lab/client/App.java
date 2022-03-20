@@ -1,75 +1,79 @@
 package lab.client;
 
+import lab.common.util.commands.CommandAbstract;
+import lab.common.util.exceptions.CommandNotFoundException;
 import lab.common.util.handlers.CommandListener;
+import lab.common.util.handlers.LineSplitter;
+import lab.common.util.handlers.TextFormatter;
+import lab.common.util.requestSystem.Response;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
+    static final int sleepTimeTwo = 2000;
+    static final int port = 45846;
+
     public static void run() throws IOException {
-        final int sleepTimeOne = 1000;
-        final int sleepTimeTwo = 2000;
-        final int port = 45846;
         SocketChannel channel = SocketChannel.open();
         Scanner sc = new Scanner(System.in);
+        TextFormatter.printMessage("Enter host:");
         String host = sc.nextLine();
         channel.connect(new InetSocketAddress(host, port));
+//        channel.configureBlocking(false);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
              ObjectInputStream ois = new ObjectInputStream(channel.socket().getInputStream());
              ObjectOutputStream oos = new ObjectOutputStream(channel.socket().getOutputStream())) {
 
-            System.out.println("Client connected to socket.");
-            System.out.println("Client writing channel = oos & reading channel = ois initialized.");
+            TextFormatter.printInfoMessage("Client connected to socket.");
+            TextFormatter.printInfoMessage("Client writing channel = oos & reading channel = ois initialized.");
             // проверяем живой ли канал и работаем если живой
             while (channel.isOpen()) {
                 // ждём консоли клиента на предмет появления в ней данных
                 if (br.ready()) {
                     // данные появились - работаем
-                    System.out.println("Client start writing in channel...");
+                    TextFormatter.printInfoMessage("Client start writing in channel...");
                     Thread.sleep(1000);
-                    String clientCommand = br.readLine();
-
-                    // пишем данные с консоли в канал сокета для сервера
-                    oos.writeObject(clientCommand);
-                    oos.flush();
-                    System.out.println("Client sent message " + clientCommand + " to server.");
-                    Thread.sleep(sleepTimeOne);
-                    // ждём чтобы сервер успел прочесть сообщение
-                    // из сокета и ответить
-
+                    String input = br.readLine();
+                    ArrayList<String> splitCommand = LineSplitter.smartSplit(input);
                     // проверяем условие выхода из соединения
-                    if ("exit".equalsIgnoreCase(clientCommand)) {
+                    if ("exit".equalsIgnoreCase(splitCommand.get(0))) {
                         // если условие выхода достигнуто разъединяемся
-                        System.out.println("Client kill connections");
+                        TextFormatter.printInfoMessage("Client kill connections");
                         Thread.sleep(sleepTimeTwo);
                         // смотрим что нам ответил сервер
                         // напоследок перед закрытием ресурсов
                         if (ois.read() > -1) {
-                            System.out.println("reading...");
-                            String in = (String) ois.readObject();
-                            System.out.println(in);
+                            StreamController.getResponse(ois);
                         }
                         // после предварительных приготовлений выходим
                         // из цикла записи чтения
                         break;
                     }
 
-                    // если условие разъединения не достигнуто продолжаем работу
-                    System.out.println("Client sent message & start waiting for data from server...");
-                    Thread.sleep(sleepTimeTwo);
+                    try {
+                      StreamController.sendCommand(oos, input);
+                    } catch (IllegalArgumentException e) {
+                        TextFormatter.printErrorMessage("Incorrect arguments");
+                        continue;
+                    } catch (CommandNotFoundException e) {
+                        TextFormatter.printErrorMessage("Command not found. Type \"help\" to check available commands");
+                        continue;
+                    } catch (NullPointerException e) {
+                        TextFormatter.printErrorMessage(e.getMessage());
+                        continue;
+                    }
 
                     // если успел забираем ответ из канала сервера в сокете и
                     // сохраняем её в ois переменную, печатаем на свою клиентскую консоль
-                    System.out.println("reading...");
-                    String in = (String) ois.readObject();
-                    System.out.println(in);
+                    StreamController.getResponse(ois);
                 }
             }
 // на выходе из цикла общения закрываем свои ресурсы
@@ -79,8 +83,5 @@ public class App {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        CommandListener listener = new CommandListener(System.in);
-        listener.run();
     }
 }
