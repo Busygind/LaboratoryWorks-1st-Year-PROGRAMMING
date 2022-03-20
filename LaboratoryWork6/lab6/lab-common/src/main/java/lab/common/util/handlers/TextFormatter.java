@@ -29,4 +29,16 @@ public final class TextFormatter {
     public static void printInfoMessage(String message) {
         printStream.println(ANSI_GREEN + message + ANSI_RESET);
     }
+
+    public static String colorMessage(String message) {
+        return ANSI_BLUE + message + ANSI_RESET;
+    }
+
+    public static String colorErrorMessage(String message) {
+        return ANSI_RED + message + ANSI_RESET;
+    }
+
+    public static String colorInfoMessage(String message) {
+        return ANSI_GREEN + message + ANSI_RESET;
+    }
 }

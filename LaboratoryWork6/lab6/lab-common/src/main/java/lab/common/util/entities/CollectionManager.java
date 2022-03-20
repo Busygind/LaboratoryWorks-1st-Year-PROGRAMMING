@@ -84,7 +84,6 @@ public class CollectionManager {
         dragon.setId();
         idCounter++;
         dragons.add(dragon);
-        TextFormatter.printInfoMessage("Дракон успешно добавлен в коллекцию");
     }
 
     /**
@@ -104,12 +103,11 @@ public class CollectionManager {
      *
      * @param id id дракона, которого нужно удалить
      */
-    public void removeById(String id) {
+    public void removeById(long id) {
         boolean idIsValid = false;
         try {
-            long idNumber = Long.parseLong(id);
             for (Dragon dragon : dragons) {
-                if (dragon.getId() == idNumber) {
+                if (dragon.getId() == id) {
                     idIsValid = true;
                     dragons.remove(dragon);
                     TextFormatter.printInfoMessage("Дракон успешно удален");
@@ -122,11 +120,6 @@ public class CollectionManager {
         } catch (NumberFormatException e) {
             TextFormatter.printErrorMessage("ID имеет некорректный формат");
         }
-    }
-
-    //todo убедиться в корректности
-    public void updateById(int id, Dragon dragon) {
-
     }
 
     //todo убрать save
@@ -144,9 +137,9 @@ public class CollectionManager {
     /**
      * Метод, выводящий пользователю информацию о коллекции
      */
-    public void showInfo() {
-        TextFormatter.printInfoMessage("Information about collection: ");
-        TextFormatter.printMessage("Collection type: " + dragons.getClass()
+    public String showInfo() {
+        return TextFormatter.colorInfoMessage("Information about collection: ")
+                + TextFormatter.colorMessage("Collection type: " + dragons.getClass()
                 + " initialization date: " + creationDate
                 + " count of dragons: " + dragons.size());
     }

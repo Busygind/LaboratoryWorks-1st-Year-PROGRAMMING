@@ -1,8 +1,10 @@
 package lab.common.util.commands;
 
-import java.util.ArrayList;
+import lab.common.util.entities.CollectionManager;
 
-public abstract class CommandAbstract {
+import java.io.Serializable;
+
+public abstract class CommandAbstract implements Serializable {
     private final String name;
     private final String description;
     private final int countOfArgs;
@@ -13,7 +15,7 @@ public abstract class CommandAbstract {
         this.countOfArgs = countOfArgs;
     }
 
-    public abstract boolean execute(ArrayList<String> args);
+    public abstract String execute(CollectionManager manager);
 
     public int getCountOfArgs() {
         return countOfArgs;
@@ -21,5 +23,9 @@ public abstract class CommandAbstract {
 
     public String getDescription() {
         return name + " : " + description;
+    }
+
+    public String getName() {
+        return name;
     }
 }

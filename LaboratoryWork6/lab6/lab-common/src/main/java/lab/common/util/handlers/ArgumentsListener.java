@@ -17,6 +17,41 @@ public class ArgumentsListener {
 
     private final Scanner scanner = new Scanner(System.in);
 
+    public Dragon inputDragon(String name, String age, String wingspan) {
+        Dragon dragon = new Dragon();
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+        try {
+            dragon.setName(name);
+            dragon.setAge(Integer.parseInt(age));
+            dragon.setWingspan(Integer.parseInt(wingspan));
+            boolean correctName = DragonValidator.validateField(dragon, "name");
+            boolean correctAge = DragonValidator.validateField(dragon, "age");
+            boolean correctWingspan = DragonValidator.validateField(dragon, "wingspan");
+            if (!correctName | !correctAge | !correctWingspan) {
+                TextFormatter.printErrorMessage("Введенные данные некорректны");
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            TextFormatter.printErrorMessage("Аргументы имеют неверный формат");
+            return null;
+        }
+        dragon.setCoordinates(inputCoordinates());
+        inputColor(dragon);
+        inputCharacter(dragon);
+        dragon.setCave(inputCave());
+        return dragon;
+    }
+
+    public Dragon inputDragonWithPrimitives() {
+        Dragon dragon = new Dragon();
+        inputPrimitives(dragon);
+        dragon.setCoordinates(inputCoordinates());
+        inputColor(dragon);
+        inputCharacter(dragon);
+        dragon.setCave(inputCave());
+        return dragon;
+    }
+
     /**
      * Метод обработки и инициализации данных примитивных типов для переданного
      * в аргументе дракона
