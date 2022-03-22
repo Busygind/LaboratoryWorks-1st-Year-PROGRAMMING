@@ -31,17 +31,6 @@ public class CommandListener {
     }
 
     /**
-     * Метод, считывающий команду из консоли и разделяющий ее на имя и аргументы
-     *
-     * @return разделенная строка с составляющими частями команды
-     */
-    private ArrayList<String> readCommand() {
-        Scanner scanner = new Scanner(inputStream);
-        String line = scanner.nextLine().toLowerCase();
-        return LineSplitter.smartSplit(line);
-    }
-
-    /**
      * Метод, извлекающий из полученного массива аргументов данные, которые являются аргументами
      *
      * @param line разделенная строка
