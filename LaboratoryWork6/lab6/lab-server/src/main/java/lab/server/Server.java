@@ -3,6 +3,7 @@ package lab.server;
 import lab.common.util.commands.CommandAbstract;
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
+import lab.common.util.handlers.HistorySaver;
 import lab.common.util.handlers.TextFormatter;
 import lab.common.util.requestSystem.Response;
 import lab.server.fileHandlers.XMLReader;
@@ -78,6 +79,7 @@ public final class Server {
 
                 // сервер ждёт в канале чтения получения данных клиента
                 CommandAbstract commandFromClient = (CommandAbstract) in.readObject();
+                HistorySaver.addCommandInHistory(commandFromClient);
 //                CommandAbstract command = (CommandAbstract) in.readObject();
 //                command.execute()
                 // после получения данных считывает их

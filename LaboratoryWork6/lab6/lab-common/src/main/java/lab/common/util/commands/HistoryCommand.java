@@ -3,6 +3,7 @@ package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.handlers.CommandFactory;
+import lab.common.util.handlers.HistorySaver;
 import lab.common.util.handlers.TextFormatter;
 
 public class HistoryCommand extends CommandAbstract {
@@ -14,10 +15,11 @@ public class HistoryCommand extends CommandAbstract {
     @Override
     public String execute(CollectionManager manager) {
         final int countOfWatchableCommands = 11;
-        if (CommandFactory.getCommandsHistory().size() > countOfWatchableCommands) {
-            return TextFormatter.colorMessage(CommandFactory.getCommandsHistory().subList(CommandFactory.getCommandsHistory().size()
-                    - countOfWatchableCommands, CommandFactory.getCommandsHistory().size()).toString());
+        System.out.println(HistorySaver.getCommandsHistory().size());
+        if (HistorySaver.getCommandsHistory().size() > countOfWatchableCommands) {
+            return TextFormatter.colorMessage(HistorySaver.getCommandsHistory().subList(HistorySaver.getCommandsHistory().size()
+                    - countOfWatchableCommands, HistorySaver.getCommandsHistory().size()).toString());
         }
-        return TextFormatter.colorMessage(CommandFactory.getCommandsHistory().toString());
+        return TextFormatter.colorMessage(HistorySaver.getCommandsHistory().toString());
     }
 }
