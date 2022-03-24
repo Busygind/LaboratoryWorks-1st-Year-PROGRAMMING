@@ -2,11 +2,9 @@ package lab.common.util.handlers;
 
 import lab.common.util.commands.CommandAbstract;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 
 /**
@@ -14,11 +12,6 @@ import java.util.Scanner;
  * а также методы по обработке полученных данных
  */
 public class CommandListener {
-    private final InputStream inputStream;
-
-    public CommandListener(InputStream stream) {
-        this.inputStream = stream;
-    }
     /**
      * Метод, циклически считывающий команды из консоли и вызывающий необходимые методы обработки коллекции
      */
