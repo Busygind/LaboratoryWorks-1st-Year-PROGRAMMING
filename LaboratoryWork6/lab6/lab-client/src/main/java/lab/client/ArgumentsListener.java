@@ -1,10 +1,12 @@
-package lab.common.util.handlers;
+package lab.client;
 
 import lab.common.util.entities.Coordinates;
 import lab.common.util.entities.Dragon;
 import lab.common.util.entities.DragonCave;
 import lab.common.util.enums.Color;
 import lab.common.util.enums.DragonCharacter;
+import lab.common.util.handlers.DragonValidator;
+import lab.common.util.handlers.TextFormatter;
 
 import java.util.Arrays;
 import java.util.Scanner;
