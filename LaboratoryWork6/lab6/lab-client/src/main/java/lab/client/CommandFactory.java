@@ -1,5 +1,6 @@
-package lab.common.util.handlers;
+package lab.client;
 
+import lab.client.exceptions.CommandNotFoundException;
 import lab.common.util.commands.AddCommand;
 import lab.common.util.commands.AddIfMaxCommand;
 import lab.common.util.commands.AddIfMinCommand;
@@ -16,21 +17,13 @@ import lab.common.util.commands.RemoveByIdCommand;
 import lab.common.util.commands.ShowCommand;
 import lab.common.util.commands.UpdateByIdCommand;
 import lab.common.util.entities.Dragon;
-import lab.common.util.exceptions.CommandNotFoundException;
+import lab.common.util.handlers.TextFormatter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class CommandFactory {
 
     ArgumentsListener listener = new ArgumentsListener();
-
-    /**
-     * Словарь, сопоставляющий доступные команды с соответствующими командами
-     */
-    private static final Map<String, CommandAbstract> COMMANDS = new HashMap<>();
 
     public CommandAbstract createCommand(String name, ArrayList<String> args) throws CommandNotFoundException {
         Dragon dragon;

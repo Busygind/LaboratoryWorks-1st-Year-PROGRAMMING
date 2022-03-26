@@ -1,4 +1,4 @@
-package lab.common.util.handlers;
+package lab.client;
 
 import java.util.ArrayList;
 

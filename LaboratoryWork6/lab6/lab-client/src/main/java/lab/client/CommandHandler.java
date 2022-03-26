@@ -1,4 +1,4 @@
-package lab.common.util.handlers;
+package lab.client;
 
 import lab.common.util.commands.CommandAbstract;
 
@@ -11,14 +11,14 @@ import java.util.ArrayList;
  * Класс, содержащий методы, вызываемые напрямую после соответствующих команд пользователя,
  * а также методы по обработке полученных данных
  */
-public class CommandListener {
+public class CommandHandler {
     /**
      * Метод, циклически считывающий команды из консоли и вызывающий необходимые методы обработки коллекции
      */
     public static CommandAbstract initCommand(String line) throws IOException {
         ArrayList<String> commandWithArgs = LineSplitter.smartSplit(line);
-        String commandName = CommandListener.getCommandName(commandWithArgs);
-        ArrayList<String> commandArgs = CommandListener.getCommandArguments(commandWithArgs);
+        String commandName = CommandHandler.getCommandName(commandWithArgs);
+        ArrayList<String> commandArgs = CommandHandler.getCommandArguments(commandWithArgs);
         CommandFactory factory = new CommandFactory();
         return factory.createCommand(commandName, commandArgs);
     }

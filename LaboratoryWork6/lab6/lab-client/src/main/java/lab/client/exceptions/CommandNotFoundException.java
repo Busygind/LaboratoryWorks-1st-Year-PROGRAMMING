@@ -1,4 +1,4 @@
-package lab.common.util.exceptions;
+package lab.client.exceptions;
 
 import java.io.IOException;
 
