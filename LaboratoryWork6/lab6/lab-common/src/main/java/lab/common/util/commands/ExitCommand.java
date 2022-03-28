@@ -7,7 +7,7 @@ import lab.common.util.handlers.TextFormatter;
 public class ExitCommand extends CommandAbstract {
 
     public ExitCommand() {
-        super("exit", "Выход из программы без сохранения", 0);
+        super("exit", "Выход из программы с сохранением", 0);
     }
 
     @Override
