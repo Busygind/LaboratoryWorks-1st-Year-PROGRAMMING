@@ -1,8 +1,5 @@
 package lab.client;
 
-import lab.common.util.commands.CommandAbstract;
-import lab.common.util.commands.PrintDescendingCommand;
-import lab.common.util.exceptions.DisconnectInitException;
 import lab.common.util.handlers.TextFormatter;
 import lab.common.util.requestSystem.Response;
 import lab.common.util.requestSystem.Serializer;
@@ -14,6 +11,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -53,7 +52,7 @@ public final class Client {
             TextFormatter.printMessage("Connected!");
             client.configureBlocking(false);
             client.register(selector, SelectionKey.OP_WRITE);
-            startSelectorLoop(client);
+            startSelectorLoop(client, scanner);
         } catch (IOException e) {
             TextFormatter.printErrorMessage(e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -63,17 +62,19 @@ public final class Client {
         }
     }
 
-    private static void startSelectorLoop(SocketChannel channel) throws IOException, ClassNotFoundException, InterruptedException {
+    private static void startSelectorLoop(SocketChannel channel, Scanner sc) throws IOException, ClassNotFoundException, InterruptedException {
         while (true) {
             int readyChannels = selector.select();
             if (readyChannels == 0) {
                 continue;
             }
-            startIteratorLoop(channel);
+            if (!startIteratorLoop(channel, sc)) {
+                break;
+            }
         }
     }
 
-    private static void startIteratorLoop(SocketChannel channel) throws IOException, ClassNotFoundException, InterruptedException {
+    private static boolean startIteratorLoop(SocketChannel channel, Scanner sc) throws IOException, ClassNotFoundException, InterruptedException {
         Set<SelectionKey> readyKeys = selector.selectedKeys();
         Iterator<SelectionKey> iterator = readyKeys.iterator();
         while (iterator.hasNext()) {
@@ -81,7 +82,6 @@ public final class Client {
             iterator.remove();
 
             if (key.isReadable()) {
-                TextFormatter.printInfoMessage("Enter command (to check available commands type \"help\"): ");
                 SocketChannel socketChannel = (SocketChannel) key.channel();
                 ByteBuffer readBuffer = ByteBuffer.allocate(4096);
                 socketChannel.read(readBuffer);
@@ -89,16 +89,27 @@ public final class Client {
                 TextFormatter.printInfoMessage(response.getMessage());
                 channel.register(selector, SelectionKey.OP_WRITE);
             } else if (key.isWritable()) {
-                String input = scanner.nextLine();
+                TextFormatter.printInfoMessage("Enter command (to check available commands type \"help\"): ");
                 try {
-                    ByteBuffer buffer = StreamController.prepareCommandToSend(input);
-                    channel.write(buffer);
-                    channel.register(selector, SelectionKey.OP_READ);
-                    Thread.sleep(2000);
-                } catch (NullPointerException | IOException e) {
-                    TextFormatter.printErrorMessage(e.getMessage());
+                    String input = sc.nextLine();
+                    List<String> splittedLine = LineSplitter.smartSplit(input);
+                    if (splittedLine.get(0).equalsIgnoreCase("execute_script")) {
+                        ScriptReader scriptReader = new ScriptReader(input);
+                        startSelectorLoop(channel, new Scanner(scriptReader.getPath()));
+                    }
+                    try {
+                        ByteBuffer buffer = StreamController.prepareCommandToSend(input);
+                        channel.write(buffer);
+                        channel.register(selector, SelectionKey.OP_READ);
+                        Thread.sleep(2000);
+                    } catch (NullPointerException | IOException e) {
+                        TextFormatter.printErrorMessage(e.getMessage());
+                    }
+                } catch (NoSuchElementException e) {
+                    return false;
                 }
             }
         }
+        return true;
     }
 }
