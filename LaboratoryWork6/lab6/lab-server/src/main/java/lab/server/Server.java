@@ -3,12 +3,13 @@ package lab.server;
 import lab.common.util.commands.CommandAbstract;
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
-import lab.common.util.exceptions.DisconnectInitException;
 import lab.common.util.handlers.HistorySaver;
 import lab.common.util.handlers.TextFormatter;
 import lab.common.util.requestSystem.Response;
 import lab.common.util.requestSystem.Serializer;
+import lab.server.exceptions.DisconnectInitException;
 import lab.server.fileHandlers.XMLReader;
+import lab.server.fileHandlers.XMLWriter;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +26,10 @@ import java.util.Set;
 public final class Server {
 
     private static final CollectionManager manager = new CollectionManager();
+    private static final File starting = new File(System.getProperty("user.dir")); // Get current user directory
     private static final int SERVER_PORT = 45846;
     private static Selector selector;
-
+    private static File file;
 //    Работа с файлом, хранящим коллекцию.
 //    Управление коллекцией объектов.
 //    Назначение автоматически генерируемых полей объектов в коллекции.
@@ -42,10 +44,8 @@ public final class Server {
     public static void main(String[] args) {
         //todo засунуть все в application
 //        String fileName = args[0];
-//        File starting = new File(System.getProperty("user.dir")); // Get current user directory
-//        File file = new File(starting, fileName); // Initialize file from cmd
-//        Logger logger = LogManager.getLogger();
-        File file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
+//        file = new File(starting, fileName); // Initialize file from cmd
+        file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
         fillCollectionFromFile(file);
         try {
             selector = Selector.open();
@@ -88,25 +88,18 @@ public final class Server {
                 SocketChannel socketChannel = (SocketChannel) key.channel();
                 CommandAbstract command = IOController.getCommand(socketChannel);
                 HistorySaver.addCommandInHistory(command);
-//                if (num > 0) {
-                    // Обработка входящих данных ...
-
-                    try {
-                        Response response = IOController.buildResponse(command, manager);
-                        ByteBuffer buffer = Serializer.serializeResponse(response);
-                        socketChannel.write(buffer);
-                        TextFormatter.printInfoMessage("Server wrote response to client");
-                    } catch (DisconnectInitException e) {
-                        TextFormatter.printInfoMessage(e.getMessage());
-                        socketChannel.close();
-                        break;
-                    }
-
-//                } else if (num == -1) {
-                    // -1 означает, что соединение было закрыто
-//                    socketChannel.close();
-//                    TextFormatter.printMessage("Channel closed");
-//                }
+                try {
+                    Response response = IOController.buildResponse(command, manager);
+                    ByteBuffer buffer = Serializer.serializeResponse(response);
+                    socketChannel.write(buffer);
+                    TextFormatter.printInfoMessage("Server wrote response to client");
+                } catch (DisconnectInitException e) {
+                    XMLWriter.write(file, manager);
+                    TextFormatter.printInfoMessage("Collection successfully saved");
+                    TextFormatter.printInfoMessage(e.getMessage());
+                    socketChannel.close();
+                    break;
+                }
             }
         }
     }
