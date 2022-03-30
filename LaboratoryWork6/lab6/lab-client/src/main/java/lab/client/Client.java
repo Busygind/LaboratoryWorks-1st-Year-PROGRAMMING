@@ -28,6 +28,7 @@ public final class Client {
 
     private static final int PORT = 45846;
     private static final Scanner scanner = new Scanner(System.in);
+    private static final int sleepTime = 1000;
     private static InetSocketAddress hostAddress;
     private static Selector selector;
     private static String hostname;
@@ -96,16 +97,18 @@ public final class Client {
                     if (splittedLine.get(0).equalsIgnoreCase("execute_script")) {
                         ScriptReader scriptReader = new ScriptReader(input);
                         startSelectorLoop(channel, new Scanner(scriptReader.getPath()));
+                        scriptReader.stopScriptReading();
                     }
                     try {
                         ByteBuffer buffer = StreamController.prepareCommandToSend(input);
                         channel.write(buffer);
                         channel.register(selector, SelectionKey.OP_READ);
-                        Thread.sleep(2000);
+                        Thread.sleep(sleepTime);
                     } catch (NullPointerException | IOException e) {
                         TextFormatter.printErrorMessage(e.getMessage());
                     }
-                } catch (NoSuchElementException e) {
+                } catch (NoSuchElementException | IllegalArgumentException e) {
+                    TextFormatter.printErrorMessage(e.getMessage());
                     return false;
                 }
             }
