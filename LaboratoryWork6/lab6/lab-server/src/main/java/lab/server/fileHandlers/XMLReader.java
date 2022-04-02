@@ -6,7 +6,6 @@ import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.DragonValidator;
 
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.util.Scanner;
  * Класс, отвечающий за стартовую обработку xml-файла с данными о коллекции
  */
 public class XMLReader {
-    //todo поменять методы на private
     /**
      * Метод, преобразующий xml-файл в коллекцию драконов
      *
@@ -38,16 +36,21 @@ public class XMLReader {
             xmlText.append(sc.nextLine());
         }
         reader.close();
-        CollectionManager dragons = (CollectionManager) xStream.fromXML(xmlText.toString());
-        boolean correctCollection = true;
-        for (Dragon elem : dragons.getDragons()) {
-            if (!DragonValidator.validateDragon(elem)) {
-                correctCollection = false;
-                System.out.println("Ошибка чтения файла на уровне валидации");
-                System.exit(0);
+        CollectionManager manager = (CollectionManager) xStream.fromXML(xmlText.toString());
+        if (!fileIsCorrect(manager)) {
+            System.out.println("Ошибка чтения файла на уровне валидации");
+            System.exit(0);
+        }
+        return manager.getDragons();
+    }
+
+    private boolean fileIsCorrect(CollectionManager manager) {
+        for (Dragon dragon : manager.getDragons()) {
+            if (!DragonValidator.validateDragon(dragon)) {
+                return false;
             }
         }
-        return dragons.getDragons();
+        return true;
     }
 
 }
