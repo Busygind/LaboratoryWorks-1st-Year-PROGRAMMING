@@ -6,9 +6,9 @@ import lab.common.util.requestSystem.Serializer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class StreamController {
+public class CommandBuilder {
 
-    public static ByteBuffer prepareCommandToSend(String input) throws IOException {
+    public static ByteBuffer buildCommand(String input) throws IOException {
         CommandAbstract command = CommandHandler.initCommand(input);
         if (command == null) {
             throw new NullPointerException("Command is incorrect. Try again");
