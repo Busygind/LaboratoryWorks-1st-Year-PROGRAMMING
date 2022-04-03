@@ -27,6 +27,9 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<archive>
+						<manifestEntries>
+							<Multi-Release>true</Multi-Release>
+						</manifestEntries>
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<mainClass>${project.groupId}.server.Server</mainClass>
@@ -46,7 +49,18 @@
 					</execution>
 				</executions>
 			</plugin>
-
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-jar-plugin</artifactId>-->
+<!--				<configuration>-->
+<!--					<archive>-->
+<!--						<manifestEntries>-->
+<!--							<Multi-Release>true</Multi-Release>-->
+<!--						</manifestEntries>-->
+<!--					</archive>-->
+<!--					<finalName>mr-jar-demo.jar</finalName>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 

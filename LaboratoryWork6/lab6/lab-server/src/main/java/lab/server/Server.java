@@ -3,7 +3,6 @@ package lab.server;
 import lab.common.util.commands.CommandAbstract;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.HistorySaver;
-import lab.common.util.handlers.TextFormatter;
 import lab.common.util.requestSystem.Response;
 import lab.common.util.requestSystem.Serializer;
 import lab.server.exceptions.DisconnectInitException;
@@ -36,8 +35,8 @@ public final class Server {
     public static void main(String[] args) {
         ServerConfig.logger.info("Server started");
         //todo засунуть все в application
-//        String fileName = args[0];
-//        file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
+        //String fileName = args[0];
+        //file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
         file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
         fillCollectionFromFile(file);
         try {
