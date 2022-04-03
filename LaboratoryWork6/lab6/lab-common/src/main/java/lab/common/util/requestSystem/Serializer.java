@@ -10,9 +10,10 @@ import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
 public class Serializer {
+    private static final int BUFFER_LENGTH = 4096;
 
     public static ByteBuffer serializeCommand(CommandAbstract command) throws IOException {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream(4096);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream(BUFFER_LENGTH);
         ObjectOutputStream oos = new ObjectOutputStream(bytes);
         oos.writeObject(command);
         oos.flush();
@@ -32,7 +33,7 @@ public class Serializer {
     }
 
     public static ByteBuffer serializeResponse(Response response) throws IOException {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream(4096);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream(BUFFER_LENGTH);
         ObjectOutputStream oos = new ObjectOutputStream(bytes);
         oos.writeObject(response);
         oos.flush();

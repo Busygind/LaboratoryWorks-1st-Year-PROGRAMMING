@@ -4,8 +4,6 @@ import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.TextFormatter;
 
-import java.util.ArrayList;
-
 public class MaxByCaveCommand extends CommandAbstract {
 
     public MaxByCaveCommand() {

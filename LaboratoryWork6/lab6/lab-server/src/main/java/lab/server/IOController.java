@@ -21,7 +21,6 @@ public class IOController {
 
     public static Response buildResponse(CommandAbstract command, CollectionManager manager) throws DisconnectInitException {
         if (command.getName().equals("exit")) {
-            TextFormatter.printInfoMessage("Client initialize disconnect");
             throw new DisconnectInitException("Client initialize disconnect");
         }
         return new Response(command.execute(manager), true);
