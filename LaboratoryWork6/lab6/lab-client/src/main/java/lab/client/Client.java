@@ -16,7 +16,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
-
 /**
  @author Dmitry Busygin
  */
@@ -28,6 +27,7 @@ public final class Client {
 
     private static final int PORT = 45846;
     private static final Scanner scanner = new Scanner(System.in);
+    private static final int BYTE_BUFFER_LENGTH = 4096;
     private static final int sleepTime = 1000;
     private static InetSocketAddress hostAddress;
     private static Selector selector;
@@ -84,7 +84,7 @@ public final class Client {
 
             if (key.isReadable()) {
                 SocketChannel socketChannel = (SocketChannel) key.channel();
-                ByteBuffer readBuffer = ByteBuffer.allocate(4096);
+                ByteBuffer readBuffer = ByteBuffer.allocate(BYTE_BUFFER_LENGTH);
                 socketChannel.read(readBuffer);
                 Response response = Serializer.deserializeResponse(readBuffer.array());
                 TextFormatter.printInfoMessage(response.getMessage());
@@ -100,7 +100,7 @@ public final class Client {
                         scriptReader.stopScriptReading();
                     }
                     try {
-                        ByteBuffer buffer = StreamController.prepareCommandToSend(input);
+                        ByteBuffer buffer = CommandBuilder.buildCommand(input);
                         channel.write(buffer);
                         channel.register(selector, SelectionKey.OP_READ);
                         Thread.sleep(sleepTime);
