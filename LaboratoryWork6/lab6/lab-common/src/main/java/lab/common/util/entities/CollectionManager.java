@@ -2,12 +2,8 @@ package lab.common.util.entities;
 
 import lab.common.util.handlers.TextFormatter;
 
-import java.io.File;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
-//todo реализовать синглтон
-
 /**
  * Класс коллекции, содержащий текущую коллекцию <b>dragons</b>,
  * отвечает за генерацию ID для новых элементов и за все действия,
@@ -15,17 +11,9 @@ import java.util.HashSet;
  */
 public class CollectionManager {
     /**
-     * Статичное поле, отвечающее за инкрементацию ID для исключения повторений
-     */
-    private static int idCounter = 1;
-    /**
      * Дата создания коллекции
      */
     private final Date creationDate;
-    /**
-     * Файл, в который будет производиться запись коллекции при сохранении
-     */
-    private File outFile;
     /**
      * Сет объектов класса Dragon, текущее содержимое коллекции
      */
@@ -50,40 +38,12 @@ public class CollectionManager {
     }
 
     /**
-     * Метод, возвращающий дату создания коллекции
-     *
-     * @return дата создания коллекции
-     */
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    /**
-     * Метод, возвращающий текущий файл, в который будет производиться запись коллекции при сохранении
-     *
-     * @return файл, в который производится запись готовой коллекции
-     */
-    public File getOutFile() {
-        return outFile;
-    }
-
-    /**
-     * Метод, устанавливающий файл, в который будет производиться запись коллекции при сохранении
-     *
-     * @param outFile файл, в который будет производиться запись коллекции
-     */
-    public void setOutFile(File outFile) {
-        this.outFile = outFile;
-    }
-
-    /**
      * Метод, добавляющий полученного дракона в коллекцию
      *
      * @param dragon дракон, которого нужно добавить в коллекцию
      */
     public void addDragon(Dragon dragon) {
         dragon.setId();
-        idCounter++;
         dragons.add(dragon);
     }
 
