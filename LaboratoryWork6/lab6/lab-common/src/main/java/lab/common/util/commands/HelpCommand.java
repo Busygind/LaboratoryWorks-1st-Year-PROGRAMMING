@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HelpCommand extends CommandAbstract {
-
     /**
      * Словарь, сопоставляющий доступные команды с соответствующими командами
      */
@@ -47,5 +46,4 @@ public class HelpCommand extends CommandAbstract {
         }
         return sb.toString();
     }
-
 }

@@ -12,7 +12,6 @@ public class ExitCommand extends CommandAbstract {
 
     @Override
     public String execute(CollectionManager manager) {
-
         return TextFormatter.colorInfoMessage("Connection disabled");
     }
 }

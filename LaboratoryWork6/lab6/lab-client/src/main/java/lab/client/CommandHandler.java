@@ -5,8 +5,6 @@ import lab.common.util.commands.CommandAbstract;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
-
 /**
  * Класс, содержащий методы, вызываемые напрямую после соответствующих команд пользователя,
  * а также методы по обработке полученных данных
@@ -43,5 +41,4 @@ public class CommandHandler {
     public static String getCommandName(ArrayList<String> line) {
         return line.get(0);
     }
-
 }

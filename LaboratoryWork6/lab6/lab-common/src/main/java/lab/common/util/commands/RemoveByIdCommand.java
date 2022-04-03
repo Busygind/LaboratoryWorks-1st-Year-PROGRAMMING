@@ -1,8 +1,6 @@
 package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
-import lab.common.util.handlers.TextFormatter;
-
 
 public class RemoveByIdCommand extends CommandAbstract {
 

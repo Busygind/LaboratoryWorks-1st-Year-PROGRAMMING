@@ -8,6 +8,7 @@ public class UpdateByIdCommand extends CommandAbstract {
 
     private long id;
     private Dragon dragon;
+
     public UpdateByIdCommand(long id, Dragon dragon) {
         super("update_by_id", "Обновить данные о элементе коллекции по данному id", 1);
         this.dragon = dragon;
