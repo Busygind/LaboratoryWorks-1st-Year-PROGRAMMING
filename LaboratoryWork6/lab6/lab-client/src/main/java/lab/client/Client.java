@@ -65,10 +65,7 @@ public final class Client {
 
     private static void startSelectorLoop(SocketChannel channel, Scanner sc) throws IOException, ClassNotFoundException, InterruptedException {
         while (true) {
-            int readyChannels = selector.select();
-            if (readyChannels == 0) {
-                continue;
-            }
+            selector.select();
             if (!startIteratorLoop(channel, sc)) {
                 break;
             }
