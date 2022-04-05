@@ -91,7 +91,7 @@ public final class Client {
                 try {
                     String input = sc.nextLine();
                     List<String> splittedLine = LineSplitter.smartSplit(input);
-                    if (splittedLine.get(0).equalsIgnoreCase("execute_script")) {
+                    if (splittedLine.get(0).equalsIgnoreCase("execute_script") && splittedLine.size() == 2) {
                         ScriptReader scriptReader = new ScriptReader(input);
                         startSelectorLoop(channel, new Scanner(scriptReader.getPath()));
                         scriptReader.stopScriptReading();
