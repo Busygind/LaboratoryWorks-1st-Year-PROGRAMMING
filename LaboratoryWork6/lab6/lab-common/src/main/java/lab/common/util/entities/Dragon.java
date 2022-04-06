@@ -272,6 +272,13 @@ public class Dragon implements Comparable<Dragon>, Serializable {
         return getCave().compareTo(o.getCave());
     }
 
+    public int compareByName(Dragon o) {
+        if (o == null) {
+            return 1;
+        }
+        return getName().compareTo(o.getName());
+    }
+
     @Override
     public int compareTo(Dragon o) {
         if (o == null) {
