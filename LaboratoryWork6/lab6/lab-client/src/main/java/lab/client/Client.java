@@ -1,5 +1,6 @@
 package lab.client;
 
+import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.TextFormatter;
 import lab.common.util.requestSystem.Response;
 import lab.common.util.requestSystem.Serializer;
@@ -85,6 +86,9 @@ public final class Client {
                 socketChannel.read(readBuffer);
                 Response response = Serializer.deserializeResponse(readBuffer.array());
                 TextFormatter.printInfoMessage(response.getMessage());
+                if (response.getDragons() != null) {
+                    TextFormatter.printMessage(response.getDragons().toString());
+                }
                 channel.register(selector, SelectionKey.OP_WRITE);
             } else if (key.isWritable()) {
                 TextFormatter.printInfoMessage("Enter command (to check available commands type \"help\"): ");
