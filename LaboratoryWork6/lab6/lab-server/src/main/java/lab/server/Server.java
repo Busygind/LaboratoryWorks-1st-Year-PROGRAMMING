@@ -24,7 +24,7 @@ import java.util.Set;
 public final class Server {
 
     private static Selector selector;
-    private static File file;
+    protected static File file;
 
 //    Назначение автоматически генерируемых полей объектов в коллекции.
 //    Сохранение коллекции в файл при исполнении специальной команды, доступной только серверу (клиент такую команду отправить не может).
@@ -33,8 +33,14 @@ public final class Server {
     }
 
     public static void main(String[] args) {
+        ConsoleThread consoleThread = new ConsoleThread();
+        consoleThread.start();
+        startServer(args);
+        consoleThread.shutdown();
+    }
+
+    private static void startServer(String[] args) {
         ServerConfig.logger.info("Server started");
-        //todo засунуть все в application
         //String fileName = args[0];
         //file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
         file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
@@ -59,7 +65,7 @@ public final class Server {
         }
     }
 
-    private static void startIteratorLoop(ServerSocketChannel channel) throws IOException, ClassNotFoundException, InterruptedException {
+    private static void startIteratorLoop(ServerSocketChannel channel) throws IOException, ClassNotFoundException {
         Set<SelectionKey> readyKeys = selector.selectedKeys();
         Iterator<SelectionKey> iterator = readyKeys.iterator();
         while (iterator.hasNext()) {
@@ -83,7 +89,7 @@ public final class Server {
                     ServerConfig.logger.info("Server wrote response to client");
                 } catch (DisconnectInitException e) {
                     XMLWriter.write(file, ServerConfig.manager);
-                    ServerConfig.logger.info("Client init disconnect. Collection successfully saved");
+                    ServerConfig.logger.info("Client " + socketChannel.getLocalAddress() + " init disconnect. Collection successfully saved");
                     socketChannel.close();
                     break;
                 }
