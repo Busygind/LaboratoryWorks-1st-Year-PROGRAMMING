@@ -1,6 +1,5 @@
 package lab.client;
 
-import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.TextFormatter;
 import lab.common.util.requestSystem.Response;
 import lab.common.util.requestSystem.Serializer;
@@ -27,9 +26,9 @@ public final class Client {
     }
 
     private static final int PORT = 45846;
-    private static final Scanner scanner = new Scanner(System.in);
     private static final int BYTE_BUFFER_LENGTH = 4096;
-    private static final int sleepTime = 1000;
+    private static final int SLEEP_TIME = 1000;
+    private static final Scanner SCANNER = new Scanner(System.in);
     private static InetSocketAddress hostAddress;
     private static Selector selector;
     private static String hostname;
@@ -44,7 +43,7 @@ public final class Client {
      */
     public static void main(String[] args) {
         TextFormatter.printMessage("Enter hostname: ");
-        hostname = scanner.nextLine();
+        hostname = SCANNER.nextLine();
         hostAddress = new InetSocketAddress(hostname, PORT);
 
         try {
@@ -54,7 +53,7 @@ public final class Client {
             TextFormatter.printMessage("Connected!");
             client.configureBlocking(false);
             client.register(selector, SelectionKey.OP_WRITE);
-            startSelectorLoop(client, scanner);
+            startSelectorLoop(client, SCANNER);
         } catch (IOException e) {
             TextFormatter.printErrorMessage(e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -104,7 +103,7 @@ public final class Client {
                         ByteBuffer buffer = CommandBuilder.buildCommand(input);
                         channel.write(buffer);
                         channel.register(selector, SelectionKey.OP_READ);
-                        Thread.sleep(sleepTime);
+                        Thread.sleep(SLEEP_TIME);
                     } catch (NullPointerException | IOException e) {
                         TextFormatter.printErrorMessage(e.getMessage());
                     }

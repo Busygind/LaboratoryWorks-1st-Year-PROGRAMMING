@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Класс, содержащий методы, вызываемые напрямую после соответствующих команд пользователя,
- * а также методы по обработке полученных данных
+ * Класс, инициализирующий команду по полученной строке
  */
 public class CommandHandler {
-    /**
-     * Метод, циклически считывающий команды из консоли и вызывающий необходимые методы обработки коллекции
-     */
+
+    private CommandHandler() {
+        //never used
+    }
+
     public static CommandAbstract initCommand(String line) throws IOException {
         ArrayList<String> commandWithArgs = LineSplitter.smartSplit(line);
         String commandName = CommandHandler.getCommandName(commandWithArgs);

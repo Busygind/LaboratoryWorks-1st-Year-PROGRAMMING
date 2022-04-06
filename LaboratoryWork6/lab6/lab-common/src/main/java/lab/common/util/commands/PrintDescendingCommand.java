@@ -18,6 +18,6 @@ public class PrintDescendingCommand extends CommandAbstract {
     public Response execute(CollectionManager manager) {
         ArrayList<Dragon> dragons = new ArrayList<>(manager.getDragons());
         dragons.sort(Collections.reverseOrder());
-        return new Response(dragons, "List of dragons compared of age (reverse): ");
+        return new Response(dragons, TextFormatter.colorInfoMessage("List of dragons compared of age (reverse): "));
     }
 }

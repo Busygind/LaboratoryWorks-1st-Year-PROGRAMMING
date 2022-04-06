@@ -9,8 +9,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
-public class Serializer {
+public final class Serializer {
     private static final int BUFFER_LENGTH = 4096;
+
+    private Serializer() {
+        //never used
+    }
 
     public static ByteBuffer serializeCommand(CommandAbstract command) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream(BUFFER_LENGTH);

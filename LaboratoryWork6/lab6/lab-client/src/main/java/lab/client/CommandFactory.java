@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class CommandFactory {
 
-    ArgumentsListener listener = new ArgumentsListener();
+    private final ArgumentsListener listener = new ArgumentsListener();
 
     public CommandAbstract createCommand(String name, ArrayList<String> args) throws CommandNotFoundException {
         Dragon dragon;

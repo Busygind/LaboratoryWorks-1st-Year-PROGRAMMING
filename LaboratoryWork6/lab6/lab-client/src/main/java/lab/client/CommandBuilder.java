@@ -8,6 +8,10 @@ import java.nio.ByteBuffer;
 
 public class CommandBuilder {
 
+    private CommandBuilder() {
+        //never used
+    }
+
     public static ByteBuffer buildCommand(String input) throws IOException {
         CommandAbstract command = CommandHandler.initCommand(input);
         if (command == null) {
