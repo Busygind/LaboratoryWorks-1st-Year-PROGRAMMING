@@ -4,6 +4,7 @@ package lab.common.util.commands;
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.handlers.HistorySaver;
 import lab.common.util.handlers.TextFormatter;
+import lab.common.util.requestSystem.Response;
 
 public class HistoryCommand extends CommandAbstract {
 
@@ -14,12 +15,12 @@ public class HistoryCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
+    public Response execute(CollectionManager manager) {
         System.out.println(HistorySaver.getCommandsHistory().size());
         if (HistorySaver.getCommandsHistory().size() > COUNT_OF_WATCHABLE_COMMANDS) {
-            return TextFormatter.colorMessage(HistorySaver.getCommandsHistory().subList(HistorySaver.getCommandsHistory().size()
-                    - COUNT_OF_WATCHABLE_COMMANDS, HistorySaver.getCommandsHistory().size()).toString());
+            return new Response(TextFormatter.colorMessage(HistorySaver.getCommandsHistory().subList(HistorySaver.getCommandsHistory().size()
+                    - COUNT_OF_WATCHABLE_COMMANDS, HistorySaver.getCommandsHistory().size()).toString()));
         }
-        return TextFormatter.colorMessage(HistorySaver.getCommandsHistory().toString());
+        return new Response(TextFormatter.colorMessage(HistorySaver.getCommandsHistory().toString()));
     }
 }

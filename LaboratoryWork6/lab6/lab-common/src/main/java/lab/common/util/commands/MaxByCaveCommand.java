@@ -3,6 +3,9 @@ package lab.common.util.commands;
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.TextFormatter;
+import lab.common.util.requestSystem.Response;
+
+import java.util.ArrayList;
 
 public class MaxByCaveCommand extends CommandAbstract {
 
@@ -11,8 +14,10 @@ public class MaxByCaveCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
+    public Response execute(CollectionManager manager) {
         Dragon dragon = manager.getMaxByCave();
-        return TextFormatter.colorMessage("Данные о драконе с самой глубокой пещерой:" + dragon);
+        ArrayList<Dragon> dragons = new ArrayList<>();
+        dragons.add(dragon);
+        return new Response(dragons, TextFormatter.colorMessage("Info about dragon with deepest cave: "));
     }
 }

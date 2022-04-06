@@ -1,6 +1,7 @@
 package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
+import lab.common.util.requestSystem.Response;
 
 public class RemoveByIdCommand extends CommandAbstract {
 
@@ -12,7 +13,7 @@ public class RemoveByIdCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
-        return manager.removeById(id);
+    public Response execute(CollectionManager manager) {
+        return new Response(manager.removeById(id));
     }
 }

@@ -23,6 +23,6 @@ public class IOController {
         if (command.getName().equals("exit")) {
             throw new DisconnectInitException("Client initialize disconnect");
         }
-        return new Response(command.execute(manager), true);
+        return (Response) command.execute(manager);
     }
 }

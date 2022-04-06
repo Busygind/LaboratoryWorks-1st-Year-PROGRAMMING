@@ -1,6 +1,7 @@
 package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
+import lab.common.util.requestSystem.Response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +17,9 @@ public class HelpCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
+    public Response execute(CollectionManager manager) {
         fillCommandsForBuildList();
-        return getCommands();
+        return new Response(getCommands());
     }
 
     private static void fillCommandsForBuildList() {

@@ -3,6 +3,7 @@ package lab.common.util.commands;
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.TextFormatter;
+import lab.common.util.requestSystem.Response;
 
 public class UpdateByIdCommand extends CommandAbstract {
 
@@ -16,7 +17,7 @@ public class UpdateByIdCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
+    public Response execute(CollectionManager manager) {
         boolean flag = false;
         for (Dragon elem : manager.getDragons()) {
             if (elem.getId() == id) {
@@ -26,9 +27,9 @@ public class UpdateByIdCommand extends CommandAbstract {
         }
         if (flag) {
             manager.addDragon(dragon);
-            return TextFormatter.colorInfoMessage("Info about dragon successfully updated");
+            return new Response(TextFormatter.colorInfoMessage("Info about dragon successfully updated"));
         } else {
-            return TextFormatter.colorInfoMessage("ID not found");
+            return new Response(TextFormatter.colorInfoMessage("ID not found"));
         }
     }
 }

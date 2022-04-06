@@ -3,6 +3,7 @@ package lab.common.util.commands;
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.TextFormatter;
+import lab.common.util.requestSystem.Response;
 
 
 public class AddIfMinCommand extends CommandAbstract {
@@ -15,13 +16,13 @@ public class AddIfMinCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
+    public Response execute(CollectionManager manager) {
         int minAge = manager.getMin().getAge();
         if (dragon.getAge() < minAge) {
             manager.addDragon(dragon);
-            return TextFormatter.colorInfoMessage("Dragon successfully added");
+            return new Response(TextFormatter.colorInfoMessage("Dragon successfully added"));
         } else {
-            return TextFormatter.colorInfoMessage("В коллекции есть дракон помладше!");
+            return new Response(TextFormatter.colorInfoMessage("В коллекции есть дракон помладше!"));
         }
     }
 }

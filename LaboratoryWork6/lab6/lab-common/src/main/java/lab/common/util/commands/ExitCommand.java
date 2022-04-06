@@ -2,6 +2,7 @@ package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.handlers.TextFormatter;
+import lab.common.util.requestSystem.Response;
 
 
 public class ExitCommand extends CommandAbstract {
@@ -11,7 +12,7 @@ public class ExitCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
-        return TextFormatter.colorInfoMessage("Connection disabled");
+    public Response execute(CollectionManager manager) {
+        return new Response(TextFormatter.colorInfoMessage("Connection disabled"));
     }
 }

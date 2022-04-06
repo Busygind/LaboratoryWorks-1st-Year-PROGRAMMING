@@ -1,6 +1,7 @@
 package lab.common.util.commands;
 
 import lab.common.util.entities.CollectionManager;
+import lab.common.util.requestSystem.Response;
 
 public class InfoCommand extends CommandAbstract {
 
@@ -9,7 +10,7 @@ public class InfoCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
-        return manager.showInfo();
+    public Response execute(CollectionManager manager) {
+        return new Response(manager.showInfo());
     }
 }

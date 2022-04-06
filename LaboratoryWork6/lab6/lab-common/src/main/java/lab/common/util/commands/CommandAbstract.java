@@ -15,7 +15,7 @@ public abstract class CommandAbstract implements Serializable {
         this.countOfArgs = countOfArgs;
     }
 
-    public abstract String execute(CollectionManager manager);
+    public abstract Object execute(CollectionManager manager);
 
     public int getCountOfArgs() {
         return countOfArgs;

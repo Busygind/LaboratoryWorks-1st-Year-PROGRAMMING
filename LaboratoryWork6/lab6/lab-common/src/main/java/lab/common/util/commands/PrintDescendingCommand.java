@@ -3,10 +3,10 @@ package lab.common.util.commands;
 import lab.common.util.entities.CollectionManager;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.TextFormatter;
+import lab.common.util.requestSystem.Response;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class PrintDescendingCommand extends CommandAbstract {
 
@@ -15,9 +15,9 @@ public class PrintDescendingCommand extends CommandAbstract {
     }
 
     @Override
-    public String execute(CollectionManager manager) {
-        List<Dragon> dragons = new ArrayList<>(manager.getDragons());
+    public Response execute(CollectionManager manager) {
+        ArrayList<Dragon> dragons = new ArrayList<>(manager.getDragons());
         dragons.sort(Collections.reverseOrder());
-        return TextFormatter.colorMessage(dragons.toString());
+        return new Response(dragons, "List of dragons compared of age (reverse): ");
     }
 }
