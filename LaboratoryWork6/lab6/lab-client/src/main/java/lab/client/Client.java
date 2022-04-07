@@ -5,11 +5,13 @@ import lab.common.util.requestSystem.Response;
 import lab.common.util.requestSystem.Serializer;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.nio.channels.UnresolvedAddressException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -54,12 +56,19 @@ public final class Client {
             client.configureBlocking(false);
             client.register(selector, SelectionKey.OP_WRITE);
             startSelectorLoop(client, SCANNER);
+        } catch (ConnectException e) {
+            TextFormatter.printErrorMessage("Server with this host is temporarily unavailable. Try again later");
+            main(args);
         } catch (IOException e) {
+            e.printStackTrace();
             TextFormatter.printErrorMessage(e.getMessage());
         } catch (ClassNotFoundException e) {
             TextFormatter.printErrorMessage("Trying to serialize non-serializable object");
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (UnresolvedAddressException e) {
+            TextFormatter.printErrorMessage("Server with this host not found. Try again");
+            main(args);
         }
     }
 
