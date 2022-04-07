@@ -5,6 +5,7 @@ import lab.common.util.requestSystem.Response;
 import lab.common.util.requestSystem.Serializer;
 
 import java.io.IOException;
+import java.io.StreamCorruptedException;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -59,6 +60,9 @@ public final class Client {
         } catch (ConnectException e) {
             TextFormatter.printErrorMessage("Server with this host is temporarily unavailable. Try again later");
             main(args);
+        } catch (StreamCorruptedException e) {
+            TextFormatter.printErrorMessage("Disconnected.");
+            System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
             TextFormatter.printErrorMessage(e.getMessage());
