@@ -24,10 +24,8 @@ import java.util.Set;
 public final class Server {
 
     private static Selector selector;
-    protected static File file;
+    static File file;
 
-//    Назначение автоматически генерируемых полей объектов в коллекции.
-//    Сохранение коллекции в файл при исполнении специальной команды, доступной только серверу (клиент такую команду отправить не может).
     private Server() {
         throw new UnsupportedOperationException("This is an utility class and can not be instantiated");
     }
@@ -41,9 +39,9 @@ public final class Server {
 
     private static void startServer(String[] args) {
         ServerConfig.logger.info("Server started");
-        String fileName = args[0];
-        file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
-        //file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
+        //String fileName = args[0];
+        //file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
+        file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
         fillCollectionFromFile(file);
         try {
             selector = Selector.open();
@@ -120,7 +118,6 @@ public final class Server {
             ServerConfig.logger.fatal("File doesn't exist");
             System.exit(0);
         } catch (Exception e) {
-            //todo не понятно, какую ошибку бросает при неверном формате ввода
             ServerConfig.logger.fatal("Can't parse file, data is incorrect");
             System.exit(0);
         }

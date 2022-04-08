@@ -30,7 +30,6 @@ public class ArgumentsListener {
             boolean correctAge = DragonValidator.validateField(dragon, "age");
             boolean correctWingspan = DragonValidator.validateField(dragon, "wingspan");
             if (!correctName | !correctAge | !correctWingspan) {
-                TextFormatter.printErrorMessage("Введенные данные некорректны");
                 return null;
             }
         } catch (NumberFormatException e) {

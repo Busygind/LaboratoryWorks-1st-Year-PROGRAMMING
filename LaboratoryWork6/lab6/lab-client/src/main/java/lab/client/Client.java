@@ -120,9 +120,11 @@ public final class Client {
                     } catch (NullPointerException | IOException e) {
                         TextFormatter.printErrorMessage(e.getMessage());
                     }
-                } catch (NoSuchElementException | IllegalArgumentException e) {
+                } catch (NoSuchElementException e) {
                     TextFormatter.printErrorMessage(e.getMessage());
                     return false;
+                } catch (IllegalArgumentException e) {
+                    TextFormatter.printErrorMessage(e.getMessage());
                 }
             }
         }
