@@ -37,7 +37,8 @@ public final class Serializer {
     }
 
     public static ByteBuffer serializeResponse(Response response) throws IOException {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream(BUFFER_LENGTH);
+        int bufSize = (response.getCountOfDragons() + 1) * BUFFER_LENGTH;
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream(bufSize);
         ObjectOutputStream oos = new ObjectOutputStream(bytes);
         oos.writeObject(response);
         oos.flush();

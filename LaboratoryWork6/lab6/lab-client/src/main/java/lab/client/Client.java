@@ -29,7 +29,7 @@ public final class Client {
     }
 
     private static final int PORT = 45846;
-    private static final int BYTE_BUFFER_LENGTH = 4096;
+    private static final int BYTE_BUFFER_LENGTH = 65000;
     private static final int SLEEP_TIME = 500;
     private static final Scanner SCANNER = new Scanner(System.in);
     private static InetSocketAddress hostAddress;
@@ -64,8 +64,8 @@ public final class Client {
             TextFormatter.printErrorMessage("Disconnected.");
             System.exit(0);
         } catch (IOException e) {
-            e.printStackTrace();
-            TextFormatter.printErrorMessage(e.getMessage());
+            TextFormatter.printErrorMessage("Server invalid or closed. Try to connect again");
+            main(args);
         } catch (ClassNotFoundException e) {
             TextFormatter.printErrorMessage("Trying to serialize non-serializable object");
         } catch (InterruptedException e) {

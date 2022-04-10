@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
@@ -39,6 +40,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
      */
     @NotNull
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")
+    @Size(min = 1, max = 70)
     private String name;
     /**
      * Координаты текущего элемента коллекции
