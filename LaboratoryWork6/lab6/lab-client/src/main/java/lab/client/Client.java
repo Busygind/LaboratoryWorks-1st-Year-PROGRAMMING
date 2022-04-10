@@ -30,7 +30,7 @@ public final class Client {
 
     private static final int PORT = 45846;
     private static final int BYTE_BUFFER_LENGTH = 4096;
-    private static final int SLEEP_TIME = 1000;
+    private static final int SLEEP_TIME = 500;
     private static final Scanner SCANNER = new Scanner(System.in);
     private static InetSocketAddress hostAddress;
     private static Selector selector;

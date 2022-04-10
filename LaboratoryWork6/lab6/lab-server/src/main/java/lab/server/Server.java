@@ -39,9 +39,9 @@ public final class Server {
 
     private static void startServer(String[] args) {
         ServerConfig.logger.info("Server started");
-        //String fileName = args[0];
-        //file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
-        file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
+        String fileName = args[0];
+        file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
+        //file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
         fillCollectionFromFile(file);
         try {
             selector = Selector.open();
@@ -79,6 +79,7 @@ public final class Server {
                 SocketChannel socketChannel = (SocketChannel) key.channel();
                 ServerConfig.logger.info("Client " + socketChannel.getLocalAddress() + " trying to send message");
                 CommandAbstract command = IOController.getCommand(socketChannel);
+                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
                 HistorySaver.addCommandInHistory(command);
                 try {
                     Response response = IOController.buildResponse(command, ServerConfig.manager);

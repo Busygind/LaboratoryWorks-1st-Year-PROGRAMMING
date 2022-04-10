@@ -22,6 +22,10 @@ public class ConsoleThread extends Thread {
                     ServerConfig.logger.fatal("Something went wrong, can't save collection");
                 }
             }
+            if ("exit".equalsIgnoreCase(line)) {
+                ServerConfig.logger.info("Server closed");
+                System.exit(0);
+            }
         }
     }
 
