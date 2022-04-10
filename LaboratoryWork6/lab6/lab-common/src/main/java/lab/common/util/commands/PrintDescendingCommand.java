@@ -7,6 +7,7 @@ import lab.common.util.requestSystem.Response;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class PrintDescendingCommand extends CommandAbstract {
 
@@ -16,7 +17,7 @@ public class PrintDescendingCommand extends CommandAbstract {
 
     @Override
     public Response execute(CollectionManager manager) {
-        ArrayList<Dragon> dragons = new ArrayList<>(manager.getDragons());
+        List<Dragon> dragons = new ArrayList<>(manager.getDragons());
         dragons.sort(Collections.reverseOrder());
         return new Response(dragons, TextFormatter.colorInfoMessage("List of dragons compared of age (reverse): "));
     }

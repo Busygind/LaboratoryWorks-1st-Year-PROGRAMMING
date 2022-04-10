@@ -6,6 +6,7 @@ import lab.common.util.handlers.TextFormatter;
 import lab.common.util.requestSystem.Response;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MaxByCaveCommand extends CommandAbstract {
 
@@ -16,7 +17,7 @@ public class MaxByCaveCommand extends CommandAbstract {
     @Override
     public Response execute(CollectionManager manager) {
         Dragon dragon = manager.getMaxByCave();
-        ArrayList<Dragon> dragons = new ArrayList<>();
+        List<Dragon> dragons = new ArrayList<>();
         dragons.add(dragon);
         return new Response(dragons, TextFormatter.colorMessage("Info about dragon with deepest cave: "));
     }

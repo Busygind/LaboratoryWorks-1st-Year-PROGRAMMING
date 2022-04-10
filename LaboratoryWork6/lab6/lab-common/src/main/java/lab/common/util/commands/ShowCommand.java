@@ -5,6 +5,7 @@ import lab.common.util.entities.Dragon;
 import lab.common.util.requestSystem.Response;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShowCommand extends CommandAbstract {
@@ -15,8 +16,8 @@ public class ShowCommand extends CommandAbstract {
 
     @Override
     public Response execute(CollectionManager manager) {
-        ArrayList<Dragon> sortedList = new ArrayList<>(manager.getDragons());
-        sortedList = (ArrayList<Dragon>) sortedList.stream().sorted(Dragon::compareByName).collect(Collectors.toList());
+        List<Dragon> sortedList = new ArrayList<>(manager.getDragons());
+        sortedList = sortedList.stream().sorted(Dragon::compareByName).collect(Collectors.toList());
         return new Response(sortedList, "List of dragons: ");
     }
 }
