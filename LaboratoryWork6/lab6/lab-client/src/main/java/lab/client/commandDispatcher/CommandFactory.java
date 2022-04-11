@@ -1,4 +1,4 @@
-package lab.client;
+package lab.client.commandDispatcher;
 
 import lab.client.exceptions.CommandNotFoundException;
 import lab.common.util.commands.AddCommand;
@@ -19,13 +19,13 @@ import lab.common.util.commands.UpdateByIdCommand;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.TextFormatter;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CommandFactory {
 
     private final ArgumentsListener listener = new ArgumentsListener();
 
-    public CommandAbstract createCommand(String name, ArrayList<String> args) throws CommandNotFoundException {
+    public CommandAbstract createCommand(String name, List<String> args) throws CommandNotFoundException {
         Dragon dragon;
         try {
             switch (name) {

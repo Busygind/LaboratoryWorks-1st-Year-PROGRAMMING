@@ -1,9 +1,9 @@
-package lab.client;
+package lab.client.commandDispatcher;
 
 import lab.common.util.commands.CommandAbstract;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс, инициализирующий команду по полученной строке
@@ -15,9 +15,9 @@ public class CommandHandler {
     }
 
     public static CommandAbstract initCommand(String line) throws IOException {
-        ArrayList<String> commandWithArgs = LineSplitter.smartSplit(line);
+        List<String> commandWithArgs = LineSplitter.smartSplit(line);
         String commandName = CommandHandler.getCommandName(commandWithArgs);
-        ArrayList<String> commandArgs = CommandHandler.getCommandArguments(commandWithArgs);
+        List<String> commandArgs = CommandHandler.getCommandArguments(commandWithArgs);
         CommandFactory factory = new CommandFactory();
         return factory.createCommand(commandName, commandArgs);
     }
@@ -28,7 +28,7 @@ public class CommandHandler {
      * @param line разделенная строка
      * @return массив аргументов
      */
-    public static ArrayList<String> getCommandArguments(ArrayList<String> line) {
+    public static List<String> getCommandArguments(List<String> line) {
         line.remove(0);
         return line;
     }
@@ -39,7 +39,7 @@ public class CommandHandler {
      * @param line разделенная строка
      * @return имя команды
      */
-    public static String getCommandName(ArrayList<String> line) {
+    public static String getCommandName(List<String> line) {
         return line.get(0);
     }
 }

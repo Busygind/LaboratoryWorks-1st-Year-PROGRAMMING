@@ -1,6 +1,7 @@
-package lab.client;
+package lab.client.commandDispatcher;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс, отвечающий за корректное разделение строки при чтении команд и их аргументов от пользователя
@@ -16,8 +17,8 @@ public final class LineSplitter {
      * @param line строка, которую необходимо разделить
      * @return разделенный список строк
      */
-    public static ArrayList<String> smartSplit(String line) {
-        ArrayList<String> splittedLine = new ArrayList<>();
+    public static List<String> smartSplit(String line) {
+        List<String> splittedLine = new ArrayList<>();
         StringBuilder currentString = new StringBuilder();
         boolean screeningStarted = false;
         for (char ch : line.toCharArray()) {

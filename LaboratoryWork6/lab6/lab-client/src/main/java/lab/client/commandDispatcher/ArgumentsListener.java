@@ -1,4 +1,4 @@
-package lab.client;
+package lab.client.commandDispatcher;
 
 import lab.common.util.entities.Coordinates;
 import lab.common.util.entities.Dragon;

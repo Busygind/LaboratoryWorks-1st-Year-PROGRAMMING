@@ -1,4 +1,4 @@
-package lab.client;
+package lab.client.commandDispatcher;
 
 import lab.common.util.commands.CommandAbstract;
 import lab.common.util.requestSystem.Serializer;
