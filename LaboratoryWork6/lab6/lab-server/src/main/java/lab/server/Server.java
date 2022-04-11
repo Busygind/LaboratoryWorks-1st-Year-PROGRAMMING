@@ -44,7 +44,7 @@ public final class Server {
         String fileName = args[0];
         file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
         //file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\d.xml");
-        //file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
+        //file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\docs\\Dragons.xml");
         fillCollectionFromFile(file);
         try {
             selector = Selector.open();
