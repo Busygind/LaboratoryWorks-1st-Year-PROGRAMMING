@@ -2,7 +2,6 @@ package lab.server;
 
 import lab.common.util.commands.CommandAbstract;
 import lab.common.util.entities.CollectionManager;
-import lab.common.util.handlers.TextFormatter;
 import lab.common.util.requestSystem.Response;
 import lab.common.util.requestSystem.Serializer;
 import lab.server.exceptions.DisconnectInitException;

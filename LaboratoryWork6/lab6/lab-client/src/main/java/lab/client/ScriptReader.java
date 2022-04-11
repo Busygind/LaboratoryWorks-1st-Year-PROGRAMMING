@@ -1,8 +1,10 @@
 package lab.client;
 
+import lab.client.commandDispatcher.LineSplitter;
+
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ScriptReader {
@@ -20,7 +22,7 @@ public class ScriptReader {
     }
 
     private boolean scriptAlreadyRan(String commandLine) {
-        ArrayList<String> commandParts = LineSplitter.smartSplit(commandLine);
+        List<String> commandParts = LineSplitter.smartSplit(commandLine);
         return namesOfRanScripts.contains(commandParts.get(1));
     }
 

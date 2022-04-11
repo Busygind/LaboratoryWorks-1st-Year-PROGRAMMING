@@ -3,7 +3,6 @@ package lab.common.util.requestSystem;
 import lab.common.util.entities.Dragon;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Response implements Serializable {
