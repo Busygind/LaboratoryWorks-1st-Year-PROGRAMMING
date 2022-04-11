@@ -1,5 +1,7 @@
 package lab.server;
 
+import com.thoughtworks.xstream.converters.ConversionException;
+import com.thoughtworks.xstream.io.StreamException;
 import lab.common.util.commands.CommandAbstract;
 import lab.common.util.entities.Dragon;
 import lab.common.util.handlers.HistorySaver;
@@ -41,6 +43,7 @@ public final class Server {
         ServerConfig.logger.info("Server started");
         String fileName = args[0];
         file = new File(ServerConfig.starting, fileName); // Initialize file from cmd
+        //file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\d.xml");
         //file = new File("C:\\Users\\Дмитрий\\JavaProjects\\LaboratoryWorks-1st-Year-PROGRAMMING\\LaboratoryWork6\\lab6\\Dragons.xml");
         fillCollectionFromFile(file);
         try {
@@ -57,7 +60,7 @@ public final class Server {
     }
 
     private static void startSelectorLoop(ServerSocketChannel channel) throws IOException, ClassNotFoundException, InterruptedException {
-        while (true) {
+        while (channel.isOpen()) {
             selector.select();
             startIteratorLoop(channel);
         }
@@ -118,7 +121,10 @@ public final class Server {
         } catch (IOException e) {
             ServerConfig.logger.fatal("File doesn't exist");
             System.exit(0);
-        } catch (Exception e) {
+        } catch (StreamException e) {
+            ServerConfig.logger.fatal("File is empty");
+            System.exit(0);
+        } catch (NullPointerException | ConversionException e) {
             ServerConfig.logger.fatal("Can't parse file, data is incorrect");
             System.exit(0);
         }
