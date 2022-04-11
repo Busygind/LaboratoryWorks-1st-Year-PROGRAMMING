@@ -1,14 +1,14 @@
 package lab.client;
 
+import lab.client.commandDispatcher.LineSplitter;
+import lab.client.dataController.CommandSender;
+import lab.client.dataController.ResponseReceiver;
 import lab.common.util.handlers.TextFormatter;
-import lab.common.util.requestSystem.Response;
-import lab.common.util.requestSystem.Serializer;
 
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -29,12 +29,9 @@ public final class Client {
     }
 
     private static final int PORT = 45846;
-    private static final int BYTE_BUFFER_LENGTH = 65000;
     private static final int SLEEP_TIME = 500;
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static InetSocketAddress hostAddress;
     private static Selector selector;
-    private static String hostname;
 
     /**
      * Старт программы. Инициализация входного файла с содержимым коллекции, создание парсера и занесение
@@ -46,8 +43,8 @@ public final class Client {
      */
     public static void main(String[] args) {
         TextFormatter.printMessage("Enter hostname: ");
-        hostname = SCANNER.nextLine();
-        hostAddress = new InetSocketAddress(hostname, PORT);
+        String hostname = SCANNER.nextLine();
+        InetSocketAddress hostAddress = new InetSocketAddress(hostname, PORT);
 
         try {
             selector = Selector.open();
@@ -62,16 +59,15 @@ public final class Client {
             main(args);
         } catch (StreamCorruptedException e) {
             TextFormatter.printErrorMessage("Disconnected.");
-            System.exit(0);
-        } catch (IOException e) {
-            TextFormatter.printErrorMessage("Server invalid or closed. Try to connect again");
-            main(args);
         } catch (ClassNotFoundException e) {
             TextFormatter.printErrorMessage("Trying to serialize non-serializable object");
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            TextFormatter.printErrorMessage("Thread was interrupt while sleeping. Restart client");
         } catch (UnresolvedAddressException e) {
             TextFormatter.printErrorMessage("Server with this host not found. Try again");
+            main(args);
+        } catch (IOException e) {
+            TextFormatter.printErrorMessage("Server invalid or closed. Try to connect again");
             main(args);
         }
     }
@@ -93,15 +89,8 @@ public final class Client {
             iterator.remove();
 
             if (key.isReadable()) {
-                SocketChannel socketChannel = (SocketChannel) key.channel();
-                ByteBuffer readBuffer = ByteBuffer.allocate(BYTE_BUFFER_LENGTH);
-                socketChannel.read(readBuffer);
-                Response response = Serializer.deserializeResponse(readBuffer.array());
-                TextFormatter.printInfoMessage(response.getMessage());
-                if (response.getDragons() != null) {
-                    TextFormatter.printMessage(response.getDragons().toString());
-                }
-                channel.register(selector, SelectionKey.OP_WRITE);
+                ResponseReceiver responseReceiver = new ResponseReceiver(channel, key, selector);
+                responseReceiver.receive();
             } else if (key.isWritable()) {
                 TextFormatter.printInfoMessage("Enter command (to check available commands type \"help\"): ");
                 try {
@@ -113,10 +102,8 @@ public final class Client {
                         scriptReader.stopScriptReading();
                     }
                     try {
-                        ByteBuffer buffer = CommandBuilder.buildCommand(input);
-                        channel.write(buffer);
-                        channel.register(selector, SelectionKey.OP_READ);
-                        Thread.sleep(SLEEP_TIME);
+                        CommandSender commandSender = new CommandSender(channel, input, selector);
+                        commandSender.send();
                     } catch (NullPointerException | IOException e) {
                         TextFormatter.printErrorMessage(e.getMessage());
                     }
