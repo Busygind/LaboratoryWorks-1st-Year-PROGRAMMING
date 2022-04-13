@@ -10,14 +10,13 @@ import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
 public final class Serializer {
-    private static final int BUFFER_LENGTH = 4096;
 
     private Serializer() {
         //never used
     }
 
     public static ByteBuffer serializeCommand(CommandAbstract command) throws IOException {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream(BUFFER_LENGTH);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bytes);
         oos.writeObject(command);
         oos.flush();
@@ -37,8 +36,7 @@ public final class Serializer {
     }
 
     public static ByteBuffer serializeResponse(Response response) throws IOException {
-        int bufSize = (response.getCountOfDragons() + 1) * BUFFER_LENGTH;
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream(bufSize);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bytes);
         oos.writeObject(response);
         oos.flush();

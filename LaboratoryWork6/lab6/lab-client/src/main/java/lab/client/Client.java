@@ -4,6 +4,7 @@ import lab.client.commandDispatcher.LineSplitter;
 import lab.client.dataController.CommandSender;
 import lab.client.dataController.ResponseReceiver;
 import lab.common.util.handlers.TextFormatter;
+import lab.common.util.requestSystem.Response;
 
 import java.io.IOException;
 import java.io.StreamCorruptedException;
@@ -90,7 +91,11 @@ public final class Client {
 
             if (key.isReadable()) {
                 ResponseReceiver responseReceiver = new ResponseReceiver(channel, key, selector);
-                responseReceiver.receive();
+                Response response = responseReceiver.receive();
+                TextFormatter.printInfoMessage(response.getMessage());
+                if (response.getDragons() != null) {
+                    TextFormatter.printMessage(response.getDragons().toString());
+                }
             } else if (key.isWritable()) {
                 TextFormatter.printInfoMessage("Enter command (to check available commands type \"help\"): ");
                 try {

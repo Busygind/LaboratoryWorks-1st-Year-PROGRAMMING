@@ -22,15 +22,11 @@ public class ResponseReceiver {
         this.selector = selector;
     }
 
-    public void receive() throws IOException, ClassNotFoundException {
+    public Response receive() throws IOException, ClassNotFoundException {
         SocketChannel socketChannel = (SocketChannel) key.channel();
         ByteBuffer readBuffer = ByteBuffer.allocate(socketChannel.socket().getReceiveBufferSize());
         socketChannel.read(readBuffer);
-        Response response = Serializer.deserializeResponse(readBuffer.array());
-        TextFormatter.printInfoMessage(response.getMessage());
-        if (response.getDragons() != null) {
-            TextFormatter.printMessage(response.getDragons().toString());
-        }
         channel.register(selector, SelectionKey.OP_WRITE);
+        return Serializer.deserializeResponse(readBuffer.array());
     }
 }
