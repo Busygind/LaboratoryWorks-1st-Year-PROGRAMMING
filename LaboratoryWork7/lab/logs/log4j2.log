@@ -1,0 +1,136 @@
+2022-04-23 22:37:36,567 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-23 22:37:36,748 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-23 22:37:36,749 INFO l.s.ServerConfig [main] Server started
+2022-04-23 22:37:36,749 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-23 22:37:36,764 INFO l.s.ServerConfig [main] Socket opened
+2022-04-23 22:37:55,259 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-23 22:38:03,562 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 22:38:03,588 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-23 22:38:10,721 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 22:38:10,723 INFO l.s.ServerConfig [main] Server recieve [help] command
+2022-04-23 22:38:10,725 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-23 22:38:14,225 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 22:38:14,226 INFO l.s.ServerConfig [main] Server recieve [show] command
+2022-04-23 22:38:14,240 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-23 22:52:26,421 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-23 22:52:26,591 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-23 22:52:26,591 INFO l.s.ServerConfig [main] Server started
+2022-04-23 22:52:26,592 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-23 22:52:26,603 INFO l.s.ServerConfig [main] Socket opened
+2022-04-23 22:52:34,629 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-23 22:52:40,029 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 22:52:40,049 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-23 22:52:51,893 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 22:52:51,894 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-23 22:53:32,260 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 22:53:32,267 INFO l.s.ServerConfig [main] Server recieve [add] command
+2022-04-23 22:53:32,270 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-23 22:53:36,732 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 22:53:36,733 INFO l.s.ServerConfig [main] Server recieve [show] command
+2022-04-23 22:53:36,736 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-23 23:44:30,808 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-23 23:44:30,983 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-23 23:44:30,985 INFO l.s.ServerConfig [main] Server started
+2022-04-23 23:44:30,985 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-23 23:44:31,000 INFO l.s.ServerConfig [main] Socket opened
+2022-04-23 23:44:41,456 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-23 23:44:52,114 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 23:44:52,140 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-23 23:44:56,756 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-23 23:44:56,758 INFO l.s.ServerConfig [main] Server recieve [show] command
+2022-04-23 23:44:56,767 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 00:26:21,228 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-24 00:26:21,612 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-24 00:26:21,615 INFO l.s.ServerConfig [main] Server started
+2022-04-24 00:26:21,616 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-24 00:26:21,636 INFO l.s.ServerConfig [main] Socket opened
+2022-04-24 00:26:30,164 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-24 00:26:38,009 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 00:26:38,041 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 00:27:08,192 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 00:27:08,256 INFO l.s.ServerConfig [main] Server recieve [add] command
+2022-04-24 00:27:08,259 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 00:29:11,873 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-24 00:29:12,161 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-24 00:29:12,162 INFO l.s.ServerConfig [main] Server started
+2022-04-24 00:29:12,163 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-24 00:29:12,188 INFO l.s.ServerConfig [main] Socket opened
+2022-04-24 00:29:17,996 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-24 00:29:26,542 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 00:29:26,571 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 00:29:54,785 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 00:29:54,825 INFO l.s.ServerConfig [main] Server recieve [add] command
+2022-04-24 00:29:54,830 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 00:30:20,631 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-24 00:30:20,906 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-24 00:30:20,908 INFO l.s.ServerConfig [main] Server started
+2022-04-24 00:30:20,908 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-24 00:30:20,935 INFO l.s.ServerConfig [main] Socket opened
+2022-04-24 00:30:30,611 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-24 00:30:53,466 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 00:30:53,495 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 00:31:14,216 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 00:31:14,246 INFO l.s.ServerConfig [main] Server recieve [add] command
+2022-04-24 00:31:14,250 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 13:05:48,878 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-24 13:05:49,044 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-24 13:05:49,045 INFO l.s.ServerConfig [main] Server started
+2022-04-24 13:05:49,046 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-24 13:05:49,056 INFO l.s.ServerConfig [main] Socket opened
+2022-04-24 13:06:05,046 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-24 13:06:11,049 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:08:05,608 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-24 13:08:05,874 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-24 13:08:05,876 INFO l.s.ServerConfig [main] Server started
+2022-04-24 13:08:05,876 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-24 13:08:05,893 INFO l.s.ServerConfig [main] Socket opened
+2022-04-24 13:08:13,082 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-24 13:08:19,875 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:08:19,920 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 13:08:26,505 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:08:26,507 INFO l.s.ServerConfig [main] Server recieve [show] command
+2022-04-24 13:08:26,516 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 13:09:07,574 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:09:07,576 INFO l.s.ServerConfig [main] Server recieve [add] command
+2022-04-24 13:09:07,577 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 13:09:12,178 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:09:12,179 INFO l.s.ServerConfig [main] Server recieve [show] command
+2022-04-24 13:09:12,180 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 13:15:29,177 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:15:29,178 FATAL l.s.ServerConfig [main] Some problems with IO. Try again
+2022-04-24 13:17:44,970 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-24 13:17:45,206 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-24 13:17:45,208 INFO l.s.ServerConfig [main] Server started
+2022-04-24 13:17:45,208 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-24 13:17:45,226 INFO l.s.ServerConfig [main] Socket opened
+2022-04-24 13:17:53,468 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-24 13:17:53,631 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-24 13:17:53,632 INFO l.s.ServerConfig [main] Server started
+2022-04-24 13:17:53,632 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-24 13:17:53,640 INFO l.s.ServerConfig [main] Socket opened
+2022-04-24 13:17:58,155 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-24 13:18:09,541 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:18:09,560 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 13:18:13,207 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:18:13,209 INFO l.s.ServerConfig [main] Server recieve [help] command
+2022-04-24 13:18:13,211 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 13:19:01,320 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 13:19:01,327 INFO l.s.ServerConfig [main] Server recieve [add] command
+2022-04-24 13:19:01,353 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 14:04:02,712 INFO o.h.v.i.u.Version [main] HV000001: Hibernate Validator 5.2.4.Final
+2022-04-24 14:04:02,907 INFO l.s.ServerConfig [main] Collection successfully filled
+2022-04-24 14:04:02,908 INFO l.s.ServerConfig [main] Server started
+2022-04-24 14:04:02,908 INFO l.s.ServerConfig [Thread-0] Console thread is running
+2022-04-24 14:04:02,920 INFO l.s.ServerConfig [main] Socket opened
+2022-04-24 14:04:10,059 INFO l.s.ServerConfig [main] Server get connection from /127.0.0.1:45846
+2022-04-24 14:04:16,875 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 14:04:16,900 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 14:04:46,801 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 14:04:46,802 INFO l.s.ServerConfig [main] Server recieve [remove_by_id] command
+2022-04-24 14:04:46,811 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 14:04:58,432 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 14:04:58,432 INFO l.s.ServerConfig [main] Server recieve [remove_by_id] command
+2022-04-24 14:04:58,433 INFO l.s.ServerConfig [main] Server wrote response to client
+2022-04-24 14:05:43,371 INFO l.s.ServerConfig [main] Client /127.0.0.1:45846 trying to send message
+2022-04-24 14:05:43,372 INFO l.s.ServerConfig [main] Server recieve [show] command
+2022-04-24 14:05:43,378 INFO l.s.ServerConfig [main] Server wrote response to client
