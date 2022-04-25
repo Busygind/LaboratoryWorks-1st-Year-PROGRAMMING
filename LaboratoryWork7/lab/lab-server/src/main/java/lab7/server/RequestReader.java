@@ -140,7 +140,7 @@ public class RequestReader {
 
     private CommandAbstract getCommandWithDragonAndId(CommandRequestWithDragonAndId commandRequestWithDragonAndId) {
         switch (commandRequestWithDragonAndId.getName()) {
-            case "remove_by_id":
+            case "update_by_id":
                 return new UpdateByIdCommand(commandRequestWithDragonAndId.getId(),
                                                     commandRequestWithDragonAndId.getDragon(), databaseWorker);
             default:

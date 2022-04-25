@@ -49,7 +49,34 @@ public class DatabaseWorker {
             }
             return false;
         } catch (SQLException e) {
-            ServerConfig.logger.info("SQL problem with generating id");
+            ServerConfig.logger.info("SQL problem with removing by id");
+            return false;
+        }
+    }
+
+    public boolean updateById(Dragon dragon, long id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(Statements.updateById.getStatement());
+            statement.setString(1, dragon.getName());
+            statement.setDate(2, Date.valueOf(LocalDate.now()));
+            statement.setInt(3, dragon.getAge());
+            statement.setInt(4, dragon.getWingspan());
+            statement.setInt(5, dragon.getCoordinates().getX());
+            statement.setFloat(6, dragon.getCoordinates().getY());
+            statement.setString(7, String.valueOf(dragon.getColor()));
+            statement.setDouble(8, dragon.getCave().getDepth());
+            statement.setInt(9, dragon.getCave().getNumberOfTreasures());
+            statement.setString(10, String.valueOf(dragon.getCharacter()));
+            statement.setLong(11, id);
+            statement.setString(12, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            ServerConfig.logger.info("SQL problem with removing by id");
+            e.printStackTrace();
             return false;
         }
     }

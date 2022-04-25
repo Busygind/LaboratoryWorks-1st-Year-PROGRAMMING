@@ -8,8 +8,8 @@ import lab7.server.databaseHandlers.DatabaseWorker;
 
 public class UpdateByIdCommand extends CommandAbstract {
 
-    private long id;
-    private Dragon dragon;
+    private final long id;
+    private final Dragon dragon;
 
     public UpdateByIdCommand(long id, Dragon dragon, DatabaseWorker databaseWorker) {
         super("update_by_id", databaseWorker);
@@ -19,18 +19,18 @@ public class UpdateByIdCommand extends CommandAbstract {
 
     @Override
     public CommandResponse execute(CollectionManager manager) {
-        boolean flag = false;
-        for (Dragon elem : manager.getDragons()) {
-            if (elem.getId() == id) {
-                manager.removeById(id);
-                flag = true;
+        if (getDatabaseWorker().updateById(dragon, id)) {
+            for (Dragon elem : manager.getDragons()) {
+                if (elem.getId() == id) {
+                    manager.removeById(id);
+                    manager.addDragon(dragon);
+                    return new CommandResponse(TextFormatter.
+                                colorInfoMessage("Info about dragon successfully updated"));
+                }
             }
-        }
-        if (flag) {
-            manager.addDragon(dragon);
-            return new CommandResponse(TextFormatter.colorInfoMessage("Info about dragon successfully updated"));
         } else {
             return new CommandResponse(TextFormatter.colorInfoMessage("ID not found"));
         }
+        return null; //never used
     }
 }

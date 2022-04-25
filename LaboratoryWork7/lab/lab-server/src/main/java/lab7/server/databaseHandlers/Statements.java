@@ -14,6 +14,19 @@ public enum Statements {
 
     removeById("DELETE FROM s335103Dragons WHERE (author=? AND id=?) RETURNING s335103Dragons.id;"),
 
+    updateById("UPDATE s335103Dragons " +
+            "SET name = ?, " +
+            "creationDate = ?, " +
+            "age = ?, " +
+            "wingspan = ?, " +
+            "xCoord = ?, " +
+            "yCoord = ?, " +
+            "color = ?, " +
+            "caveDepth = ?, " +
+            "caveNumOfTreasures = ?, " +
+            "dragonCharacter = ? " +
+            "WHERE (id=? AND author=?) RETURNING s335103Dragons.id;"),
+
     getNextId("SELECT nextval('ids')"),
 
     getAll("SELECT * FROM s335103Dragons;");
