@@ -25,7 +25,11 @@ public class DatabaseWorker {
             statement.setInt(5, dragon.getWingspan());
             statement.setInt(6, dragon.getCoordinates().getX());
             statement.setFloat(7, dragon.getCoordinates().getY());
-            statement.setString(8, String.valueOf(dragon.getColor()));
+            if (dragon.getColor() == null) {
+                statement.setString(8,null);
+            } else {
+                statement.setString(8, String.valueOf(dragon.getColor()));
+            }
             statement.setDouble(9, dragon.getCave().getDepth());
             statement.setInt(10, dragon.getCave().getNumberOfTreasures());
             statement.setString(11, String.valueOf(dragon.getCharacter()));
@@ -44,10 +48,7 @@ public class DatabaseWorker {
             statement.setString(1, username);
             statement.setLong(2, id);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-            return false;
+            return resultSet.next();
         } catch (SQLException e) {
             ServerConfig.logger.info("SQL problem with removing by id");
             return false;
@@ -70,10 +71,20 @@ public class DatabaseWorker {
             statement.setLong(11, id);
             statement.setString(12, username);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
+            return resultSet.next();
+        } catch (SQLException e) {
+            ServerConfig.logger.info("SQL problem with removing by id");
+            e.printStackTrace();
             return false;
+        }
+    }
+
+    public boolean clear() {
+        try {
+            PreparedStatement statement = connection.prepareStatement(Statements.clearByUser.getStatement());
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
         } catch (SQLException e) {
             ServerConfig.logger.info("SQL problem with removing by id");
             e.printStackTrace();
@@ -93,5 +104,9 @@ public class DatabaseWorker {
             ServerConfig.logger.info("SQL problem with generating id");
             return null;
         }
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

@@ -49,13 +49,8 @@ public class CollectionManager {
     /**
      * Метод, очищающий текущую коллекцию
      */
-    public void clear() {
-        dragons.clear();
-        if (this.getDragons().isEmpty()) {
-            TextFormatter.printInfoMessage("Collection successful cleared");
-        } else {
-            TextFormatter.printErrorMessage("Something went wrong, try again.");
-        }
+    public void clear(String username) {
+        dragons.removeIf(dragon -> dragon.getAuthorName().equals(username));
     }
 
     /**

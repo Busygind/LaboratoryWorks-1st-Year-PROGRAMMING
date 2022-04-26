@@ -10,6 +10,8 @@ public enum Statements {
 
     addUserToData("INSERT INTO s335103Users (name, password) VALUES(?, ?)"),
 
+    clearByUser("DELETE FROM s335103Dragons WHERE (author=?) RETURNING s335103Dragons.id;"),
+
     getAllForUser("SELECT * FROM s335103Dragons WHERE author=?;"),
 
     removeById("DELETE FROM s335103Dragons WHERE (author=? AND id=?) RETURNING s335103Dragons.id;"),

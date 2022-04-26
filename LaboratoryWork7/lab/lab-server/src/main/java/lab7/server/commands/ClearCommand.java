@@ -13,7 +13,10 @@ public class ClearCommand extends CommandAbstract {
 
     @Override
     public CommandResponse execute(CollectionManager manager) {
-        manager.clear();
-        return new CommandResponse(TextFormatter.colorInfoMessage("Collection successfully cleared"));
+        if (getDatabaseWorker().clear()) {
+            manager.clear(getDatabaseWorker().getUsername());
+            return new CommandResponse(TextFormatter.colorInfoMessage("Your collection successfully cleared"));
+        }
+        return new CommandResponse(TextFormatter.colorInfoMessage("Your collection is empty :("));
     }
 }
