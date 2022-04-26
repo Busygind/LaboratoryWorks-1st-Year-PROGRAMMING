@@ -40,7 +40,8 @@ public class DatabaseInitializer {
                 "color='BLUE' OR " +
                 "color='YELLOW' OR " +
                 "color='ORANGE' OR " +
-                "color='WHITE')," +
+                "color='WHITE' OR " +
+                "color IS NULL)," +
                 "caveDepth real," +
                 "caveNumOfTreasures int NOT NULL CHECK (caveNumOfTreasures > 0)," +
                 "dragonCharacter varchar(12) NOT NULL " +
