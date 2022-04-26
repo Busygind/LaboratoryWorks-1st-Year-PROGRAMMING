@@ -19,6 +19,7 @@ public class AddCommand extends CommandAbstract {
     @Override
     public CommandResponse execute(CollectionManager manager) {
         if (getDatabaseWorker().addDragon(dragon)) {
+            dragon.setAuthorName(getDatabaseWorker().getUsername());
             manager.addDragon(dragon);
             return new CommandResponse(TextFormatter.colorInfoMessage("Dragon successfully added"));
         } else {

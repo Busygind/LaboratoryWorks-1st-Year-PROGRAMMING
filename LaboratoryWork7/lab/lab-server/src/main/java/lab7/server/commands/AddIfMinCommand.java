@@ -20,6 +20,7 @@ public class AddIfMinCommand extends CommandAbstract {
     public CommandResponse execute(CollectionManager manager) {
         int minAge = manager.getMin().getAge();
         if (dragon.getAge() < minAge && getDatabaseWorker().addDragon(dragon)) {
+            dragon.setAuthorName(getDatabaseWorker().getUsername());
             manager.addDragon(dragon);
             return new CommandResponse(TextFormatter.colorInfoMessage("Dragon successfully added"));
         } else {

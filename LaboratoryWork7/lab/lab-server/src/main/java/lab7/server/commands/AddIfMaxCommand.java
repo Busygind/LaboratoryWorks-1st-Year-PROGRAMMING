@@ -19,6 +19,7 @@ public class AddIfMaxCommand extends CommandAbstract {
     public CommandResponse execute(CollectionManager manager) {
         int maxAge = manager.getMax().getAge();
         if (dragon.getAge() > maxAge && getDatabaseWorker().addDragon(dragon)) {
+            dragon.setAuthorName(getDatabaseWorker().getUsername());
             manager.addDragon(dragon);
             return new CommandResponse(TextFormatter.colorInfoMessage("Dragon successfully added"));
         } else {
