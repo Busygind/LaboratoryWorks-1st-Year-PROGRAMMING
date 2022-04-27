@@ -35,62 +35,65 @@ public class RequestReader {
     }
 
     public void read() throws IOException {
-        if (request.getType().equals(RequestType.COMMAND_WITHOUT_ARGS)) {
-            CommandAbstract command = getCommandWithoutArgs((CommandRequestWithoutArgs) request);
-            ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
-            HistorySaver.addCommandInHistory(command);
-            CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
-            ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
-            socketChannel.write(buffer);
-            ServerConfig.logger.info("Server wrote response to client");
-        } else if (request.getType().equals(RequestType.COMMAND_WITH_DRAGON)) {
-            CommandAbstract command = getCommandWithDragon((CommandRequestWithDragon) request);
-//            DatabaseWorker databaseWorker = new DatabaseWorker(dbConnection, ((CommandRequestWithDragon) request).getUsername());
-//            databaseWorker.addDragon(((CommandRequestWithDragon) request).getDragon());
-            ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
-            HistorySaver.addCommandInHistory(command);
-            CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
-            ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
-            socketChannel.write(buffer);
-            ServerConfig.logger.info("Server wrote response to client");
-        } else if (request.getType().equals(RequestType.COMMAND_WITH_ID)) {
-            CommandAbstract command = getCommandWithId((CommandRequestWithId) request);
-            ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
-            HistorySaver.addCommandInHistory(command);
-            CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
-            ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
-            socketChannel.write(buffer);
-            ServerConfig.logger.info("Server wrote response to client");
-        } else if (request.getType().equals(RequestType.COMMAND_WITH_DRAGON_AND_ID)) {
-            CommandAbstract command = getCommandWithDragonAndId((CommandRequestWithDragonAndId) request);
-            ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
-            HistorySaver.addCommandInHistory(command);
-            CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
-            ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
-            socketChannel.write(buffer);
-            ServerConfig.logger.info("Server wrote response to client");
-        } else if (request.getType().equals(RequestType.SIGN_IN)) {
-            try {
-                AuthorizationModule authorizationModule =
-                        new AuthorizationModule((SignInRequest) request, dbConnection);
-                SignInResponse signInResponse = new SignInResponse(authorizationModule.isCorrectUser(), ((SignInRequest) request).getLogin());
-                ByteBuffer buffer = Serializer.serializeResponse(signInResponse);
+        try {
+            if (request.getType().equals(RequestType.COMMAND_WITHOUT_ARGS)) {
+                CommandAbstract command = getCommandWithoutArgs((CommandRequestWithoutArgs) request);
+                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
+                HistorySaver.addCommandInHistory(command);
+                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
+                ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
                 socketChannel.write(buffer);
                 ServerConfig.logger.info("Server wrote response to client");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else if (request.getType().equals(RequestType.SIGN_UP)) {
-            try {
-                AuthorizationModule authorizationModule =
-                        new AuthorizationModule((SignUpRequest) request, dbConnection);
-                SignUpResponse signUpResponse = new SignUpResponse(authorizationModule.isCorrectUser(), ((SignUpRequest) request).getLogin());
-                ByteBuffer buffer = Serializer.serializeResponse(signUpResponse);
+            } else if (request.getType().equals(RequestType.COMMAND_WITH_DRAGON)) {
+                CommandAbstract command = getCommandWithDragon((CommandRequestWithDragon) request);
+                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
+                HistorySaver.addCommandInHistory(command);
+                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
+                ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
                 socketChannel.write(buffer);
                 ServerConfig.logger.info("Server wrote response to client");
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } else if (request.getType().equals(RequestType.COMMAND_WITH_ID)) {
+                CommandAbstract command = getCommandWithId((CommandRequestWithId) request);
+                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
+                HistorySaver.addCommandInHistory(command);
+                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
+                ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
+                socketChannel.write(buffer);
+                ServerConfig.logger.info("Server wrote response to client");
+            } else if (request.getType().equals(RequestType.COMMAND_WITH_DRAGON_AND_ID)) {
+                CommandAbstract command = getCommandWithDragonAndId((CommandRequestWithDragonAndId) request);
+                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
+                HistorySaver.addCommandInHistory(command);
+                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
+                ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
+                socketChannel.write(buffer);
+                ServerConfig.logger.info("Server wrote response to client");
+            } else if (request.getType().equals(RequestType.SIGN_IN)) {
+                try {
+                    AuthorizationModule authorizationModule =
+                            new AuthorizationModule((SignInRequest) request, dbConnection);
+                    SignInResponse signInResponse = new SignInResponse(authorizationModule.isCorrectUser(), ((SignInRequest) request).getLogin());
+                    ByteBuffer buffer = Serializer.serializeResponse(signInResponse);
+                    socketChannel.write(buffer);
+                    ServerConfig.logger.info("Server wrote response to client");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else if (request.getType().equals(RequestType.SIGN_UP)) {
+                try {
+                    AuthorizationModule authorizationModule =
+                            new AuthorizationModule((SignUpRequest) request, dbConnection);
+                    SignUpResponse signUpResponse = new SignUpResponse(authorizationModule.isCorrectUser(), ((SignUpRequest) request).getLogin());
+                    ByteBuffer buffer = Serializer.serializeResponse(signUpResponse);
+                    socketChannel.write(buffer);
+                    ServerConfig.logger.info("Server wrote response to client");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (NullPointerException e) {
+            ServerConfig.logger.error("Received command is null");
+            ServerConfig.logger.error("Response will not write");
         }
     }
 
@@ -98,18 +101,23 @@ public class RequestReader {
         switch (commandRequestWithoutArgs.getName()) {
             case "clear":
                 return new ClearCommand(databaseWorker);
+            case "exit":
+                return new ExitCommand(databaseWorker);
             case "help":
                 return new HelpCommand(databaseWorker);
+            case "history":
+                return new HistoryCommand(databaseWorker);
             case "info":
                 return new InfoCommand(databaseWorker);
             case "show":
                 return new ShowCommand(databaseWorker);
+            case "max_by_cave":
+                return new MaxByCaveCommand(databaseWorker);
             case "print_ascending":
                 return new PrintAscendingCommand(databaseWorker);
             case "print_descending":
                 return new PrintDescendingCommand(databaseWorker);
             default:
-                //todo обработать этот нулл
                 return null;
         }
     }
@@ -123,7 +131,6 @@ public class RequestReader {
             case "add_if_max":
                 return new AddIfMaxCommand(commandRequestWithDragon.getDragon(), databaseWorker);
             default:
-                //todo обработать этот нулл
                 return null;
         }
     }
@@ -133,7 +140,6 @@ public class RequestReader {
             case "remove_by_id":
                 return new RemoveByIdCommand(commandRequestWithId.getId(), databaseWorker);
             default:
-                //todo обработать этот нулл
                 return null;
         }
     }
@@ -144,7 +150,6 @@ public class RequestReader {
                 return new UpdateByIdCommand(commandRequestWithDragonAndId.getId(),
                                                     commandRequestWithDragonAndId.getDragon(), databaseWorker);
             default:
-                //todo обработать этот нулл
                 return null;
         }
     }

@@ -92,8 +92,7 @@ public final class Server {
                 try {
                     requestReader.read();
                 } catch (DisconnectInitException e) {
-                    //todo сохранение коллекции
-                    ServerConfig.logger.info("Client " + socketChannel.getLocalAddress() + " init disconnect. Collection successfully saved");
+                    ServerConfig.logger.info("Client " + socketChannel.getLocalAddress() + " init disconnect.");
                     socketChannel.close();
                     break;
                 }
