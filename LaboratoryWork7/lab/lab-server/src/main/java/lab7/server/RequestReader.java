@@ -38,36 +38,36 @@ public class RequestReader {
         try {
             if (request.getType().equals(RequestType.COMMAND_WITHOUT_ARGS)) {
                 CommandAbstract command = getCommandWithoutArgs((CommandRequestWithoutArgs) request);
-                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
+                ServerConfig.LOGGER.info("Server recieve [" + command.getName() + "] command");
                 HistorySaver.addCommandInHistory(command);
-                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
+                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.MANAGER);
                 ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
                 socketChannel.write(buffer);
-                ServerConfig.logger.info("Server wrote response to client");
+                ServerConfig.LOGGER.info("Server wrote response to client");
             } else if (request.getType().equals(RequestType.COMMAND_WITH_DRAGON)) {
                 CommandAbstract command = getCommandWithDragon((CommandRequestWithDragon) request);
-                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
+                ServerConfig.LOGGER.info("Server recieve [" + command.getName() + "] command");
                 HistorySaver.addCommandInHistory(command);
-                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
+                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.MANAGER);
                 ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
                 socketChannel.write(buffer);
-                ServerConfig.logger.info("Server wrote response to client");
+                ServerConfig.LOGGER.info("Server wrote response to client");
             } else if (request.getType().equals(RequestType.COMMAND_WITH_ID)) {
                 CommandAbstract command = getCommandWithId((CommandRequestWithId) request);
-                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
+                ServerConfig.LOGGER.info("Server recieve [" + command.getName() + "] command");
                 HistorySaver.addCommandInHistory(command);
-                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
+                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.MANAGER);
                 ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
                 socketChannel.write(buffer);
-                ServerConfig.logger.info("Server wrote response to client");
+                ServerConfig.LOGGER.info("Server wrote response to client");
             } else if (request.getType().equals(RequestType.COMMAND_WITH_DRAGON_AND_ID)) {
                 CommandAbstract command = getCommandWithDragonAndId((CommandRequestWithDragonAndId) request);
-                ServerConfig.logger.info("Server recieve [" + command.getName() + "] command");
+                ServerConfig.LOGGER.info("Server recieve [" + command.getName() + "] command");
                 HistorySaver.addCommandInHistory(command);
-                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.manager);
+                CommandResponse commandResponse = IOController.buildResponse(command, ServerConfig.MANAGER);
                 ByteBuffer buffer = Serializer.serializeResponse(commandResponse);
                 socketChannel.write(buffer);
-                ServerConfig.logger.info("Server wrote response to client");
+                ServerConfig.LOGGER.info("Server wrote response to client");
             } else if (request.getType().equals(RequestType.SIGN_IN)) {
                 try {
                     AuthorizationModule authorizationModule =
@@ -75,7 +75,7 @@ public class RequestReader {
                     SignInResponse signInResponse = new SignInResponse(authorizationModule.isCorrectUser(), ((SignInRequest) request).getLogin());
                     ByteBuffer buffer = Serializer.serializeResponse(signInResponse);
                     socketChannel.write(buffer);
-                    ServerConfig.logger.info("Server wrote response to client");
+                    ServerConfig.LOGGER.info("Server wrote response to client");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -86,14 +86,14 @@ public class RequestReader {
                     SignUpResponse signUpResponse = new SignUpResponse(authorizationModule.isCorrectUser(), ((SignUpRequest) request).getLogin());
                     ByteBuffer buffer = Serializer.serializeResponse(signUpResponse);
                     socketChannel.write(buffer);
-                    ServerConfig.logger.info("Server wrote response to client");
+                    ServerConfig.LOGGER.info("Server wrote response to client");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         } catch (NullPointerException e) {
-            ServerConfig.logger.error("Received command is null");
-            ServerConfig.logger.error("Response will not write");
+            ServerConfig.LOGGER.error("Received command is null");
+            ServerConfig.LOGGER.error("Response will not write");
         }
     }
 

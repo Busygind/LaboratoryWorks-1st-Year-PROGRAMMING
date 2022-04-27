@@ -77,13 +77,13 @@ public class DatabaseInitializer {
                     DragonCharacter.valueOf(resultSet.getString(11)) : null);
             dragon.setAuthorName(resultSet.getString(12));
             if (DragonValidator.validateDragon(dragon)) {
-                ServerConfig.manager.addDragon(dragon);
+                ServerConfig.MANAGER.addDragon(dragon);
             } else {
-                ServerConfig.logger.fatal("Dragon with id = " + resultSet.getLong(1) + " is incorrect");
+                ServerConfig.LOGGER.fatal("Dragon with id = " + resultSet.getLong(1) + " is incorrect");
                 System.exit(1);
             }
         }
-        ServerConfig.logger.info("Collection successfully filled");
+        ServerConfig.LOGGER.info("Collection successfully filled");
     }
 
     public Connection getConnection() {

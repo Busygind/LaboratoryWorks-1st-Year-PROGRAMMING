@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class CommandRequestWithDragon implements CommandRequest, Serializable {
 
-    private static final RequestType type = RequestType.COMMAND_WITH_DRAGON;
+    private static final RequestType TYPE = RequestType.COMMAND_WITH_DRAGON;
     private final String name;
     private final Dragon dragon;
     private final String username;
@@ -33,6 +33,6 @@ public class CommandRequestWithDragon implements CommandRequest, Serializable {
 
     @Override
     public RequestType getType() {
-        return type;
+        return TYPE;
     }
 }

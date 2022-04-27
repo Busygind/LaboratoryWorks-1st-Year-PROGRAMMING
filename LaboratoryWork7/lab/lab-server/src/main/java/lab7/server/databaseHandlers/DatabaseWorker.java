@@ -50,7 +50,7 @@ public class DatabaseWorker {
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            ServerConfig.logger.info("SQL problem with removing by id");
+            ServerConfig.LOGGER.info("SQL problem with removing by id");
             return false;
         }
     }
@@ -73,7 +73,7 @@ public class DatabaseWorker {
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            ServerConfig.logger.info("SQL problem with removing by id");
+            ServerConfig.LOGGER.info("SQL problem with removing by id");
             e.printStackTrace();
             return false;
         }
@@ -86,7 +86,7 @@ public class DatabaseWorker {
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            ServerConfig.logger.info("SQL problem with removing by id");
+            ServerConfig.LOGGER.info("SQL problem with removing by id");
             e.printStackTrace();
             return false;
         }
@@ -101,7 +101,7 @@ public class DatabaseWorker {
             }
             return null;
         } catch (SQLException e) {
-            ServerConfig.logger.info("SQL problem with generating id");
+            ServerConfig.LOGGER.info("SQL problem with generating id");
             return null;
         }
     }

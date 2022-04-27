@@ -5,7 +5,6 @@ import lab7.server.databaseHandlers.DatabaseConnector;
 import lab7.server.databaseHandlers.DatabaseInitializer;
 import lab7.server.exceptions.DisconnectInitException;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
@@ -22,13 +21,13 @@ import java.util.concurrent.Executors;
 
 public final class Server {
 
-    private static final DatabaseConnector connector =
+    private static final DatabaseConnector CONNECTOR =
             new DatabaseConnector("jdbc:postgresql://localhost:5432/dragons_database",
                                 "postgres", "chh455");
     private static Selector selector;
-    static File file;
-    static ExecutorService threadPool = Executors.newFixedThreadPool(2);
     private static Connection dbConnection;
+    static ExecutorService threadPool = Executors.newFixedThreadPool(2);
+
 
     private Server() {
         throw new UnsupportedOperationException("This is an utility class and can not be instantiated");
@@ -36,7 +35,7 @@ public final class Server {
 
     public static void main(String[] args) {
         try {
-            dbConnection = connector.getNewConnection();
+            dbConnection = CONNECTOR.getNewConnection();
             DatabaseInitializer initializer = new DatabaseInitializer(dbConnection);
             initializer.initialize();
             initializer.fillCollection(dbConnection);
@@ -51,15 +50,15 @@ public final class Server {
     }
 
     private static void startServer() {
-        ServerConfig.logger.info("Server started");
+        ServerConfig.LOGGER.info("Server started");
         try {
             selector = Selector.open();
             ServerSocketChannel server = initChannel(selector);
             startSelectorLoop(server);
         } catch (IOException e) {
-            ServerConfig.logger.fatal("Some problems with IO. Try again");
+            ServerConfig.LOGGER.fatal("Some problems with IO. Try again");
         } catch (ClassNotFoundException e) {
-            ServerConfig.logger.error("Trying to serialize non-serializable object");
+            ServerConfig.LOGGER.error("Trying to serialize non-serializable object");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -81,18 +80,18 @@ public final class Server {
 
             if (key.isAcceptable()) {
                 SocketChannel socketChannel = channel.accept();
-                ServerConfig.logger.info("Server get connection from " + socketChannel.getLocalAddress());
+                ServerConfig.LOGGER.info("Server get connection from " + socketChannel.getLocalAddress());
                 socketChannel.configureBlocking(false);
                 socketChannel.register(selector, SelectionKey.OP_READ);
             } else if (key.isReadable()) {
                 SocketChannel socketChannel = (SocketChannel) key.channel();
-                ServerConfig.logger.info("Client " + socketChannel.getLocalAddress() + " trying to send message");
+                ServerConfig.LOGGER.info("Client " + socketChannel.getLocalAddress() + " trying to send message");
                 Request request = IOController.getRequest(socketChannel);
                 RequestReader requestReader = new RequestReader(request, socketChannel, dbConnection);
                 try {
                     requestReader.read();
                 } catch (DisconnectInitException e) {
-                    ServerConfig.logger.info("Client " + socketChannel.getLocalAddress() + " init disconnect.");
+                    ServerConfig.LOGGER.info("Client " + socketChannel.getLocalAddress() + " init disconnect.");
                     socketChannel.close();
                     break;
                 }
@@ -103,7 +102,7 @@ public final class Server {
 
     private static ServerSocketChannel initChannel(Selector selector) throws IOException {
         ServerSocketChannel server = ServerSocketChannel.open();
-        ServerConfig.logger.info("Socket opened");
+        ServerConfig.LOGGER.info("Socket opened");
         server.socket().bind(new InetSocketAddress(ServerConfig.SERVER_PORT));
         server.configureBlocking(false);
         server.register(selector, SelectionKey.OP_ACCEPT);

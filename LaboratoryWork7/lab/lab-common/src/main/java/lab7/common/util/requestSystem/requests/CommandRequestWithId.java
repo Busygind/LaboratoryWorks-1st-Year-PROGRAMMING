@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class CommandRequestWithId implements CommandRequest, Serializable {
 
-    private static final RequestType type = RequestType.COMMAND_WITH_ID;
+    private static final RequestType TYPE = RequestType.COMMAND_WITH_ID;
     private final String name;
     private final long id;
     private final String username;
@@ -31,6 +31,6 @@ public class CommandRequestWithId implements CommandRequest, Serializable {
 
     @Override
     public RequestType getType() {
-        return type;
+        return TYPE;
     }
 }

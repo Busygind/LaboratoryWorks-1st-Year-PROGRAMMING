@@ -22,7 +22,7 @@ public class DatabaseConnector {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            ServerConfig.logger.error("DB driver not found!");
+            ServerConfig.LOGGER.error("DB driver not found!");
             return null;
         }
         return DriverManager.getConnection(url, username, password);

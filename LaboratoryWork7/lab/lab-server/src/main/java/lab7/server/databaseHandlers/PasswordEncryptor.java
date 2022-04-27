@@ -16,7 +16,7 @@ public class PasswordEncryptor {
             md = MessageDigest.getInstance("MD2");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            ServerConfig.logger.error("Cant encrypt password");
+            ServerConfig.LOGGER.error("Cant encrypt password");
         }
         byte[] messageDigest = md.digest(s.getBytes());
         BigInteger no = new BigInteger(1, messageDigest);
