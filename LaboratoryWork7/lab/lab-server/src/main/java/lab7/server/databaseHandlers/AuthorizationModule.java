@@ -13,6 +13,7 @@ public class AuthorizationModule {
 
     private final Connection connection;
     private final Request request;
+    private final PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
 
     private final boolean correctUser;
 
@@ -32,17 +33,16 @@ public class AuthorizationModule {
         SignInRequest signInRequest = (SignInRequest) request;
         PreparedStatement statement = connection.prepareStatement(Statements.checkUserInData.getStatement());
         statement.setString(1, signInRequest.getLogin());
-        statement.setString(2, signInRequest.getPassword());
+        statement.setString(2, passwordEncryptor.encrypt(signInRequest.getPassword()));
         ResultSet resultSet = statement.executeQuery();
         return resultSet.next();
-        //todo написать логику
     }
 
     public boolean addUserToData() throws SQLException {
         SignUpRequest signUpRequest = (SignUpRequest) request;
         PreparedStatement statement = connection.prepareStatement(Statements.addUserToData.getStatement());
         statement.setString(1, signUpRequest.getLogin());
-        statement.setString(2, signUpRequest.getPassword());
+        statement.setString(2, passwordEncryptor.encrypt(signUpRequest.getPassword()));
         statement.executeUpdate();
         return true;
     }
