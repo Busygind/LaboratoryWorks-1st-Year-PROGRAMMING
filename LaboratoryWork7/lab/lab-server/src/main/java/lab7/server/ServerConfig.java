@@ -1,6 +1,5 @@
 package lab7.server;
 
-import lab7.common.util.entities.CollectionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

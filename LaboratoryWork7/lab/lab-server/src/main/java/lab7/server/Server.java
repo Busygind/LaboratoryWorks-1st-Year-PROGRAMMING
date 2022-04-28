@@ -1,6 +1,7 @@
 package lab7.server;
 
 import lab7.common.util.requestSystem.requests.*;
+import lab7.common.util.requestSystem.responses.Response;
 import lab7.server.databaseHandlers.DatabaseConnector;
 import lab7.server.databaseHandlers.DatabaseInitializer;
 import lab7.server.exceptions.DisconnectInitException;
@@ -85,17 +86,18 @@ public final class Server {
                 socketChannel.register(selector, SelectionKey.OP_READ);
             } else if (key.isReadable()) {
                 SocketChannel socketChannel = (SocketChannel) key.channel();
-                ServerConfig.LOGGER.info("Client " + socketChannel.getLocalAddress() + " trying to send message");
-                Request request = IOController.getRequest(socketChannel);
-                RequestReader requestReader = new RequestReader(request, socketChannel, dbConnection);
+                ServerConfig.LOGGER.info("Client " + socketChannel.getLocalAddress() + " sent message");
+                Request request = RequestReader.read(socketChannel);
+                RequestHandler requestHandler = new RequestHandler(request, socketChannel, dbConnection);
                 try {
-                    requestReader.read();
+                    Response response = requestHandler.handle();
+                    ResponseSender sender = new ResponseSender(socketChannel);
+                    sender.send(response);
                 } catch (DisconnectInitException e) {
                     ServerConfig.LOGGER.info("Client " + socketChannel.getLocalAddress() + " init disconnect.");
                     socketChannel.close();
                     break;
                 }
-
             }
         }
     }
