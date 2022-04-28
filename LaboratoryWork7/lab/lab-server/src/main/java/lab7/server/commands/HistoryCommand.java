@@ -1,7 +1,7 @@
 package lab7.server.commands;
 
 
-import lab7.common.util.entities.CollectionManager;
+import lab7.server.CollectionManager;
 import lab7.server.HistorySaver;
 import lab7.common.util.handlers.TextFormatter;
 import lab7.common.util.requestSystem.responses.CommandResponse;
