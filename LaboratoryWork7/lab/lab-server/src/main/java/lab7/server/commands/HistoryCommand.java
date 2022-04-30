@@ -17,11 +17,12 @@ public class HistoryCommand extends CommandAbstract {
 
     @Override
     public CommandResponse execute(CollectionManager manager) {
-        System.out.println(HistorySaver.getCommandsHistory().size());
-        if (HistorySaver.getCommandsHistory().size() > COUNT_OF_WATCHABLE_COMMANDS) {
-            return new CommandResponse(TextFormatter.colorMessage(HistorySaver.getCommandsHistory().subList(HistorySaver.getCommandsHistory().size()
-                    - COUNT_OF_WATCHABLE_COMMANDS, HistorySaver.getCommandsHistory().size()).toString()));
+        HistorySaver historySaver = new HistorySaver();
+        if (historySaver.getCommandsHistory().size() > COUNT_OF_WATCHABLE_COMMANDS) {
+            return new CommandResponse(TextFormatter.colorMessage(historySaver.getCommandsHistory()
+                                .subList(historySaver.getCommandsHistory().size() - COUNT_OF_WATCHABLE_COMMANDS,
+                                historySaver.getCommandsHistory().size()).toString()));
         }
-        return new CommandResponse(TextFormatter.colorMessage(HistorySaver.getCommandsHistory().toString()));
+        return new CommandResponse(TextFormatter.colorMessage(historySaver.getCommandsHistory().toString()));
     }
 }

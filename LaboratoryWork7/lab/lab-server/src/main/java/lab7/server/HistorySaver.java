@@ -5,18 +5,14 @@ import lab7.server.commands.CommandAbstract;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class HistorySaver {
-    private static List<String> commandsHistory = new ArrayList<>();
+public class HistorySaver {
+    private volatile static List<String> commandsHistory = new ArrayList<>();
 
-    private HistorySaver() {
-        //never used
-    }
-
-    public static List<String> getCommandsHistory() {
+    public List<String> getCommandsHistory() {
         return commandsHistory;
     }
 
-    public static void addCommandInHistory(CommandAbstract command) {
+    public void addCommandInHistory(CommandAbstract command) {
         commandsHistory.add(command.getName());
     }
 }
