@@ -21,25 +21,32 @@ import java.util.*;
 
 public class Application {
 
-    private static final int PORT = 45846;
-    private static final AuthorizationModule authorizationModule = new AuthorizationModule();
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static Selector selector;
+    private static boolean isWorking = true;
     private static String username;
+    private final int port;
+    private final AuthorizationModule authorizationModule = new AuthorizationModule();
+    private final Scanner SCANNER = new Scanner(System.in);
+    private Selector selector;
 
-    public static void startClient() {
+
+    public Application(int port) {
+        this.port = port;
+    }
+
+    public void startClient() {
         TextFormatter.printMessage("Enter hostname: ");
         String hostname = SCANNER.nextLine();
-        InetSocketAddress hostAddress = new InetSocketAddress(hostname, PORT);
+        InetSocketAddress hostAddress = new InetSocketAddress(hostname, port);
 
         try {
             selector = Selector.open();
-
             SocketChannel client = SocketChannel.open(hostAddress);
             TextFormatter.printMessage("Connected!");
             client.configureBlocking(false);
             client.register(selector, SelectionKey.OP_WRITE);
             startSelectorLoop(client, SCANNER);
+            selector.close();
+            client.close();
         } catch (ConnectException e) {
             TextFormatter.printErrorMessage("Server with this host is temporarily unavailable. Try again later");
             startClient();
@@ -58,8 +65,8 @@ public class Application {
         }
     }
 
-    private static void startSelectorLoop(SocketChannel channel, Scanner sc) throws IOException, ClassNotFoundException, InterruptedException {
-        while (true) {
+    private void startSelectorLoop(SocketChannel channel, Scanner sc) throws IOException, ClassNotFoundException, InterruptedException {
+        while (isWorking) {
             selector.select();
             if (!startIteratorLoop(channel, sc)) {
                 break;
@@ -67,7 +74,7 @@ public class Application {
         }
     }
 
-    private static boolean startIteratorLoop(SocketChannel channel, Scanner sc) throws IOException, ClassNotFoundException, InterruptedException {
+    private boolean startIteratorLoop(SocketChannel channel, Scanner sc) throws IOException, ClassNotFoundException, InterruptedException {
         Set<SelectionKey> readyKeys = selector.selectedKeys();
         Iterator<SelectionKey> iterator = readyKeys.iterator();
         while (iterator.hasNext()) {
@@ -111,18 +118,28 @@ public class Application {
                         ScriptReader scriptReader = new ScriptReader(input);
                         startSelectorLoop(channel, new Scanner(scriptReader.getPath()));
                         scriptReader.stopScriptReading();
+                    } else if (input.equals("exit")) {
+                        channel.close();
+                        isWorking = false;
+                        TextFormatter.printMessage("Client closed");
+                        break;
                     }
                     try {
                         RequestSender requestSender = new RequestSender(channel, input, selector, username);
                         requestSender.send();
                     } catch (NullPointerException | IOException e) {
-                        TextFormatter.printErrorMessage(e.getMessage());
+                        TextFormatter.printErrorMessage("Channel closed or invalid");
+                        isWorking = false;
+                        break;
                     }
                 } catch (NoSuchElementException e) {
                     TextFormatter.printErrorMessage(e.getMessage());
+                    isWorking = false;
                     return false;
                 } catch (IllegalArgumentException e) {
+                    isWorking = false;
                     TextFormatter.printErrorMessage(e.getMessage());
+                    break;
                 }
             }
         }
