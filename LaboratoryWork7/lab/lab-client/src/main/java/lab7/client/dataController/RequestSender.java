@@ -40,7 +40,8 @@ public class RequestSender {
         if (input != null) {
             buffer = RequestBuilder.buildRequest(input, username);
         } else {
-            buffer = Serializer.serializeRequest(request);
+            Serializer serializer = new Serializer();
+            buffer = serializer.serializeRequest(request);
         }
         channel.write(buffer);
         channel.register(selector, SelectionKey.OP_READ);

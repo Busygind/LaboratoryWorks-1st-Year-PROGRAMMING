@@ -26,6 +26,7 @@ public class ResponseReceiver {
         ByteBuffer readBuffer = ByteBuffer.allocate(socketChannel.socket().getReceiveBufferSize());
         socketChannel.read(readBuffer);
         channel.register(selector, SelectionKey.OP_WRITE);
-        return Serializer.deserializeResponse(readBuffer.array());
+        Serializer serializer = new Serializer();
+        return serializer.deserializeResponse(readBuffer.array());
     }
 }

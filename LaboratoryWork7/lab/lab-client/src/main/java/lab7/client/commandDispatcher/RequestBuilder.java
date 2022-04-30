@@ -18,7 +18,8 @@ public class RequestBuilder {
         if (request == null) {
             throw new NullPointerException("Command is incorrect. Try again");
         }
-        return Serializer.serializeRequest(request);
+        Serializer serializer = new Serializer();
+        return serializer.serializeRequest(request);
     }
 
     private static CommandRequest initCommand(String line, String username) throws IOException {

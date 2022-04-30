@@ -1,6 +1,5 @@
 package lab7.server;
 
-import lab7.common.util.requestSystem.Serializer;
 import lab7.common.util.requestSystem.requests.*;
 import lab7.common.util.requestSystem.responses.CommandResponse;
 import lab7.common.util.requestSystem.responses.Response;
@@ -9,34 +8,26 @@ import lab7.common.util.requestSystem.responses.SignUpResponse;
 import lab7.server.commands.*;
 import lab7.server.databaseHandlers.AuthorizationModule;
 import lab7.server.databaseHandlers.DatabaseWorker;
-import lab7.server.exceptions.DisconnectInitException;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class RequestHandler {
 
-    private final Request request;
-    private final SocketChannel socketChannel;
     private final Connection dbConnection;
     private DatabaseWorker databaseWorker;
 
-    public RequestHandler(Request request, SocketChannel socketChannel, Connection dbConnection) {
-        this.request = request;
-        this.socketChannel = socketChannel;
+    public RequestHandler(Request request, Connection dbConnection) {
         this.dbConnection = dbConnection;
         try {
             this.databaseWorker = new DatabaseWorker(dbConnection, ((CommandRequest) request).getUsername());
         } catch (ClassCastException e) {
             this.databaseWorker = new DatabaseWorker(dbConnection, "");
         }
-
     }
 
-    public Response handle() throws IOException {
+    public Response handle(Request request) throws IOException {
         try {
             if (request.getType().equals(RequestType.COMMAND_WITHOUT_ARGS)) {
                 CommandAbstract command = getCommandWithoutArgs((CommandRequestWithoutArgs) request);
@@ -79,8 +70,6 @@ public class RequestHandler {
         switch (commandRequestWithoutArgs.getName()) {
             case "clear":
                 return new ClearCommand(databaseWorker);
-            case "exit":
-                return new ExitCommand(databaseWorker);
             case "help":
                 return new HelpCommand(databaseWorker);
             case "history":
@@ -132,9 +121,10 @@ public class RequestHandler {
         }
     }
 
-    private CommandResponse handleCommand(CommandAbstract command) throws DisconnectInitException {
+    private CommandResponse handleCommand(CommandAbstract command) {
         ServerConfig.LOGGER.info("Server recieve [" + command.getName() + "] command");
-        HistorySaver.addCommandInHistory(command);
-        return RequestReader.buildResponse(command, ServerConfig.MANAGER);
+        HistorySaver historySaver = new HistorySaver();
+        historySaver.addCommandInHistory(command);
+        return (CommandResponse) command.execute(ServerConfig.MANAGER);
     }
 }
