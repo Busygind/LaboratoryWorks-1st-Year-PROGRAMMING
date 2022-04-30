@@ -6,16 +6,19 @@ import lab7.common.util.requestSystem.responses.Response;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.Set;
 import java.util.function.Consumer;
 
 public class ResponseSender implements Consumer<Response> {
 
-    private final SocketChannel socketChannel;
+    private final SelectionKey key;
+    private volatile Set<SelectionKey> workingKeys;
 
-    public ResponseSender(SocketChannel socketChannel) {
-        this.socketChannel = socketChannel;
+    public ResponseSender(SelectionKey key, Set<SelectionKey> workingKeys) {
+        this.key = key;
+        this.workingKeys = workingKeys;
     }
 
     public synchronized void accept(Response response) {
@@ -31,5 +34,6 @@ public class ResponseSender implements Consumer<Response> {
             ServerConfig.LOGGER.error("Problem with response serializing or sending");
         }
         ServerConfig.LOGGER.info("Server wrote response to client");
+        workingKeys.remove(key);
     }
 }
