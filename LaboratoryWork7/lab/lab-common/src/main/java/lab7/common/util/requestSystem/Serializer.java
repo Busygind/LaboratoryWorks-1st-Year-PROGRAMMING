@@ -6,13 +6,9 @@ import lab7.common.util.requestSystem.responses.Response;
 import java.io.*;
 import java.nio.ByteBuffer;
 
-public final class Serializer {
+public class Serializer {
 
-    private Serializer() {
-        //never used
-    }
-
-    public static ByteBuffer serializeRequest(Request request) throws IOException {
+    public synchronized ByteBuffer serializeRequest(Request request) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bytes);
         oos.writeObject(request);
@@ -23,7 +19,7 @@ public final class Serializer {
         return bufferToSend;
     }
 
-    public static Response deserializeResponse(byte[] bytes) throws IOException, ClassNotFoundException {
+    public synchronized Response deserializeResponse(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
         Response response = (Response) objectInputStream.readObject();
@@ -32,7 +28,7 @@ public final class Serializer {
         return response;
     }
 
-    public static ByteBuffer serializeResponse(Response response) throws IOException {
+    public synchronized ByteBuffer serializeResponse(Response response) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bytes);
         oos.writeObject(response);
@@ -43,7 +39,7 @@ public final class Serializer {
         return bufferToSend;
     }
 
-    public static Request deserializeRequest(byte[] bytes) throws IOException, ClassNotFoundException {
+    public synchronized Request deserializeRequest(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
         Request request = (Request) objectInputStream.readObject();
