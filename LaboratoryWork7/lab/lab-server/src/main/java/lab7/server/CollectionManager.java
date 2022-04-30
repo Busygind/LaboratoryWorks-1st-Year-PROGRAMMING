@@ -22,7 +22,7 @@ public class CollectionManager {
     /**
      * Сет объектов класса Dragon, текущее содержимое коллекции
      */
-    private HashSet<Dragon> dragons;
+    private volatile HashSet<Dragon> dragons;
 
     private final Lock readLock;
     private final Lock writeLock;

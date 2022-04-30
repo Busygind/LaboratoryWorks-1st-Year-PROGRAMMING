@@ -15,10 +15,11 @@ public class DatabaseWorker {
         this.username = username;
     }
 
-    public boolean addDragon(Dragon dragon) {
+    public synchronized boolean addDragon(Dragon dragon) {
         try {
             PreparedStatement statement = connection.prepareStatement(Statements.addDragon.getStatement());
-            statement.setLong(1, generateId());
+            dragon.setId(generateId());
+            statement.setLong(1, dragon.getId());
             statement.setString(2, dragon.getName());
             statement.setDate(3, Date.valueOf(LocalDate.now()));
             statement.setInt(4, dragon.getAge());
@@ -42,7 +43,7 @@ public class DatabaseWorker {
         }
     }
 
-    public boolean removeById(long id) {
+    public synchronized boolean removeById(long id) {
         try {
             PreparedStatement statement = connection.prepareStatement(Statements.removeById.getStatement());
             statement.setString(1, username);
@@ -55,7 +56,7 @@ public class DatabaseWorker {
         }
     }
 
-    public boolean updateById(Dragon dragon, long id) {
+    public synchronized boolean updateById(Dragon dragon, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement(Statements.updateById.getStatement());
             statement.setString(1, dragon.getName());
@@ -64,7 +65,7 @@ public class DatabaseWorker {
             statement.setInt(4, dragon.getWingspan());
             statement.setInt(5, dragon.getCoordinates().getX());
             statement.setFloat(6, dragon.getCoordinates().getY());
-            statement.setString(7, String.valueOf(dragon.getColor()));
+            statement.setString(7, dragon.getColor() == null ? null : String.valueOf(dragon.getColor()));
             statement.setDouble(8, dragon.getCave().getDepth());
             statement.setInt(9, dragon.getCave().getNumberOfTreasures());
             statement.setString(10, String.valueOf(dragon.getCharacter()));
@@ -79,7 +80,7 @@ public class DatabaseWorker {
         }
     }
 
-    public boolean clear() {
+    public synchronized boolean clear() {
         try {
             PreparedStatement statement = connection.prepareStatement(Statements.clearByUser.getStatement());
             statement.setString(1, username);
@@ -92,7 +93,7 @@ public class DatabaseWorker {
         }
     }
 
-    private Long generateId() {
+    private synchronized Long generateId() {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(Statements.getNextId.getStatement());
