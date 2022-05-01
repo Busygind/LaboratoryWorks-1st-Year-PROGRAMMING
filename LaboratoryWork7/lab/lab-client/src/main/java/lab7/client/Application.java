@@ -88,12 +88,10 @@ public class Application {
                     SignInResponse signInResponse = (SignInResponse) response;
                     UserAcceptor acceptor = new UserAcceptor(authorizationModule, signInResponse);
                     username = acceptor.acceptAuthorization();
-                    System.out.println(username);
                 } else if (response.getType().equals(ResponseType.SIGN_UP)) {
                     SignUpResponse signUpResponse = (SignUpResponse) response;
                     UserAcceptor acceptor = new UserAcceptor(authorizationModule, signUpResponse);
                     username = acceptor.acceptRegistration();
-                    System.out.println(username);
                 } else {
                     CommandResponse commandResponse = (CommandResponse) response;
                     TextFormatter.printInfoMessage(commandResponse.getMessage());
