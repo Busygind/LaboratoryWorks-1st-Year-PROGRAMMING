@@ -23,9 +23,14 @@ import java.util.function.Supplier;
 
 public class Application {
 
+//    to use on PC
+//    private static final DatabaseConnector CONNECTOR =
+//            new DatabaseConnector("jdbc:postgresql://localhost:5432/dragons_database",
+//                    "postgres", "chh455");
+//    to use on helios
     private static final DatabaseConnector CONNECTOR =
-            new DatabaseConnector("jdbc:postgresql://localhost:5432/dragons_database",
-                    "postgres", "chh455");
+            new DatabaseConnector("jdbc:postgresql://pg:5432/studs",
+                    "s335103", "chh455");
     private volatile Connection dbConnection;
     private volatile Selector selector;
     private final ExecutorService readExecutor = Executors.newFixedThreadPool(2);
