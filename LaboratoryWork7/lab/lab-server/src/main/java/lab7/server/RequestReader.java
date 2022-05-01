@@ -24,9 +24,7 @@ public class RequestReader implements Supplier<Request> {
             socketChannel.read(readBuffer);
             Serializer serializer = new Serializer();
             return serializer.deserializeRequest(readBuffer.array());
-        } catch (IOException e) {
-            return null;
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             return null;
         }
     }
