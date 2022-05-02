@@ -12,7 +12,7 @@ public class HistorySaver {
         return commandsHistory;
     }
 
-    public void addCommandInHistory(CommandAbstract command) {
+    public synchronized void addCommandInHistory(CommandAbstract command) {
         commandsHistory.add(command.getName());
     }
 }
