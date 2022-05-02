@@ -119,10 +119,10 @@ public class CollectionManager {
         }
     }
 
-    public Dragon getMaxByCave() {
+    public Dragon getMaxByCave(String username) {
         readLock.lock();
         try {
-            return dragons.stream().max(Dragon::compareByCave).get();
+            return dragons.stream().filter(((d) -> d.getAuthorName().equals(username))).max(Dragon::compareByCave).get();
         } finally {
             readLock.unlock();
         }

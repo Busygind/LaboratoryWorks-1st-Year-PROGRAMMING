@@ -17,7 +17,7 @@ public class MaxByCaveCommand extends CommandAbstract {
 
     @Override
     public CommandResponse execute(CollectionManager manager) {
-        Dragon dragon = manager.getMaxByCave();
+        Dragon dragon = manager.getMaxByCave(getDatabaseWorker().getUsername());
         List<Dragon> dragons = new ArrayList<>();
         dragons.add(dragon);
         return new CommandResponse(dragons, TextFormatter.colorMessage("Info about dragon with deepest cave: "));
