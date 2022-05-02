@@ -32,6 +32,7 @@ public class ResponseSender implements Consumer<Response> {
             socketChannel.write(buffer);
         } catch (IOException e) {
             ServerConfig.LOGGER.error("Problem with response serializing or sending");
+            return;
         }
         ServerConfig.LOGGER.info("Server wrote response to client");
         workingKeys.remove(key);

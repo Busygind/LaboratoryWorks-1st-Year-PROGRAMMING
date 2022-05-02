@@ -24,7 +24,11 @@ public class RequestReader implements Supplier<Request> {
             socketChannel.read(readBuffer);
             Serializer serializer = new Serializer();
             return serializer.deserializeRequest(readBuffer.array());
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
+            ServerConfig.LOGGER.error("Client disconnected");
+            return null;
+        } catch (ClassNotFoundException e) {
+            ServerConfig.LOGGER.error("Trying to deserialize incorrect object");
             return null;
         }
     }
