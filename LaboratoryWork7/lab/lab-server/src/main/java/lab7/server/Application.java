@@ -24,18 +24,19 @@ import java.util.function.Supplier;
 public class Application {
 
 //    to use on PC
-//    private static final DatabaseConnector CONNECTOR =
-//            new DatabaseConnector("jdbc:postgresql://localhost:5432/dragons_database",
-//                    "postgres", "chh455");
-//    to use on helios
     private static final DatabaseConnector CONNECTOR =
-            new DatabaseConnector("jdbc:postgresql://pg:5432/studs",
-                    "s335103", "chh455");
-    private volatile Connection dbConnection;
-    private volatile Selector selector;
+            new DatabaseConnector("jdbc:postgresql://localhost:5432/dragons_database",
+                    "postgres", "chh455");
+//    to use on helios
+//    private static final DatabaseConnector CONNECTOR =
+//            new DatabaseConnector("jdbc:postgresql://pg:5432/studs",
+//                    "s335103", "chh455");
+    private static boolean isWorking = true;
     private final ExecutorService readExecutor = Executors.newFixedThreadPool(2);
     private final ExecutorService handleExecutor = Executors.newFixedThreadPool(2);
     private final ExecutorService sendExecutor = Executors.newFixedThreadPool(2);
+    private volatile Connection dbConnection;
+    private volatile Selector selector;
     private volatile Set<SelectionKey> workingKeys = Collections.synchronizedSet(new HashSet<>());
 
     public void run() {
@@ -45,13 +46,17 @@ public class Application {
             initializer.initialize();
             initializer.fillCollection(dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            ServerConfig.LOGGER.error("Problems during SQL DB initialization");
+            isWorking = false;
         }
-
         ConsoleThread consoleThread = new ConsoleThread();
-        consoleThread.start();
-        startServer();
-        consoleThread.shutdown();
+        if (isWorking) {
+            consoleThread.start();
+            startServer();
+        }
+        readExecutor.shutdown();
+        handleExecutor.shutdown();
+        sendExecutor.shutdown();
     }
 
     private void startServer() {
@@ -62,21 +67,22 @@ public class Application {
             startSelectorLoop(server);
         } catch (IOException e) {
             ServerConfig.LOGGER.fatal("Some problems with IO. Try again");
+            isWorking = false;
         } catch (ClassNotFoundException e) {
             ServerConfig.LOGGER.error("Trying to serialize non-serializable object");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            isWorking = false;
         }
     }
 
-    private void startSelectorLoop(ServerSocketChannel channel) throws IOException, ClassNotFoundException, InterruptedException {
-        while (channel.isOpen()) {
-            selector.select();
-            startIteratorLoop(channel);
+    private void startSelectorLoop(ServerSocketChannel channel) throws IOException, ClassNotFoundException {
+        while (channel.isOpen() && isWorking) {
+            if (selector.select(1) != 0) {
+                startIteratorLoop(channel);
+            }
         }
     }
 
-    private void startIteratorLoop(ServerSocketChannel channel) throws IOException, ClassNotFoundException {
+    private void startIteratorLoop(ServerSocketChannel channel) throws IOException {
         Set<SelectionKey> readyKeys = selector.selectedKeys();
         Iterator<SelectionKey> iterator = readyKeys.iterator();
         while (iterator.hasNext()) {
@@ -93,13 +99,15 @@ public class Application {
                     CompletableFuture
                             .supplyAsync(requestReader, readExecutor)
                             .thenApplyAsync(request -> {
-                                RequestHandler requestHandler = new RequestHandler(request, dbConnection);
-                                try {
-                                    return requestHandler.handle(request);
-                                } catch (IOException e) {
-                                    ServerConfig.LOGGER.error("Error during request handling");
-                                    return null;
-                                }
+                                if (request != null) {
+                                    RequestHandler requestHandler = new RequestHandler(request, dbConnection);
+                                    try {
+                                        return requestHandler.handle(request);
+                                    } catch (IOException e) {
+                                        ServerConfig.LOGGER.error("Error during request handling");
+                                        return null;
+                                    }
+                                } else return null;
                             }, handleExecutor)
                             .thenAcceptAsync(sender, sendExecutor);
                 }
@@ -123,4 +131,7 @@ public class Application {
         return server;
     }
 
+    public static void closeServer() {
+        isWorking = false;
+    }
 }

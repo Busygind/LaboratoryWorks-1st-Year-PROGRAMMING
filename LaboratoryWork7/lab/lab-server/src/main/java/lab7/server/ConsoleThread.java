@@ -13,7 +13,8 @@ public class ConsoleThread extends Thread {
             String line = SCANNER.nextLine();
             if ("exit".equalsIgnoreCase(line)) {
                 ServerConfig.LOGGER.info("Server closed");
-                System.exit(0);
+                Application.closeServer();
+                this.running = false;
             }
         }
     }
