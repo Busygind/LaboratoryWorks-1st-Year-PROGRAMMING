@@ -1,5 +1,6 @@
 package lab7.client.usersController;
 
+import javafx.util.Pair;
 import lab7.common.util.handlers.TextFormatter;
 import lab7.common.util.requestSystem.requests.Request;
 import lab7.common.util.requestSystem.requests.SignInRequest;
@@ -32,7 +33,7 @@ public class AuthorizationModule {
         TextFormatter.printMessage("Repeat your password: ");
         if (SCANNER.nextLine().equals(password)) {
             TextFormatter.printMessage("Trying to create new user... ");
-            return new SignUpRequest(login, password);
+            return new SignUpRequest(new Pair<>(login, password));
         }
         TextFormatter.printErrorMessage("Passwords didn't match, try again");
         return createNewUser();
@@ -44,7 +45,7 @@ public class AuthorizationModule {
         TextFormatter.printMessage("Enter your password: ");
         String password = SCANNER.nextLine();
         TextFormatter.printMessage("Trying to log in... ");
-        return new SignInRequest(login, password);
+        return new SignInRequest(new Pair<>(login, password));
     }
 
     public boolean isAuthorizationDone() {

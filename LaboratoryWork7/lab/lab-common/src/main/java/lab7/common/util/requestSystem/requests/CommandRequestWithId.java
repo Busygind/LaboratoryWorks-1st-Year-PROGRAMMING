@@ -1,5 +1,7 @@
 package lab7.common.util.requestSystem.requests;
 
+import javafx.util.Pair;
+
 import java.io.Serializable;
 
 public class CommandRequestWithId implements CommandRequest, Serializable {
@@ -7,12 +9,12 @@ public class CommandRequestWithId implements CommandRequest, Serializable {
     private static final RequestType TYPE = RequestType.COMMAND_WITH_ID;
     private final String name;
     private final long id;
-    private final String username;
+    private final Pair<String, String> loginData;
 
-    public CommandRequestWithId(String name, long id, String username) {
+    public CommandRequestWithId(String name, long id, Pair<String, String> loginData) {
         this.name = name;
         this.id = id;
-        this.username = username;
+        this.loginData = loginData;
     }
 
     public long getId() {
@@ -25,8 +27,8 @@ public class CommandRequestWithId implements CommandRequest, Serializable {
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public Pair<String, String> getPair() {
+        return loginData;
     }
 
     @Override

@@ -1,21 +1,19 @@
 package lab7.common.util.requestSystem.requests;
 
+import javafx.util.Pair;
+
 import java.io.Serializable;
 
 public class CommandRequestWithoutArgs implements CommandRequest, Serializable {
 
     private static final RequestType TYPE = RequestType.COMMAND_WITHOUT_ARGS;
     private final String name;
-    private final String username;
+    private final Pair<String, String> loginData;
 
-    public CommandRequestWithoutArgs(String name, String username) {
+    public CommandRequestWithoutArgs(String name, Pair<String, String> loginData) {
         this.name = name;
-        this.username = username;
+        this.loginData = loginData;
     }
-
-//    public CommandAbstract getCommand() {
-//        return command;
-//    }
 
     @Override
     public RequestType getType() {
@@ -28,7 +26,7 @@ public class CommandRequestWithoutArgs implements CommandRequest, Serializable {
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public Pair<String, String> getPair() {
+        return loginData;
     }
 }

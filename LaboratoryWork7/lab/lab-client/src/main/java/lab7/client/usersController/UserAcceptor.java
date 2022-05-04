@@ -1,5 +1,6 @@
 package lab7.client.usersController;
 
+import javafx.util.Pair;
 import lab7.common.util.handlers.TextFormatter;
 import lab7.common.util.requestSystem.responses.Response;
 import lab7.common.util.requestSystem.responses.SignInResponse;
@@ -15,20 +16,20 @@ public class UserAcceptor {
         this.response = response;
     }
 
-    public String acceptAuthorization() {
+    public Pair<String, String> acceptAuthorization() {
         authorizationModule.setAuthorizationDone(((SignInResponse) response).isSuccessfulAuthorization());
         if (!authorizationModule.isAuthorizationDone()) {
             TextFormatter.printErrorMessage("User not found");
         } else {
             TextFormatter.printMessage("Authorization complete");
-            return ((SignInResponse) response).getUsername();
+            return ((SignInResponse) response).getPair();
         }
         return null;
     }
 
-    public String acceptRegistration() {
+    public Pair<String, String> acceptRegistration() {
         authorizationModule.setAuthorizationDone(((SignUpResponse) response).isSuccessfulAuthorization());
         TextFormatter.printMessage("User successful added. Authorization complete");
-        return ((SignUpResponse) response).getUsername();
+        return ((SignUpResponse) response).getPair();
     }
 }

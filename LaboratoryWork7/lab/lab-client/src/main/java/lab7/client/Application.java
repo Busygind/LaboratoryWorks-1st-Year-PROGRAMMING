@@ -1,5 +1,6 @@
 package lab7.client;
 
+import javafx.util.Pair;
 import lab7.client.commandDispatcher.LineSplitter;
 import lab7.client.dataController.RequestSender;
 import lab7.client.dataController.ResponseReceiver;
@@ -22,7 +23,7 @@ import java.util.*;
 public class Application {
 
     private static boolean isWorking = true;
-    private static String username;
+    private static Pair<String, String> loginData;
     private final int port;
     private final AuthorizationModule authorizationModule = new AuthorizationModule();
     private final Scanner SCANNER = new Scanner(System.in);
@@ -87,11 +88,11 @@ public class Application {
                 if (response.getType().equals(ResponseType.SIGN_IN)) {
                     SignInResponse signInResponse = (SignInResponse) response;
                     UserAcceptor acceptor = new UserAcceptor(authorizationModule, signInResponse);
-                    username = acceptor.acceptAuthorization();
+                    loginData = acceptor.acceptAuthorization();
                 } else if (response.getType().equals(ResponseType.SIGN_UP)) {
                     SignUpResponse signUpResponse = (SignUpResponse) response;
                     UserAcceptor acceptor = new UserAcceptor(authorizationModule, signUpResponse);
-                    username = acceptor.acceptRegistration();
+                    loginData = acceptor.acceptRegistration();
                 } else {
                     CommandResponse commandResponse = (CommandResponse) response;
                     TextFormatter.printInfoMessage(commandResponse.getMessage());
@@ -103,7 +104,7 @@ public class Application {
                 //authorization
                 if (!authorizationModule.isAuthorizationDone()) {
                     Request authorizationRequest = authorizationModule.greet();
-                    RequestSender requestSender = new RequestSender(channel, authorizationRequest, selector, username);
+                    RequestSender requestSender = new RequestSender(channel, authorizationRequest, selector, loginData);
                     requestSender.send();
                     continue;
                 }
@@ -123,7 +124,7 @@ public class Application {
                         break;
                     }
                     try {
-                        RequestSender requestSender = new RequestSender(channel, input, selector, username);
+                        RequestSender requestSender = new RequestSender(channel, input, selector, loginData);
                         requestSender.send();
                     } catch (NullPointerException | IOException e) {
                         TextFormatter.printErrorMessage("Channel closed or invalid");

@@ -1,24 +1,20 @@
 package lab7.common.util.requestSystem.requests;
 
+import javafx.util.Pair;
+
 import java.io.Serializable;
 
 public class SignUpRequest implements Request, Serializable {
 
     private static final RequestType type = RequestType.SIGN_UP;
-    private final String login;
-    private final String password;
+    private final Pair<String, String> loginData;
 
-    public SignUpRequest(String login, String password) {
-        this.login = login;
-        this.password = password;
+    public SignUpRequest(Pair<String, String> loginData) {
+        this.loginData = loginData;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
+    public Pair<String, String> getPair() {
+        return loginData;
     }
 
     @Override

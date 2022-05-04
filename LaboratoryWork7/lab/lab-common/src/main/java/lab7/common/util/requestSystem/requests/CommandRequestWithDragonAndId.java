@@ -1,5 +1,6 @@
 package lab7.common.util.requestSystem.requests;
 
+import javafx.util.Pair;
 import lab7.common.util.entities.Dragon;
 
 import java.io.Serializable;
@@ -10,13 +11,13 @@ public class CommandRequestWithDragonAndId implements CommandRequest, Serializab
     private final String name;
     private final Dragon dragon;
     private final long id;
-    private final String username;
+    private final Pair<String, String> loginData;
 
-    public CommandRequestWithDragonAndId(String name, Dragon dragon, long id, String username) {
+    public CommandRequestWithDragonAndId(String name, Dragon dragon, long id, Pair<String, String> loginData) {
         this.name = name;
         this.dragon = dragon;
         this.id = id;
-        this.username = username;
+        this.loginData = loginData;
     }
 
     public Dragon getDragon() {
@@ -33,8 +34,8 @@ public class CommandRequestWithDragonAndId implements CommandRequest, Serializab
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public Pair<String, String> getPair() {
+        return loginData;
     }
 
     @Override

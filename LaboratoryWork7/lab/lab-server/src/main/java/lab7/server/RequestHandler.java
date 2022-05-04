@@ -8,6 +8,7 @@ import lab7.common.util.requestSystem.responses.SignUpResponse;
 import lab7.server.commands.*;
 import lab7.server.databaseHandlers.AuthorizationModule;
 import lab7.server.databaseHandlers.DatabaseWorker;
+import lab7.server.databaseHandlers.UsersChecker;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,47 +17,54 @@ import java.sql.SQLException;
 public class RequestHandler {
 
     private final Connection dbConnection;
+    private UsersChecker usersChecker;
     private DatabaseWorker databaseWorker;
 
     public RequestHandler(Request request, Connection dbConnection) {
         this.dbConnection = dbConnection;
         try {
-            this.databaseWorker = new DatabaseWorker(dbConnection, ((CommandRequest) request).getUsername());
+            this.usersChecker = new UsersChecker(dbConnection, ((CommandRequest) request).getPair());
+            this.databaseWorker = new DatabaseWorker(dbConnection, ((CommandRequest) request).getPair());
         } catch (ClassCastException e) {
-            this.databaseWorker = new DatabaseWorker(dbConnection, "");
+            this.usersChecker = new UsersChecker(dbConnection, null);
+            this.databaseWorker = new DatabaseWorker(dbConnection, null);
         }
     }
 
-    public Response handle(Request request) throws IOException {
+    public Response handle(Request request) throws IOException, SQLException {
         try {
             if (request.getType().equals(RequestType.COMMAND_WITHOUT_ARGS)) {
                 CommandAbstract command = getCommandWithoutArgs((CommandRequestWithoutArgs) request);
+                if (!usersChecker.checkUserInData()) {
+                    return new CommandResponse("Your login or password is incorrect!");
+                }
                 return handleCommand(command);
             } else if (request.getType().equals(RequestType.COMMAND_WITH_DRAGON)) {
                 CommandAbstract command = getCommandWithDragon((CommandRequestWithDragon) request);
+                if (!usersChecker.checkUserInData()) {
+                    return new CommandResponse("Your login or password is incorrect!");
+                }
                 return handleCommand(command);
             } else if (request.getType().equals(RequestType.COMMAND_WITH_ID)) {
                 CommandAbstract command = getCommandWithId((CommandRequestWithId) request);
+                if (!usersChecker.checkUserInData()) {
+                    return new CommandResponse("Your login or password is incorrect!");
+                }
                 return handleCommand(command);
             } else if (request.getType().equals(RequestType.COMMAND_WITH_DRAGON_AND_ID)) {
                 CommandAbstract command = getCommandWithDragonAndId((CommandRequestWithDragonAndId) request);
+                if (!usersChecker.checkUserInData()) {
+                    return new CommandResponse("Your login or password is incorrect!");
+                }
                 return handleCommand(command);
             } else if (request.getType().equals(RequestType.SIGN_IN)) {
-                try {
-                    AuthorizationModule authorizationModule =
-                            new AuthorizationModule((SignInRequest) request, dbConnection);
-                    return new SignInResponse(authorizationModule.isCorrectUser(), ((SignInRequest) request).getLogin());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                AuthorizationModule authorizationModule =
+                        new AuthorizationModule((SignInRequest) request, dbConnection);
+                return new SignInResponse(authorizationModule.isCorrectUser(), ((SignInRequest) request).getPair());
             } else if (request.getType().equals(RequestType.SIGN_UP)) {
-                try {
-                    AuthorizationModule authorizationModule =
-                            new AuthorizationModule((SignUpRequest) request, dbConnection);
-                    return new SignUpResponse(authorizationModule.isCorrectUser(), ((SignUpRequest) request).getLogin());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                AuthorizationModule authorizationModule =
+                        new AuthorizationModule((SignUpRequest) request, dbConnection);
+                return new SignUpResponse(authorizationModule.isCorrectUser(), ((SignUpRequest) request).getPair());
             }
         } catch (NullPointerException e) {
             ServerConfig.LOGGER.error("Received command is null");

@@ -1,5 +1,6 @@
 package lab7.server.databaseHandlers;
 
+import javafx.util.Pair;
 import lab7.common.util.entities.Dragon;
 import lab7.server.ServerConfig;
 
@@ -8,11 +9,11 @@ import java.time.LocalDate;
 
 public class DatabaseWorker {
     private final Connection connection;
-    private final String username;
+    private final Pair<String, String> userData;
 
-    public DatabaseWorker(Connection dbConnection, String username) {
+    public DatabaseWorker(Connection dbConnection, Pair<String, String> userData) {
         this.connection = dbConnection;
-        this.username = username;
+        this.userData = userData;
     }
 
     public synchronized boolean addDragon(Dragon dragon) {
@@ -34,7 +35,7 @@ public class DatabaseWorker {
             statement.setDouble(9, dragon.getCave().getDepth());
             statement.setInt(10, dragon.getCave().getNumberOfTreasures());
             statement.setString(11, String.valueOf(dragon.getCharacter()));
-            statement.setString(12, username);
+            statement.setString(12, userData.getKey());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public class DatabaseWorker {
     public synchronized boolean removeById(long id) {
         try {
             PreparedStatement statement = connection.prepareStatement(Statements.removeById.getStatement());
-            statement.setString(1, username);
+            statement.setString(1, userData.getKey());
             statement.setLong(2, id);
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
@@ -70,7 +71,7 @@ public class DatabaseWorker {
             statement.setInt(9, dragon.getCave().getNumberOfTreasures());
             statement.setString(10, String.valueOf(dragon.getCharacter()));
             statement.setLong(11, id);
-            statement.setString(12, username);
+            statement.setString(12, userData.getKey());
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
@@ -83,7 +84,7 @@ public class DatabaseWorker {
     public synchronized boolean clear() {
         try {
             PreparedStatement statement = connection.prepareStatement(Statements.clearByUser.getStatement());
-            statement.setString(1, username);
+            statement.setString(1, userData.getKey());
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
@@ -108,6 +109,6 @@ public class DatabaseWorker {
     }
 
     public String getUsername() {
-        return username;
+        return userData.getKey();
     }
 }

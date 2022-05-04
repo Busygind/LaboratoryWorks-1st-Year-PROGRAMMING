@@ -1,5 +1,6 @@
 package lab7.client.commandDispatcher;
 
+import javafx.util.Pair;
 import lab7.common.util.requestSystem.requests.CommandRequest;
 import lab7.common.util.requestSystem.Serializer;
 
@@ -13,8 +14,8 @@ public class RequestBuilder {
         //never used
     }
 
-    public static ByteBuffer buildRequest(String input, String username) throws IOException {
-        CommandRequest request = initCommand(input, username);
+    public static ByteBuffer buildRequest(String input, Pair<String, String> loginData) throws IOException {
+        CommandRequest request = initCommand(input, loginData);
         if (request == null) {
             throw new NullPointerException("Command is incorrect. Try again");
         }
@@ -22,11 +23,11 @@ public class RequestBuilder {
         return serializer.serializeRequest(request);
     }
 
-    private static CommandRequest initCommand(String line, String username) throws IOException {
+    private static CommandRequest initCommand(String line, Pair<String, String> loginData) throws IOException {
         List<String> commandWithArgs = LineSplitter.smartSplit(line);
         String commandName = getCommandName(commandWithArgs);
         List<String> commandArgs = getCommandArguments(commandWithArgs);
-        CommandFactory factory = new CommandFactory(username);
+        CommandFactory factory = new CommandFactory(loginData);
         return factory.createCommand(commandName, commandArgs);
     }
 

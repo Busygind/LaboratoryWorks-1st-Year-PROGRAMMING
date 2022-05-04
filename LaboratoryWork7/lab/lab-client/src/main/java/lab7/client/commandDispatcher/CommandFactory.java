@@ -1,5 +1,6 @@
 package lab7.client.commandDispatcher;
 
+import javafx.util.Pair;
 import lab7.client.exceptions.CommandNotFoundException;
 import lab7.common.util.entities.Dragon;
 import lab7.common.util.handlers.TextFormatter;
@@ -10,10 +11,10 @@ import java.util.List;
 public class CommandFactory {
 
     private final ArgumentsListener listener = new ArgumentsListener();
-    private final String username;
+    private final Pair<String, String> loginData;
 
-    public CommandFactory(String username) {
-        this.username = username;
+    public CommandFactory(Pair<String, String> loginData) {
+        this.loginData = loginData;
     }
 
     public CommandRequest createCommand(String name, List<String> args) throws CommandNotFoundException {
@@ -30,7 +31,7 @@ public class CommandFactory {
                     if (dragon == null) {
                         throw new IllegalArgumentException("Аргументы команды некорректны");
                     }
-                    return new CommandRequestWithDragon(name, dragon, username);
+                    return new CommandRequestWithDragon(name, dragon, loginData);
                 case "exit":
                 case "help":
                 case "history":
@@ -44,20 +45,20 @@ public class CommandFactory {
                     if (args.size() != 0) {
                         return null;
                     }
-                    return new CommandRequestWithoutArgs(name, username);
+                    return new CommandRequestWithoutArgs(name, loginData);
                 case "remove_by_id":
                     if (args.size() != 1) {
                         return null;
                     }
                     long id = Long.parseLong(args.get(0));
-                    return new CommandRequestWithId(name, id, username);
+                    return new CommandRequestWithId(name, id, loginData);
                 case "update_by_id":
                     if (args.size() != 1) {
                         return null;
                     }
                     long idOfDragon = Long.parseLong(args.get(0));
                     dragon = listener.inputDragonWithPrimitives();
-                    return new CommandRequestWithDragonAndId(name, dragon, idOfDragon, username);
+                    return new CommandRequestWithDragonAndId(name, dragon, idOfDragon, loginData);
                 default:
                     throw new CommandNotFoundException("Command with current name not found");
             }

@@ -31,10 +31,11 @@ public class Application {
 //    private static final DatabaseConnector CONNECTOR =
 //            new DatabaseConnector("jdbc:postgresql://pg:5432/studs",
 //                    "s335103", "chh455");
+    private static final int THREADS = Runtime.getRuntime().availableProcessors();
     private static boolean isWorking = true;
-    private final ExecutorService readExecutor = Executors.newFixedThreadPool(2);
-    private final ExecutorService handleExecutor = Executors.newFixedThreadPool(2);
-    private final ExecutorService sendExecutor = Executors.newFixedThreadPool(2);
+    private final ExecutorService readExecutor = Executors.newFixedThreadPool(THREADS);
+    private final ExecutorService handleExecutor = Executors.newFixedThreadPool(THREADS);
+    private final ExecutorService sendExecutor = Executors.newFixedThreadPool(THREADS);
     private volatile Connection dbConnection;
     private volatile Selector selector;
     private volatile Set<SelectionKey> workingKeys = Collections.synchronizedSet(new HashSet<>());
@@ -95,7 +96,7 @@ public class Application {
                     workingKeys.add(key);
                     ServerConfig.LOGGER.info("Client " + ((SocketChannel) key.channel()).getLocalAddress() + " sent message");
                     Supplier<Request> requestReader = new RequestReader(key);
-                    Consumer<Response> sender = new ResponseSender(key, workingKeys);
+                    Consumer<Response> responseSender = new ResponseSender(key, workingKeys);
                     CompletableFuture
                             .supplyAsync(requestReader, readExecutor)
                             .thenApplyAsync(request -> {
@@ -103,13 +104,13 @@ public class Application {
                                     RequestHandler requestHandler = new RequestHandler(request, dbConnection);
                                     try {
                                         return requestHandler.handle(request);
-                                    } catch (IOException e) {
+                                    } catch (IOException | SQLException e) {
                                         ServerConfig.LOGGER.error("Error during request handling");
                                         return null;
                                     }
                                 } else return null;
                             }, handleExecutor)
-                            .thenAcceptAsync(sender, sendExecutor);
+                            .thenAcceptAsync(responseSender, sendExecutor);
                 }
             }
         }

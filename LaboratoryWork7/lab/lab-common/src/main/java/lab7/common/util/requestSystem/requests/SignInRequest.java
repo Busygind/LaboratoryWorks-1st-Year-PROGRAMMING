@@ -1,24 +1,20 @@
 package lab7.common.util.requestSystem.requests;
 
+import javafx.util.Pair;
+
 import java.io.Serializable;
 
 public class SignInRequest implements Request, Serializable {
 
     private static final RequestType type = RequestType.SIGN_IN;
-    private final String login;
-    private final String password;
+    private final Pair<String, String> loginData;
 
-    public SignInRequest(String login, String password) {
-        this.login = login;
-        this.password = password;
+    public SignInRequest(Pair<String, String> loginData) {
+        this.loginData = loginData;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
+    public Pair<String, String> getPair() {
+        return loginData;
     }
 
     @Override

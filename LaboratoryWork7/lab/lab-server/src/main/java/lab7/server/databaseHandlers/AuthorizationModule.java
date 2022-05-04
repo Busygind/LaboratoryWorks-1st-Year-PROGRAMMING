@@ -6,7 +6,6 @@ import lab7.common.util.requestSystem.requests.SignUpRequest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AuthorizationModule {
@@ -20,7 +19,8 @@ public class AuthorizationModule {
     public AuthorizationModule(SignInRequest signInRequest, Connection connection) throws SQLException {
         this.request = signInRequest;
         this.connection = connection;
-        this.correctUser = checkUserInData();
+        UsersChecker checker = new UsersChecker(connection, signInRequest.getPair());
+        this.correctUser = checker.checkUserInData();
     }
 
     public AuthorizationModule(SignUpRequest signUpRequest, Connection connection) throws SQLException {
@@ -29,20 +29,11 @@ public class AuthorizationModule {
         this.correctUser = addUserToData();
     }
 
-    public boolean checkUserInData() throws SQLException {
-        SignInRequest signInRequest = (SignInRequest) request;
-        PreparedStatement statement = connection.prepareStatement(Statements.checkUserInData.getStatement());
-        statement.setString(1, signInRequest.getLogin());
-        statement.setString(2, passwordEncryptor.encrypt(signInRequest.getPassword()));
-        ResultSet resultSet = statement.executeQuery();
-        return resultSet.next();
-    }
-
-    public boolean addUserToData() throws SQLException {
+    private boolean addUserToData() throws SQLException {
         SignUpRequest signUpRequest = (SignUpRequest) request;
         PreparedStatement statement = connection.prepareStatement(Statements.addUserToData.getStatement());
-        statement.setString(1, signUpRequest.getLogin());
-        statement.setString(2, passwordEncryptor.encrypt(signUpRequest.getPassword()));
+        statement.setString(1, signUpRequest.getPair().getKey());
+        statement.setString(2, passwordEncryptor.encrypt(signUpRequest.getPair().getValue()));
         statement.executeUpdate();
         return true;
     }
